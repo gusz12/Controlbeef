@@ -1,0 +1,81 @@
+@import url('https://fonts.googleapis.com/css2?family=Jura:wght@300..700&family=Numans&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Jura', sans-serif;
+  }
+  
+  /* Fundo da página */
+  body {
+    font-size: 30px;
+    min-height: 100vh; /* 100% da altura da janela */
+    background-image: url('../images/background_apelo.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: bottom;
+  }
+  
+  /* Navbar */
+.navbar {
+    font-size: 50px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 32px;
+    background-color: rgb(194, 253, 251);
+}
+
+.logo {
+    display: flex;
+    gap: 5px;
+    align-items: center;
+}
+
+.logo img {
+    width: 60px;
+}
+
+.menu {
+    display: flex;
+    flex-direction: row;
+    gap:30px;
+}
+
+.menu a {
+    text-decoration: none;
+    color:black;
+    font-weight: 500;
+}
+
+/* FECHA NAVBAR */
+
+/* FORMULARIO LOGIN */
+
+.cadastro {
+    border: 3px solid rgb(0, 0, 75);
+    display: flex;
+    flex: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.formulario {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 40%;
+    height: auto;
+    background-color: rgb(232, 252, 252);
+}
+
+.imagemLogin {
+    background-color: rgb(226, 226, 226);
+    width: 40%;
+}
+
+.imagemLogin img {
+    width: 100%;
+}
