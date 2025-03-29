@@ -8,48 +8,16 @@
   }
   
   /* Fundo da página */
-  body {
+body {
     font-size: 30px;
     min-height: 100vh; /* 100% da altura da janela */
     background-image: url('../images/background_apelo.png');
     background-size: cover;
     background-repeat: no-repeat;
     background-position: bottom;
-  }
+}
   
-  /* Navbar */
-.navbar {
-    font-size: 50px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 16px 32px;
-    background-color: #FDFDFD;
-}
 
-.logo {
-    display: flex;
-    gap: 5px;
-    align-items: center;
-}
-
-.logo img {
-    width: 60px;
-}
-
-.menu {
-    display: flex;
-    flex-direction: row;
-    gap:30px;
-}
-
-.menu a {
-    text-decoration: none;
-    color:black;
-    font-weight: 500;
-}
-
-/* FECHA NAVBAR */
 
 /* FORMULARIO LOGIN */
 

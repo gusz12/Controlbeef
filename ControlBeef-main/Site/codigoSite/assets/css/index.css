@@ -9,49 +9,13 @@
     scroll-behavior: smooth;
 }
 
-  /* Fundo da página */
-  body {
+/* Fundo da página */
+body {
+    overflow-x: hidden;
     font-size: 30px;
-    /* min-height: 100vh; 100% da altura da janela */
-    /* background-image: url('../images/background_apelo.png'); */
-    /* background-size: cover; */
-    /* background-repeat: no-repeat; */
-    /* background-position: bottom; */
-  }
+}
   
-  /* Navbar */
-.navbar {
-    font-size: 50px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 21px 32px;
-    background-color: #FDFDFD;
-}
 
-.logo {
-    display: flex;
-    gap: 5px;
-    align-items: center;
-}
-
-.logo img {
-    width: 60px;
-}
-
-.menu {
-    display: flex;
-    flex-direction: row;
-    gap:30px;
-}
-
-.menu a {
-    text-decoration: none;
-    color:black;
-    font-weight: 500;
-}
-
-/* FECHA NAVBAR */
 
 /* APELO */
 
@@ -81,6 +45,10 @@
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.idealizacao h2{
+    font-weight: 600;
 }
 
 .imagemIdealizacao {
@@ -116,7 +84,7 @@
 .funcionalidade h2{
     margin-left: 80px;
     font-size: 45px;
-    font-weight: 600;
+    font-weight: 700;
 }
 
 .principais{
@@ -135,7 +103,7 @@
 }
 
 .caracteristica h3{
-    font-weight: 500;
+    font-weight: 600;
 }
 
 
@@ -155,8 +123,6 @@
     display: flex;
     flex-direction: column;
     gap:20px;
-
-    justify-content:flex-start;
 }
 
 .diagrama h2{
@@ -187,14 +153,15 @@
     background-repeat: no-repeat;
     min-height: 100vh; /* altura mínima para preencher a tela */
     display: flex;
-
-
-    /* FALTA COLOCAR O BACKGROUND IMAGE CORRETO, nao to sabendo fazer */
 }
 
 .textoQuemSomos {
     width: 70%;
     padding: 20px;
+}
+
+.textoQuemSomos h2{
+    font-weight: 600;
 }
 
 
