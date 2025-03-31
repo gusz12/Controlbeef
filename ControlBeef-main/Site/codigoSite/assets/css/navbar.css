@@ -1,0 +1,31 @@
+  /* Navbar */
+  .navbar {
+    font-size: 35px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 21px 32px;
+    background-color: #FDFDFD;
+}
+
+.logo {
+    display: flex;
+    gap: 5px;
+    align-items: center;
+}
+
+.logo img {
+    width: 60px;
+}
+
+.menu {
+    display: flex;
+    flex-direction: row;
+    gap:30px;
+}
+
+.menu a {
+    text-decoration: none;
+    color:black;
+    font-weight: 500;
+}
