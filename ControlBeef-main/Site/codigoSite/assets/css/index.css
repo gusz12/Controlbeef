@@ -7,111 +7,122 @@
     font-family: "Jura", sans-serif;
     font-weight: 400;
     scroll-behavior: smooth;
+   
 }
 
 /* Fundo da página */
 body {
     overflow-x: hidden;
-    font-size: 30px;
-}
+    font-size: 25px;
   
+}
+
 
 
 /* APELO */
 
-.apelo { 
+.apelo {
     padding: 50px;
     display: flex;
-    /* justify-content: center; */
     width: 100vw;
     height: auto;
-    background-image: url(/assets/images/background_apelo.png);
+    background-image: url(/ControlBeef-main/Site/codigoSite/assets/images/background_apelo.png);
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    min-height: 100vh; /* altura mínima para preencher a tela */
-    display: flex; /* PRECISO ARRUMAR O BACKGROUND IMAGE, não to sabendo fazer */
+    min-height: 100vh;
+
+    /* altura mínima para preencher a tela */
+    display: flex;
     align-items: center;
+   
 }
 
-.apelo span{
+.apelo span {
     font-weight: 700;
     background-color: #5DD7EDBA;
 }
 
-/* idealizacao */
 
+
+
+
+
+/* idealizacao */
 .idealizacao {
     display: flex;
-    justify-content: center;
+    justify-content: space-evenly;
     align-items: center;
+    zoom: 80%;
 }
 
-.idealizacao h2{
+.idealizacao img {
+    filter: none;
+}
+
+.idealizacao h2 {
     font-weight: 600;
 }
 
-.imagemIdealizacao {
-    width: 40%;
-}
-
-.textoIdealizacao{
+.textoIdealizacao {
     font-weight: 600;
     display: flex;
     flex-direction: column;
-    gap:30px;
+    gap: 30px;
     width: 40%;
 
 }
 
-.textoIdealizacao button{
+.textoIdealizacao button {
     background-color: #5DD7ED;
-    border:none;
+    border: none;
     width: 30%;
     font-size: 30px;
     padding: 5px;
-    cursor:pointer;
+    cursor: pointer;
 }
 
 /* FUNCIONALIDADES */
 
-.funcionalidade{
+.funcionalidade {
     padding: 20px;
     align-items: center;
     justify-content: center;
 }
 
-.funcionalidade h2{
+.funcionalidade h2 {
     margin-left: 80px;
     font-size: 45px;
     font-weight: 700;
+    zoom: 80%;
 }
 
-.principais{
+.principais {
     padding: 10px;
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
+   
 }
 
-.caracteristica{
+.caracteristica {
     padding: 25px;
     width: 30%;
     display: flex;
     flex-direction: column;
-    gap:20px;
+    gap: 20px;
 }
 
-.caracteristica h3{
+.caracteristica h3 {
     font-weight: 600;
 }
 
 
 /* CALCULADORA / SIMULADOR FINANCEIRO */
 
-.simuladorFinanceiro{
+.simuladorFinanceiro {
     width: 100%;
-    background-color:#BEE7FF4F;
+    background-color: #BEE7FF4F;
 }
 
 
@@ -122,22 +133,23 @@ body {
     padding: 40px;
     display: flex;
     flex-direction: column;
-    gap:20px;
+    gap: 20px;
 }
 
-.diagrama h2{
+.diagrama h2 {
     display: flex;
     align-self: left;
     font-weight: 500;
 }
 
-.imgDiagrama{
+.imgDiagrama {
     display: flex;
     justify-content: center;
 }
 
 .imgDiagrama img {
     width: 80%;
+    filter: none;
 }
 
 /* QUEM SOMOS */
@@ -146,13 +158,15 @@ body {
     padding: 30px;
     display: flex;
     flex-direction: column;
-    gap:30px;
-    background-image: url(/assets/images/quemSomos.png);
+    gap: 30px;
+    background-image: url(/ControlBeef-main/Site/codigoSite/assets/images/quemSomos.png);
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    min-height: 100vh; /* altura mínima para preencher a tela */
+    min-height: 100vh;
+    /* altura mínima para preencher a tela */
     display: flex;
+    zoom: 80%;
 }
 
 .textoQuemSomos {
@@ -160,33 +174,6 @@ body {
     padding: 20px;
 }
 
-.textoQuemSomos h2{
-    font-weight: 600;
-}
-
-
-/* RODAPE */
-
-.rodape {
-    padding: 50px;
-    background-color: #BEE7FF;
-    display: flex;
-    flex-direction: column;
-    gap:10px;
-}
-
-.contato {
-    display: flex;
-    justify-content: space-between;
-}
-
-.copyright {
-    font-size: 20px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.rodape h2{
+.textoQuemSomos h2 {
     font-weight: 600;
 }
