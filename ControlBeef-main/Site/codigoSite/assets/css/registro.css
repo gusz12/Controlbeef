@@ -11,10 +11,11 @@
 body {
     font-size: 30px;
     min-height: 100vh; /* 100% da altura da janela */
-    background-image: url('../images/background_apelo.png');
+    background-image: url(/ControlBeef-main/Site/codigoSite/assets/images/background_apelo.png);
     background-size: cover;
+    background-position: center;
     background-repeat: no-repeat;
-    background-position: bottom;
+
 }
   
 
@@ -32,6 +33,7 @@ body {
     justify-content: center;
     align-items: center;
     box-shadow: 0px 5px gray;
+    zoom: 80%;
 }
 
 .formulario {
@@ -67,10 +69,6 @@ body {
     width: 80%;
     padding: 15px;
     outline: none;
-}
-
-.formulario h1 {
-    font-size: 40px;
 }
 
 .formulario button {
