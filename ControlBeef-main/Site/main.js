@@ -6,24 +6,22 @@ var lucroAfetado = lucro - lucroPerda;
 
 function Calcular() {
     var carne = (ipt_carneInfo.value);
-    var Qntcarne = Number(ipt_carneQnt.value);
+    var carneQnt = Number(ipt_carneQnt.value);
     var temperatura = Number(ipt_temp.value);
     var horas = Number(ipt_hora.value);
-    var carneComprada = Number(ipt_precoV.value);
-    var carneVendida = Number(ipt_precoC.value);
-
-    var perda = 0;
-    var perdaVendas = 0;
-    var perdaCompras = 0;
-    var receitaBruta = Qntcarne * carneVendida
-    var custoCompra = Qntcarne * carneComprada
+    var vendas = Number(ipt_precoV.value);
+    var compras = Number(ipt_precoC.value);
+    var perdaVendas = 0
+    var perdaCompras = 0
+    var receitaBruta = carneQnt * vendas
+    var custoCompra = carneQnt * compras
     lucro = receitaBruta - custoCompra;
     // Máxima temperatura segura 4ºC
     // Mínima temperatura segura -3 para refrigeração, dps ela congela
 
     // Se a temperatura estiver entre -3°C e 4°C não há perda
     if (temperatura >= -3 && temperatura <= 4) {
-        div_resp.innerHTML = `<p>O lote de ${carne} não sofrerá perdas</p>`;
+        div_resp.innerHTML = `<p>O lote de ${carne} não sofrerá perdas dentro de 12 meses</p>`;
     }
 
     if (temperatura > 4) {
@@ -69,40 +67,38 @@ function Calcular() {
     }
 
     if (perda > 0) {
-        perdaVendas = perda * carneComprada;
-        perdaCarne = (carneComprada - perdaVendas) * Qntcarne;
-        lucroComPerda =  custoCompra-perdaCarne;
-        lucroAfetado = lucroComPerda-lucro;
-
+        perdaVendas = perda * vendas;
+        perdaCarne = (vendas - perdaVendas) * carneQnt;
+        lucroPerda = perdaCarne - custoCompra;
+        lucroAfetado = lucro - lucroPerda;
 
         div_resp.innerHTML = `<p><b>Cada carne custará R$${perdaVendas.toFixed(2)} a menos na venda para o consumidor.
                 Resultando em uma perda de R$${lucroAfetado.toFixed(2)} no lucro final.</b></p>`;
 
-        if (perda >= 0.5) {
+        if (perda === 0.5) {
             lucroAfetado = custoCompra;
             div_resp.innerHTML = `<p><b>O lote de ${carne} não poderá mais ser comercializado,
                 podendo ir apenas para processamento ou apenas será descartado. <br>
                 Resultando em uma perda total de <span style="color: red;">R$${lucroAfetado}.</span></b> <br>`;
-        } else if (perda >= 0.15) {
+        } else if (perda === 0.15) {
             div_resp.innerHTML += `<p><b><p>O lote de ${carne} poderá ir para o uso industrial (embutidos ou moída)</p></b> <br>`;
         }
 
-        
-    }   
-    div_resp.innerHTML += `<button id="botaoDiv" onclick="VerMais()" style="margin-top: 0.5rem">Ver Mais</button>`;
+        div_resp.innerHTML += `<button id="botaoDiv" onclick="VerMais()" style="margin-top: 0.5rem">Ver Mais</button>`;
+    }
 }
 
 function VerMais() {
     var carne = (ipt_carneInfo.value);
-    var Qntcarne = Number(ipt_carneQnt.value);
+    var carneQnt = Number(ipt_carneQnt.value);
     var temperatura = Number(ipt_temp.value);
     var horas = Number(ipt_hora.value);
-    var carneComprada = Number(ipt_precoV.value);
-    var carneVendida = Number(ipt_precoC.value);
-    var custoCompra = Qntcarne * carneComprada;
+    var vendas = Number(ipt_precoV.value);
+    var compras = Number(ipt_precoC.value);
+    var custoCompra = carneQnt * compras
 
-    lucro = (Qntcarne * carneComprada) - (Qntcarne * carneVendida);
-    lucroPerda = lucroAfetado - lucro;
+    lucro = (carneQnt * vendas) - (carneQnt * compras);
+    lucroPerda = lucro - lucroAfetado
 
     if (perda === 0.5) {
         lucroPerda = custoCompra;  // Prejuízo total é o custo de compra
@@ -130,5 +126,4 @@ function VerMais() {
         }
         </p>
 `;
-
-}
+    }
