@@ -62,7 +62,7 @@ body {
     display: flex;
     width: 100vw;
     height: auto;
-    background-image: url(/ControlBeef-main/Site/codigoSite/assets/images/background_apelo.png);
+    background-image: url(assets/background_apelo.png);
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -209,7 +209,7 @@ body {
     display: flex;
     flex-direction: column;
     gap: 30px;
-    background-image: url(/ControlBeef-main/Site/codigoSite/assets/images/quemSomos.png);
+    background-image: url(assets/quemSomos.png);
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
