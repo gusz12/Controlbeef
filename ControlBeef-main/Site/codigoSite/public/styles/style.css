@@ -167,7 +167,8 @@ body {
 /* CALCULADORA / SIMULADOR FINANCEIRO */
 .simuladorFinanceiro {
     width: 100%;
-    background-color: #BEE7FF4F;
+    display: flex;
+    flex-direction: column;
 }
 
 
@@ -227,12 +228,6 @@ body {
 .textoQuemSomos h2 {
     font-weight: 600;
 }
-
-
-
-
-
-
 
 /* RODAPE */
 

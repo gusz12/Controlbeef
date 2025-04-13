@@ -1,0 +1,72 @@
+     /* Importando fontes do Google Fonts */
+     @import url('https://fonts.googleapis.com/css2?family=Jura:wght@300..700&display=swap');
+     @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+     * {
+         font-family: "Montserrat", sans-serif;
+         margin: 0;
+         padding: 0;
+     }
+     body {
+         background-color: #bee7ff50;
+     }
+
+     .titulo {
+         text-align: center;
+     }
+
+     .container {
+         display: flex;
+         align-items: center;
+         justify-content: center;
+         gap: 5rem;
+     }
+
+     .conteudo_principal {
+         display: flex;
+         flex-direction: column;
+         align-items: center;
+         background-color: white;
+         width: 500px;
+         border-radius: 10px;
+         gap: 10px;
+         padding: 10px;
+         margin-top: 2rem;
+     }
+
+     .conteudo_principal p {
+         font-size: small;
+     }
+
+     input {
+         padding: 10px;
+         border-radius: 5px;
+         width: 90%;
+         border: 1px solid gray;
+     }
+
+     button {
+         padding: 10px;
+         /* Adiciona espaçamento interno */
+         border-radius: 5px;
+         /* Arredonda as bordas */
+         border: 1px solid #85cffa;
+         /* Adiciona uma borda azul clara */
+         background-color: #5DD7ED;
+         /* Define a cor de fundo azul */
+     }
+
+     /* Mudando a aparência ao passar o mouse sobre o botão */
+     button:hover {
+         background-color: rgb(62, 181, 250);
+         /* Muda a cor de fundo */
+         cursor: pointer;
+         /* Muda o cursor para indicar clique */
+     }
+
+     .div_resp {
+         width: 700px;
+         height: auto;
+         padding: 20px;
+         border-radius: 10px;
+     }
