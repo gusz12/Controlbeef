@@ -1,24 +1,24 @@
 @import url('https://fonts.googleapis.com/css2?family=Jura:wght@300..700&family=Numans&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
 * {
-    margin: 0px;
-    padding: 0px;
     box-sizing: border-box;
     font-family: "Jura", sans-serif;
     font-weight: 400;
     scroll-behavior: smooth;
-   
+
 }
 
 /* Fundo da página */
 body {
     overflow-x: hidden;
     font-size: 25px;
+   
 }
 
 
 /* Navbar */
 .navbar {
+    margin: 0;
     font-size: 35px;
     display: flex;
     position: fixed; 
@@ -38,7 +38,7 @@ body {
 }
 
 .logo img {
-    width: 60px;
+    width: 100px;
 }
 
 .menu {
@@ -228,6 +228,14 @@ body {
 .textoQuemSomos h2 {
     font-weight: 600;
 }
+.quemSomos button {
+    background-color: #5DD7ED;
+    border: none;
+    width: 10%;
+    font-size: 30px;
+    padding: 5px;
+    cursor: pointer;
+}
 
 /* RODAPE */
 
@@ -236,8 +244,9 @@ body {
     background-color: #BEE7FF;
     display: flex;
     flex-direction: column;
-    
+    bottom: 0;
     gap:10px;
+    width: 100%;
 }
 
 .contato {

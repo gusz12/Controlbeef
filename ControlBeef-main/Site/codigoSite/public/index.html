@@ -5,28 +5,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  
+
     <link rel="stylesheet" href="styles/style.css">
     <link rel="stylesheet" href="styles/calculadora.css">
     <title>ControlBeef</title>
 </head>
 
 <body>
-    <div class="navbar">
-        <div class="logo">
-            <span>ControlBeef</span>
-            <img src="styles/assets/logoControlBeef.png" alt="logo ControlBeef">
+    <header>
+        <div class="navbar">
+            <div class="logo">
+                <span>ControlBeef</span>
+                <img src="styles/assets/logoControlBeef1.png" alt="logo ControlBeef">
+            </div>
+            <div class="menu">
+                <a href="index.html">Home</a>
+                <span>|</span>
+                <a href="#sobre-nos">Sobre Nós</a>
+                <span>|</span>
+                <a href="login.html">Login</a>
+                <span>|</span>
+                <a href="registro.html">Cadastro</a>
+            </div>
         </div>
-        <div class="menu">
-            <a href="index.html">Home</a>
-            <span>|</span>
-            <a href="#sobre-nos">Sobre Nós</a>
-            <span>|</span>
-            <a href="login.html">Login</a>
-            <span>|</span>
-            <a href="registro.html">Cadastro</a>
-        </div>
-    </div>
+    </header>
 
     <div class="apelo">
         <h1>Mantenha suas carnes sempre na <br><span>temperatura ideal</span> e <br>evite prejuízos.</h1>
@@ -43,7 +45,9 @@
                 alertas imediatos sempre que a temperatura sair da faixa ideal, evitando prejuízos, contaminações e
                 multas sanitárias.</p>
 
-            <button>Saiba mais...</button>
+                <a href="sobrenos.html">
+                    <button>Saiba mais...</button>
+                </a>
         </div>
     </div>
 
@@ -70,8 +74,8 @@
             </div>
         </div>
     </div>
-<!--Calculadora-->
-    <div class="simuladorFinanceiro"> 
+    <!--Calculadora-->
+    <div class="simuladorFinanceiro">
         <div class="titulo">
             <H1>Calcule a sua possível perda</H1>
             <div class="container">
@@ -81,7 +85,8 @@
                     <p>Insira a quantidade de carne(kg)</p>
                     <input type="number" id="ipt_carneQnt" placeholder="Insira a quantidade de carne (kg)...">
                     <p>Informe o valor pago pelo quilo da carne(em R$)</p>
-                    <input type="number" id="ipt_precoC" placeholder="Insira o preço pelo qual foi comprado a carne (R$)...">
+                    <input type="number" id="ipt_precoC"
+                        placeholder="Insira o preço pelo qual foi comprado a carne (R$)...">
                     <p>Insira o preço do quilo para o consumidor final(em R$)</p>
                     <input type="number" id="ipt_precoV" placeholder="Insira o preço de venda da carne (R$)...">
                     <p>Insira a temperatura que a carne ficou armazenada(ºC)</p>
@@ -91,7 +96,8 @@
                         placeholder="Insira a quantidade de horas que a carne ficou nessa temperatura..."> <br>
                     <button onclick="Calcular()">Calcular perda</button> <br>
                 </div>
-                <div id="div_resp" class="div_resp" style="background-color: #f9f9f9;"><span>Esperando dados...</span></div>
+                <div id="div_resp" class="div_resp" style="background-color: #f9f9f9;"><span>Esperando dados...</span>
+                </div>
             </div>
         </div>
     </div>
@@ -115,7 +121,11 @@
                 compromisso é ajudar seu negócio a operar com mais eficiência, conformidade sanitária e rentabilidade.
             </p>
         </div>
-
+        <div>
+            <a href="sobrenos.html">
+                <button>Saiba mais...</button>
+            </a>
+        </div>
 
     </div>
 
