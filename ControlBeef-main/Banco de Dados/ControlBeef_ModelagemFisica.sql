@@ -7,7 +7,7 @@ logradouro varchar(100),
 cep char(8),
 numero int8,
 bairro varchar(50),
-fkcidade varchar(70)
+fkcidade INT
 );
 CREATE TABLE pais(
 id int primary key auto_increment,

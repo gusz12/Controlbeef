@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ControlBeef | Dashboard</title>
+    <link rel="stylesheet" href="styles/dashboard.css">
+</head>
+<body>
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <img src="styles/assets/logoControlBeef1.png" alt="Logo" class="logo-icon">
+            <span class="logo-texto">ControlBeef</span>
+        </div>
+        <nav class="sidebar-menu">
+            <a href="dashboard.html" class="menu-item active">
+                <span>Dashboard</span>
+            </a>
+            <a href="index.html" class="menu-item">
+                <span>Home</span>
+            </a>
+            <a href="sobrenos.html" class="menu-item">
+                <span>Sobre Nós</span>
+            </a>
+            <a href="login.html" class="menu-item">
+                <span>Login</span>
+            </a>
+            <a href="registro.html" class="menu-item">
+                <span>Cadastro</span>
+            </a>
+        </nav>
+        <div class="sidebar-footer">
+            <img src="styles/assets/vitorio.png" class="user-avatar" alt="Usuário">
+            <span>Vitório</span>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <div class="mensagemInicial">
+            <h1>Bem Vindo, Vitório.</h1>
+        </div>
+        <div class="grafico-main">
+            <canvas id="graficoMain"></canvas>
+        </div>
+        <div class="subgraficos">
+            <div class="graficoSensores">
+                <h2>Sensores <br>Ativos e Inativos:</h2>
+                <canvas id="graficoSub"></canvas>
+            </div>
+            <div class="kpi">
+                <div class="alertas">Temperatura Máxima: <br>4ºC</div>
+                <div class="alertas">Temperatura Mínima: <br>-1ºC</div>
+                <div class="alertas">Data da captura: <br>18/03/2025</div>
+                <div class="alertas">Horário da última captura: <br>15:23</div>
+            </div>
+        </div>
+    </div>
+</body>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    const ctx = document.getElementById('graficoMain');
+
+    new Chart(ctx, {
+    type: 'line',
+    data: {
+        labels: ['12:00', '13:00', '14:00', '15:00', '16:00', '17:00'],
+        datasets: [{
+        label: 'Temperatura (ºC)',
+        data: [4, 3, 0, -1, 0, 3],
+        borderColor: '#0c0968',
+        backgroundColor: '#0c0968',
+        borderWidth: 3,
+        tension: .4
+        }]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+        y: {
+            beginAtZero: true
+        }
+        }
+    }
+    });
+
+</script> <!--graficomMain-->
+
+<script>
+    const ctxSub = document.getElementById('graficoSub');
+
+    new Chart(ctxSub, {
+        type: 'pie',
+        data: {
+            labels: ['Ativos', 'Inativos'],
+            datasets: [{
+                label: 'Sensores',
+                data: [12, 1],
+                backgroundColor: [
+                    '#0c0968',
+                    '#383676',
+                    '#5a57a2'
+                ],
+                borderWidth: 2
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: true,
+            plugins: {
+                legend: {
+                    position: 'bottom'
+                }
+            }
+        }
+    });
+</script> <!--Grafico sensores-->
