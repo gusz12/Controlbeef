@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="Assets/css/style.css">
+    <link rel="stylesheet" href="Assets/css/registro.css">
+    <title>Login</title>
+</head>
+
+<body>
+
+    <div class="navbar">
+        <div class="logo">
+            <span>ControlBeef</span>
+            <img src="Assets/images/logoControlBeef1.png" alt="logo ControlBeef">
+        </div>
+        <div class="menu">
+            <a href="index.html">Home</a>
+            <span>|</span>
+            <a href="sobrenos.html">Sobre Nós</a>
+            <span>|</span>
+            <a href="login.html">Login</a>
+            <span>|</span>
+            <a href="registro.html">Cadastro</a>
+            <a href="dashboard.html">
+                <span>|</span>
+                Dashboard
+            </a>
+        </div>
+    </div>
+<br><br>
+
+    <div class="main">
+
+        <div class="cadastro">
+            <div class="formulario">
+
+                <h1>Login</h1>
+
+                <input type="text" id="ipt_email" placeholder="Insira seu email...">
+                <input type="password" id="ipt_senha" placeholder="Insira sua senha...">
+
+                <button style="color: black;"; onclick="redirectDash()">Entrar</button>
+                <p>Não tem conta? <a href="registro.html">Registre-se</a></p>
+            </div>
+            <div class="imagemLogin">
+                <img src="Assets/images/loginImagem.png" alt="ImagemLogin">
+            </div>
+        </div>
+
+    </div>
+
+</body>
+<script src="Assets/script/login.js"></script>
+</html>
