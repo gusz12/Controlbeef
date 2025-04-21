@@ -10,7 +10,6 @@
 </head>
 
 <body>
-
     <div class="navbar">
         <div class="logo">
             <span>ControlBeef</span>
@@ -21,12 +20,12 @@
             <span>|</span>
             <a href="sobrenos.html">Sobre Nós</a>
             <span>|</span>
-            <a href="login.html">Login</a>
+            <a href="registro.html">Cadastrar</a>
             <span>|</span>
-            <a href="registro.html">Cadastro</a>
+            <a href="login.html">Dashboard</a>
         </div>
     </div>
-<br><br>
+    <br><br>
 
     <div class="main">
 
@@ -38,7 +37,8 @@
                 <input type="text" id="ipt_email" placeholder="Insira seu email...">
                 <input type="password" id="ipt_senha" placeholder="Insira sua senha...">
 
-                <button>Entrar</button>
+                <button onclick="redirectDash()">Entrar</button>
+                <div href="dashboard.html" id="div_buttonDash"></div>
                 <p>Não tem conta? <a href="registro.html">Registre-se</a></p>
             </div>
             <div class="imagemLogin">
@@ -49,5 +49,6 @@
     </div>
 
 </body>
+<script src="scripts/login.js"></script>
 
 </html>

@@ -20,9 +20,9 @@
             <span>|</span>
             <a href="sobrenos.html">Sobre Nós</a>
             <span>|</span>
-            <a href="login.html">Login</a>
+            <a href="registro.html">Cadastrar</a>
             <span>|</span>
-            <a href="registro.html">Cadastro</a>
+            <a href="login.html">Dashboard</a>
         </div>
     </div>
     <br><br>
@@ -41,7 +41,8 @@
                 <input type="password" id="ipt_senha" placeholder="Insira sua senha...">
                 <input type="password" id="ipt_senha_confirmation" placeholder="Insira sua senha novamente...">
 
-                <button>Registrar</button>
+                <button onclick="resultado()">Registrar</button>
+                <div id="div_resultado"></div>
                 <p>Já tem uma conta? <a href="login.html">Faça Login</a></p>
             </div>
         </div>
@@ -49,5 +50,7 @@
     </div>
 
 </body>
+
+<script src="scripts/registro.js"></script>
 
 </html>
