@@ -6,14 +6,13 @@
     font-family: "Jura", sans-serif;
     font-weight: 400;
     scroll-behavior: smooth;
-    overflow: hidden; 
+
 }
 
 body {
     margin: 0;
     padding: 0;
     display: flex;
-    height: 100vh;
     background-color: #f4f4f4;
 }
 
@@ -92,14 +91,20 @@ body {
 .main-content {
     flex: 1;
     padding: 40px;
+    margin: 60px 0px;
 }
 
 .grafico-main {
     flex:1;
     display: flex;
-    height: 65%;
+    height: 465px;
+    width: 90%;
     align-items: center;
     justify-content: center;
+}
+.tabelas{
+    height: 465px;
+    width: 100%;
 }
 
 .grafico-main canvas {
@@ -128,20 +133,20 @@ body {
 
 
 .kpi {
+    padding: 5px;
     display: flex;
-    width: 70%;
+    width: fit-content;
     gap: 30px;
     align-items:center;
     justify-content: space-evenly;
 }
-
 .alertas {
     padding: 15px;
     border-radius: 20px;
     background-color: #0c0968;
     width: 20%;
     height: 180px;
-
+    flex-grow: 1;
     font-size: 30px;
     color:white;
     
@@ -149,4 +154,12 @@ body {
 
 .mensagemInicial {
     font-weight: 800;
+}
+.tabelas{
+    align-items: center;
+    width: 100%;
+    margin: 30px;
+}
+.sensores{
+    margin-bottom: 100px;
 }
