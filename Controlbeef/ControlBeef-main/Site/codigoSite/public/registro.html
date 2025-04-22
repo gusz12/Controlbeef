@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles/style.css">
+    <link rel="stylesheet" href="styles/registro.css">
+    <title>Registre-se</title>
+</head>
+
+<body>
+    <div class="navbar">
+        <div class="logo">
+            <span>ControlBeef</span>
+            <img src="styles/assets/logoControlBeef1.png" alt="logo ControlBeef">
+        </div>
+        <div class="menu">
+            <a href="index.html">Home</a>
+            <span>|</span>
+            <a href="sobrenos.html">Sobre Nós</a>
+            <span>|</span>
+            <a href="registro.html">Cadastrar</a>
+            <span>|</span>
+            <a href="login.html">Dashboard</a>
+        </div>
+    </div>
+    <br><br>
+    <div class="main">
+
+        <div class="cadastro">
+            <div class="imagemLogin">
+                <img src="styles/assets/loginImagem.png" alt="ImagemLogin">
+            </div>
+            <div class="formulario">
+
+                <h1>Cadastre-se</h1>
+
+                <input type="text" id="ipt_nome" placeholder="Insira seu nome...">
+                <input type="text" id="ipt_email" placeholder="Insira seu email...">
+                <input type="password" id="ipt_senha" placeholder="Insira sua senha...">
+                <input type="password" id="ipt_senha_confirmation" placeholder="Insira sua senha novamente...">
+
+                <button onclick="resultado()">Registrar</button>
+                <div id="div_resultado"></div>
+                <p>Já tem uma conta? <a href="login.html">Faça Login na Dashboard</a></p>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+
+<script src="scripts/registro.js"></script>
+<script src="scripts/main.js"></script>
+
+</html>

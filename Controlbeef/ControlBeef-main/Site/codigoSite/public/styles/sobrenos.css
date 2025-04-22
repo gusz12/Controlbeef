@@ -1,0 +1,128 @@
+body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    background-image: url(assets/background_snowflake.png);
+}
+
+img {
+    filter: none !important;
+}
+
+.imagem img {
+    filter: none !important;
+    width: 200px;
+}
+
+.tituloSobre {
+    margin-top: 40px;
+    font-weight: bold;
+}
+
+.tituloPorque {
+    font-weight: bold;
+    margin-top: 40px;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+
+
+}
+
+.tituloMVV {
+    font-weight: bold;
+}
+
+.textoSobre {
+    width: 50%;
+}
+
+.textoPorque {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: flex-end;
+    text-align: end;
+    margin: 20px;
+}
+
+.container {
+    padding: 30px;
+    width: 100%;
+}
+
+.card {
+    display: flex;
+    justify-content: space-evenly;
+    margin: 5px;
+    width: 100%;
+}
+
+.sobre {
+    display: flex;
+    flex-direction: row;
+}
+
+.porque {
+    display: flex;
+    flex-direction: row;
+}
+
+
+
+.textos img {
+    width: 50%;
+    height: 50%;
+    border-radius: 10px;
+
+}
+
+.cartao {
+    padding: 5px;
+    border-radius: 10px;
+    background-color: aliceblue;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    margin: 10px;
+    width: 50%;
+}
+
+
+.cartao h2 {
+    font-weight: 600;
+}
+
+
+
+.valores {
+    text-align: left;
+}
+
+.parte_tecnica {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+
+}
+
+.parte_tecnica h1 {
+    font-weight: bold;
+    margin-top: 50px;
+}
+
+.parte_tecnica img {
+    border: solid black 2px;
+    border-radius: 10px;
+}
+.nos h1{
+    font-weight: bold;
+}
+
+.NossaFoto{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

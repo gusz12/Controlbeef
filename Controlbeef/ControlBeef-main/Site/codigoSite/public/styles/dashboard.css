@@ -1,0 +1,170 @@
+@import url('https://fonts.googleapis.com/css2?family=Jura:wght@300..700&family=Numans&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+* {
+    margin: 0px;
+    box-sizing: border-box;
+    font-family: "Jura", sans-serif;
+    font-weight: 400;
+    scroll-behavior: smooth;
+
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    background-color: #f4f4f4;
+}
+
+.sidebar {
+    width: 250px;
+    background-color: #0c0968;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 20px 0;
+}
+
+.sidebar-header {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.logo-icon {
+    width: auto;
+    height: 90px;
+}
+
+.logo-texto {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.sidebar-menu {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 40px;
+}
+
+.menu-item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 10px 20px;
+    text-decoration: none;
+    color: white;
+    transition: background 0.3s;
+}
+
+.menu-item:hover,
+.menu-item.active {
+    background-color: #383676;
+    border-left: 4px solid #474675;
+}
+
+.icon {
+    font-size: 18px;
+}
+
+.sidebar-footer {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.sidebar-footer span {
+    font-size: 20px;
+}
+
+.user-avatar {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+}
+
+.main-content {
+    flex: 1;
+    padding: 40px;
+    margin: 60px 0px;
+}
+
+.grafico-main {
+    flex: 1;
+    display: flex;
+    height: 465px;
+    width: 90%;
+    align-items: center;
+    justify-content: center;
+}
+
+.tabelas {
+    height: 465px;
+    width: 100%;
+}
+
+.grafico-main canvas {
+    width: 100% !important;
+    height: 100% !important;
+}
+
+.subgraficos {
+    display: flex;
+    height: 35%;
+}
+
+
+.graficoSensores {
+    flex: 1;
+    display: flex;
+    width: 30%;
+    align-items: center;
+    justify-content: center;
+}
+
+.graficoSensores canvas {
+    width: auto !important;
+    height: 200px !important;
+}
+
+
+.kpi {
+    padding: 5px;
+    display: flex;
+    width: fit-content;
+    gap: 30px;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.alertas {
+    padding: 15px;
+    border-radius: 20px;
+    background-color: #0c0968;
+    width: 20%;
+    height: 180px;
+    flex-grow: 1;
+    font-size: 30px;
+    color: white;
+
+}
+
+.mensagemInicial {
+    font-weight: 800;
+}
+
+.tabelas {
+    align-items: center;
+    width: 100%;
+    margin: 30px;
+}
+
+.salas {
+    height: 100%;
+}
+

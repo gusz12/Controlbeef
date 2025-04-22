@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ControlBeef | Dashboard</title>
+    <link rel="stylesheet" href="styles/style.css">
+    <link rel="stylesheet" href="styles/dashboard.css">
+</head>
+
+<body>
+    <div class="navbar">
+        <div class="logo">
+            <span>ControlBeef</span>
+            <img src="styles/assets/logoControlBeef1.png" alt="logo ControlBeef">
+        </div>
+        <div class="menu">
+            <a href="index.html">Home</a>
+            <span>|</span>
+            <a href="sobrenos.html">Sobre Nós</a>
+            <span>|</span>
+            <a href="registro.html">Cadastrar</a>
+            <span>|</span>
+            <a href="login.html">Dashboard</a>
+        </div>
+        <div class="usuario">
+            <img src="styles/assets/vitorio.png" class="user-avatar" alt="Usuário">
+            <span id="nome_lateral">Usuário</span>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <div class="mensagemInicial">
+            <h1 id="bem_vindo">Bem Vindo</h1>
+        </div>
+
+        <div class="containerFrigorifico">
+            <select id="select_frigo" class="select_Frigo">
+                <option value="#">Escolha um frigorifico</option>
+                <option value="1">Frigorifico XPTO</option>
+            </select>
+
+            <button onclick="frigorifico()">Mostrar Frigorifico</button>
+        </div>
+
+        <div class="grafico-main" id="graficoFrigorifico"></div>
+
+        <div id="limpar_sub">
+            <div class="subgraficos" id="subgraficos"></div>
+        </div>
+
+        <div class="containerSalas">
+            <div id="div_salas" class="tabela_salas"></div>
+        </div>
+
+        <div class="container" id="div_container"></div>
+
+        <div class="sensores" id="div_sensores"> </div>
+    </div>
+
+</body>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="scripts/main.js"></script>
