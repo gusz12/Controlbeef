@@ -26,7 +26,7 @@ function redirectDash() {
         }
 
         alert("Login efetuado com sucesso✔");
-        
+
         div_buttonDash.innerHTML = `
      <a href='dashboard.html'>Acessar dashboard</a> `
     } else {
@@ -35,7 +35,7 @@ function redirectDash() {
 }
 //dashboard
 
-if(email==true){
+if (email == true) {
     nome_lateral.innerHTML = `${nome}`
     bem_vindo.innerHTML = `Bem Vindo, ${nome}`
 }
@@ -43,7 +43,8 @@ if(email==true){
 
 subgraficos.style.display = "none";
 graficoFrigorifico.innerHTML = `<canvas id="graficoMain"></canvas>`
-function frigorifico() {
+
+    function frigorifico() {
     graficoFrigorifico.style.display = "";
     limpar_sub.innerHTML = ` <div class="subgraficos" id="subgraficos"></div>`
     let frigo = select_frigo.value;
@@ -68,7 +69,7 @@ function frigorifico() {
                 <div class="salas sala3" id="sala3">
                     <canvas id="tabelaSala3"></canvas>
                 </div>
-                <div id="subgrafico_salas"></div>
+                <div id="subgrafico_salas" class="subgraficos"></div>
                 </div>
         `
     if (frigo == 1) {
@@ -86,7 +87,7 @@ function frigorifico() {
                 <div class="alertas">Data da captura: <br>22/04/2025</div>
                 <div class="alertas">Horário da última captura: <br>17:00</div>
             </div>`
-            //dados KPI
+        //dados KPI
         let dadosFrigoPizza = {
             labels: ['Ativos', 'Inativos'],
             datasets: [{
@@ -157,17 +158,15 @@ function frigorifico() {
     }
 
 }
-
-function mostrar() {
+    function mostrar() {
     graficoFrigorifico.style.display = "none";
     limpar_sub.innerHTML = ""
     let sala = select_sala.value;
-
-
     div_cabecalho.innerHTML = `<h1>Sala: ${sala}</h1>`
+
     if (sala == 1) {
         sala1.style.display = "";
-        subgrafico_salas.innerHTML = `
+        subgrafico_salas.innerHTML += `
               <div class="graficoSensores">
                 <div>
                 <h2>Sensores <br>Ativos e Inativos:</h2>
@@ -390,4 +389,123 @@ function mostrar() {
         <canvas id="tabelaSala2"></canvas>
         `
     }
+    div_sensores.innerHTML = `
+    <select id="select_area">
+        <option value="#">Selecione o setor da sala</option>
+        <option value="1">Sul</option>
+        <option value="2">Leste</option>
+        <option value="3">Norte</option>
+        <option value="4">Oeste</option>
+    </select>
+    <button onclick="EscolherSensores()">Enviar</button>
+    `
+}
+    function EscolherSensores() {
+
+    let area = select_area.value;
+    if (area == '#') {
+        alert('POR FAVOR ESCOLHA UMA ÁREA')
+        return;
+    }
+    if (area == 1) {
+        div_sensores.innerHTML += `
+        <div class="tabelaSensores">
+        <h3>Sensores da área Sul</h3>
+
+        <div class="item sensor1" id="item">
+        sensor 1
+        <input type="checkbox" id="chk_sensor1"><br>
+        <canvas id="sensor1"></canvas><br>
+        </div>
+
+        <div class="item sensor2">
+        Sensor 2
+        <input type="checkbox" id="chk_sensor2"><br>
+        <canvas id="sensor2"></canvas><br>
+        </div>
+
+        <div class="item sensor3">
+        Sensor 3
+        <input type="checkbox" id="chk_sensor3"><br>
+        <canvas id="sensor3"></canvas><br>
+        </div>
+
+        <div class="item sensor4"
+        Sensor 4
+        <input type="checkbox" id="chk_sensor4"><br>
+        <canvas id="sensor4"></canvas><br>
+        </div>
+
+        <div class="item sensor5">
+        Sensor 5
+        <input type="checkbox" id="chk_sensor5"><br>
+        <canvas id="sensor5"></canvas><br>  
+        </div>
+       </div>
+        <button onclick="sensores()">Mostrar gráficos</button>
+        `
+    }
+}
+    function sensores() {
+
+    if (chk_sensor1.checked) {
+        var Sensor1 = [
+            "12:00",
+            "13:00",
+            "14:00",
+            "15:00",
+            "16:00",
+            "17:00",
+        ];
+        var dadosSensor1 = {
+            labels: Sensor1,
+            datasets: [{
+                label: 'Temperatura',
+                backgroundColor: 'rgb(93,215,237)',
+                borderColor: 'rgb(93,215,237)',
+                data: [4, 3, 2, 1, 0, -2],
+            }]
+        };
+        var config = {
+            type: 'line',
+            data: dadosSensor1,
+            options: {}
+        };
+
+        var myChart = new Chart(
+            document.getElementById('sensor1'),
+            config
+        );
+    }
+
+    if (chk_sensor2.checked) {
+        var Sensor1 = [
+            "12:00",
+            "13:00",
+            "14:00",
+            "15:00",
+            "16:00",
+            "17:00",
+        ];
+        var dadosSensor1 = {
+            labels: Sensor1,
+            datasets: [{
+                label: 'Temperatura',
+                backgroundColor: 'rgb(93,215,237)',
+                borderColor: 'rgb(93,215,237)',
+                data: [0, 1, -1, 1, 0, -2],
+            }]
+        };
+        var config = {
+            type: 'line',
+            data: dadosSensor1,
+            options: {}
+        };
+
+        var myChart = new Chart(
+            document.getElementById('sensor2'),
+            config
+        );
+    }
+
 }

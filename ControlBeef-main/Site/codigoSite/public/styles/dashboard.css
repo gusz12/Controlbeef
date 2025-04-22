@@ -140,7 +140,6 @@ body {
     align-items:center;
     justify-content: space-evenly;
 }
-
 .alertas {
     padding: 15px;
     border-radius: 20px;
@@ -155,4 +154,12 @@ body {
 
 .mensagemInicial {
     font-weight: 800;
+}
+.tabelas{
+    align-items: center;
+    width: 100%;
+    margin: 30px;
+}
+.sensores{
+    margin-bottom: 100px;
 }
