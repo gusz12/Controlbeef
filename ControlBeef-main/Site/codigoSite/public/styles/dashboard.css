@@ -95,14 +95,15 @@ body {
 }
 
 .grafico-main {
-    flex:1;
+    flex: 1;
     display: flex;
     height: 465px;
     width: 90%;
     align-items: center;
     justify-content: center;
 }
-.tabelas{
+
+.tabelas {
     height: 465px;
     width: 100%;
 }
@@ -137,9 +138,10 @@ body {
     display: flex;
     width: fit-content;
     gap: 30px;
-    align-items:center;
+    align-items: center;
     justify-content: space-evenly;
 }
+
 .alertas {
     padding: 15px;
     border-radius: 20px;
@@ -148,18 +150,21 @@ body {
     height: 180px;
     flex-grow: 1;
     font-size: 30px;
-    color:white;
-    
+    color: white;
+
 }
 
 .mensagemInicial {
     font-weight: 800;
 }
-.tabelas{
+
+.tabelas {
     align-items: center;
     width: 100%;
     margin: 30px;
 }
-.sensores{
-    margin-bottom: 100px;
+
+.salas {
+    height: 100%;
 }
+
