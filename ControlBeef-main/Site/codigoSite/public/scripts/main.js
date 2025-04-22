@@ -411,44 +411,46 @@ graficoFrigorifico.innerHTML = `<canvas id="graficoMain"></canvas>`
         div_sensores.innerHTML += `
         <div class="tabelaSensores">
         <h3>Sensores da área Sul</h3>
+            <div class="separacao">
+                <div class="item sensor1" id="item">
+                    sensor 1
+                    <input type="checkbox" id="chk_sensor1"><br>
+                    <canvas id="sensor1"></canvas><br>
+                </div>
 
-        <div class="item sensor1" id="item">
-        sensor 1
-        <input type="checkbox" id="chk_sensor1"><br>
-        <canvas id="sensor1"></canvas><br>
-        </div>
+                <div class="item sensor2">
+                    Sensor 2
+                    <input type="checkbox" id="chk_sensor2"><br>
+                    <canvas id="sensor2"></canvas><br>
+                </div>
 
-        <div class="item sensor2">
-        Sensor 2
-        <input type="checkbox" id="chk_sensor2"><br>
-        <canvas id="sensor2"></canvas><br>
-        </div>
+                <div class="item sensor3">
+                    Sensor 3
+                    <input type="checkbox" id="chk_sensor3"><br>
+                    <canvas id="sensor3"></canvas><br>
+                </div>
 
-        <div class="item sensor3">
-        Sensor 3
-        <input type="checkbox" id="chk_sensor3"><br>
-        <canvas id="sensor3"></canvas><br>
-        </div>
+                <div class="item sensor4"
+                    Sensor 4
+                    <input type="checkbox" id="chk_sensor4"><br>
+                    <canvas id="sensor4"></canvas><br>
+                </div>
 
-        <div class="item sensor4"
-        Sensor 4
-        <input type="checkbox" id="chk_sensor4"><br>
-        <canvas id="sensor4"></canvas><br>
-        </div>
-
-        <div class="item sensor5">
-        Sensor 5
-        <input type="checkbox" id="chk_sensor5"><br>
-        <canvas id="sensor5"></canvas><br>  
-        </div>
+                <div class="item sensor5">
+                    Sensor 5
+                    <input type="checkbox" id="chk_sensor5"><br>
+                    <canvas id="sensor5"></canvas><br>  
+                </div>
+            </div>
        </div>
         <button onclick="sensores()">Mostrar gráficos</button>
         `
     }
 }
     function sensores() {
-
+        
     if (chk_sensor1.checked) {
+        sensor1.style.display = "";
         var Sensor1 = [
             "12:00",
             "13:00",
@@ -477,8 +479,13 @@ graficoFrigorifico.innerHTML = `<canvas id="graficoMain"></canvas>`
             config
         );
     }
+    else{
+        sensor1.style.display = "none";
+    }
 
     if (chk_sensor2.checked) {
+        sensor2.style.display = "";
+
         var Sensor1 = [
             "12:00",
             "13:00",
@@ -506,6 +513,9 @@ graficoFrigorifico.innerHTML = `<canvas id="graficoMain"></canvas>`
             document.getElementById('sensor2'),
             config
         );
+    }
+    else{
+        sensor2.style.display = "none";
     }
 
 }
