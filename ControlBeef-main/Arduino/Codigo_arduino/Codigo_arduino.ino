@@ -1,12 +1,12 @@
 // Definição da entrada analogica como A0.
-const int PINO_SENSOR_TEMPERATURA = A2; 
+const int PINO_SENSOR_TEMPERATURA = A0; 
 
 // Definição da variavel como float para capturar o valor da temperatura, onde o valor tem casas depois da virgula.
 float temperaturaCelsius;
 
 // Definição da variavel como int para definir o valor máximo e mínimo da temperatura.
-int tempMax = 4;
-int tempMin = -3;
+// int tempMax = 4;
+// int tempMin = -3;
 
 // Função para iniciação do programa.
 void setup(){
@@ -23,19 +23,19 @@ void loop(){
   int valorLeitura = analogRead(PINO_SENSOR_TEMPERATURA);
   
   // Calculo para converter o valor capturado pelo sensor em graus celsius.
-  temperaturaCelsius = (valorLeitura * 5.0 / 1023.0) / 0.01 - 25;
+  temperaturaCelsius = (valorLeitura * 5.0 / 1023.0) / 0.01;
   
   // O seriais são para formar a mensagem "Temperatura: (temperaturaCelsius), Maxima: (tempMax), Minima: (tempMin)"
-  Serial.print("Temperatura:"); 
-  Serial.print(temperaturaCelsius);
-  Serial.print(",");
+  // Serial.print("Temperatura:"); 
+  Serial.println(temperaturaCelsius);
+  // Serial.print(",");
 
-  Serial.print("Maxima:");
-  Serial.print(tempMax);
-  Serial.print(",");
+  // Serial.print("Maxima:");
+  // Serial.print(tempMax);
+  // Serial.print(",");
   
-  Serial.print("Minima:");
-  Serial.println(tempMin);
+  // Serial.print("Minima:");
+  // Serial.println(tempMin);
 
   // Delay para o loop capturar os dados de 2 em 2 segundos. Muda de acordo com valor dentro do parêntese que esta em ms(milissegundos).
   delay(2000);

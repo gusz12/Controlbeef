@@ -12,7 +12,7 @@ const HABILITAR_OPERACAO_INSERIR = true;
 
 // função para comunicação serial
 const serial = async (
-    valoresSensorAnalogico,
+    valoresSensorAnalogico
     // valoresSensorDigital,
 ) => {
 
@@ -20,9 +20,9 @@ const serial = async (
     let poolBancoDados = mysql.createPool(
         {
             host: '127.0.0.1',
-            user: 'API1',
+            user: 'ControlBeef',
             password: 'Sptech#2025',
-            database: 'controlbeef',
+            database: 'ControlBeef',
             port: 3307
         }
     ).promise();
@@ -51,7 +51,7 @@ const serial = async (
     arduino.pipe(new serialport.ReadlineParser({ delimiter: '\r\n' })).on('data', async (data) => {
         console.log(data);
         const valores = data.split(';');
-        // const sensorDigital = parseInt(valores[1]);
+        // const sensorDigital = parseInt(valores[0]);
         const sensorAnalogico = parseFloat(valores[0]);
 
         // armazena os valores dos sensores nos arrays correspondentes
@@ -61,12 +61,12 @@ const serial = async (
         // insere os dados no banco de dados (se habilitado)
         if (HABILITAR_OPERACAO_INSERIR) {
 
-            // este insert irá inserir os dados na tabela "medida"
+            // este insert irá inserir os dados na tabela "DadosSensor"
             await poolBancoDados.execute(
-                'INSERT INTO DadosSensor (tempRegistrada) VALUES (?)',
+                'INSERT INTO dados(sensor_analogico) VALUES (?)',
                 [sensorAnalogico]
             );
-            console.log("valores inseridos no banco: ", sensorAnalogico );
+            console.log("valores inseridos no banco: ", sensorAnalogico);
 
         }
 
@@ -80,7 +80,7 @@ const serial = async (
 
 // função para criar e configurar o servidor web
 const servidor = (
-    valoresSensorAnalogico,
+    valoresSensorAnalogico
     // valoresSensorDigital
 ) => {
     const app = express();
