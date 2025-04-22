@@ -51,8 +51,12 @@ graficoFrigorifico.innerHTML = `<canvas id="graficoMain"></canvas>`
     let frigo = select_frigo.value;
     if (frigo == '#') {
         alert('POR FAVOR ESCOLHA UM FRIGORIFICO')
+        graficoFrigorifico.innerHTML=" "
         return;
     }
+graficoFrigorifico.innerHTML = `<canvas id="graficoMain"></canvas>`
+
+    
     div_salas.innerHTML = `
             <select id="select_sala" class="select_Sala">
                 <option value="#">Escolha uma sala</option>
@@ -65,14 +69,15 @@ graficoFrigorifico.innerHTML = `<canvas id="graficoMain"></canvas>`
     div_container.innerHTML = `
                 <div class="cabecalho" id="div_cabecalho"></div>
                 <div class="tabelas">
-                <div class="salas sala1" id="sala1">
-                    <canvas id="tabelaSala1"></canvas>
-                </div>
-                <div class="salas sala2" id="sala2">
-                    <canvas id="tabelaSala2"></canvas>
-                </div>
-                <div class="salas sala3" id="sala3">
-                    <canvas id="tabelaSala3"></canvas>
+                    <div class="salas sala1" id="sala1">
+                        <canvas id="tabelaSala1"></canvas>
+                    </div>
+                    <div class="salas sala2" id="sala2">
+                        <canvas id="tabelaSala2"></canvas>
+                    </div>
+                    <div class="salas sala3" id="sala3">
+                        <canvas id="tabelaSala3"></canvas>
+                    </div>
                 </div>
                 <div id="subgrafico_salas" class="subgraficos"></div>
                 </div>
@@ -275,9 +280,11 @@ graficoFrigorifico.innerHTML = `<canvas id="graficoMain"></canvas>`
     if (sala == 2) {
         sala2.style.display = "";
         subgrafico_salas.innerHTML = `
-        <div class="graficoSensores">
-        <h2>Sensores <br>Ativos e Inativos:</h2>
-            <canvas id="graficoSub2"></canvas>
+         <div class="graficoSensores">
+            <div>
+                <h2>Sensores <br>Ativos e Inativos:</h2>
+                <canvas id="graficoSub2"></canvas>
+            </div>
         </div>
         <div class="kpi">
             <div class="alertas">Temperatura Máxima: <br>4ºC</div>
@@ -371,8 +378,10 @@ graficoFrigorifico.innerHTML = `<canvas id="graficoMain"></canvas>`
         sala3.style.display = "";
         subgrafico_salas.innerHTML = `
         <div class="graficoSensores">
-        <h2>Sensores <br>Ativos e Inativos:</h2>
-            <canvas id="graficoSub3"></canvas>
+            <div>
+                <h2>Sensores <br>Ativos e Inativos:</h2>
+                <canvas id="graficoSub3"></canvas>
+            </div>
         </div>
         <div class="kpi">
             <div class="alertas">Temperatura Máxima: <br>4ºC</div>
@@ -382,6 +391,37 @@ graficoFrigorifico.innerHTML = `<canvas id="graficoMain"></canvas>`
 `
         sala1.style.display = "none";
         sala2.style.display = "none";
+
+        let dadosSala3Pizza = {
+            labels: ['Ativos', 'Inativos'],
+            datasets: [{
+                label: 'Sensores',
+                backgroundColor: [
+                    '#5dd7ed',
+                    '#1b7f91',
+                    '#a3f1ff'
+                ],
+                data: [10, 2],
+            }]
+        };
+        let configSala3Pizza = {
+            type: 'pie',
+            data: dadosSala3Pizza,
+            options: {
+                responsive: true,
+                maintainAspectRatio: true,
+                plugins: {
+                    legend: {
+                        position: 'bottom'
+                    }
+                }
+            }
+        };
+        let chartPizza = new Chart(
+            document.getElementById('graficoSub3'),
+            configSala3Pizza
+        );
+
         const graf3 = document.getElementById('tabelaSala3');
 
         new Chart(graf3, {
@@ -430,7 +470,7 @@ graficoFrigorifico.innerHTML = `<canvas id="graficoMain"></canvas>`
         <canvas id="tabelaSala2"></canvas>
         `
     }
-    div_sensores.innerHTML = `
+  /*  div_sensores.innerHTML = `
     <select id="select_area">
         <option value="#">Selecione o setor da sala</option>
         <option value="1">Sul</option>
@@ -439,9 +479,9 @@ graficoFrigorifico.innerHTML = `<canvas id="graficoMain"></canvas>`
         <option value="4">Oeste</option>
     </select>
     <button onclick="EscolherSensores()">Enviar</button>
-    `
+    `*/
 }
-    function EscolherSensores() {
+ /*   function EscolherSensores() {
 
     let area = select_area.value;
     if (area == '#') {
@@ -557,4 +597,4 @@ let graficoSensor1;
   
    // }
 
-}
+}*/

@@ -165,17 +165,6 @@ body {
 }
 
 .salas {
-    height: 90%;
-    margin-bottom: 100px;
+    height: 100%;
 }
 
-.subgraficos {
-    margin-bottom: 100px;
-}
-
-.sensores {
-    margin: 300px 0px;
-}
-.separacao{
-display: flex;
-}
