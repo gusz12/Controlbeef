@@ -16,6 +16,30 @@ body {
     background-color: #f4f4f4;
 }
 
+
+button {
+    background-color: #5DD7ED;
+    border: none;
+    width: 15%;
+    font-size: 20px;
+    padding: 5px;
+    cursor: pointer;
+    margin: 5px;
+}
+
+button:hover {
+    background-color: #7cddee;
+}
+
+button:active {
+    background-color: #9ae0ec;
+}
+
+
+select {
+    width: 15%;
+}
+
 .sidebar {
     width: 250px;
     background-color: #0c0968;
@@ -88,6 +112,16 @@ body {
     border-radius: 50%;
 }
 
+.usuario img {
+    width: 80px;
+    height: 80px;
+}
+
+.usuario {
+    font-size: 65px;
+}
+
+
 .main-content {
     flex: 1;
     padding: 40px;
@@ -95,10 +129,9 @@ body {
 }
 
 .grafico-main {
-    flex: 1;
+    flex-direction: column;
     display: flex;
     height: 465px;
-    width: 90%;
     align-items: center;
     justify-content: center;
 }
@@ -108,10 +141,7 @@ body {
     width: 100%;
 }
 
-.grafico-main canvas {
-    width: 100% !important;
-    height: 100% !important;
-}
+
 
 .subgraficos {
     display: flex;
@@ -132,6 +162,22 @@ body {
     height: 200px !important;
 }
 
+.graficoSensores h2 {
+    text-align: center;
+}
+
+#graficoSub1 {
+    margin-left: 125px;
+}
+
+#graficoSub2 {
+    margin-left: 125px;
+}
+
+#graficoSub3 {
+    margin-left: 125px;
+}
+
 
 .kpi {
     padding: 5px;
@@ -145,12 +191,36 @@ body {
 .alertas {
     padding: 15px;
     border-radius: 20px;
-    background-color: #0c0968;
+    background-color: #5DD7EDBA;
     width: 20%;
     height: 180px;
     flex-grow: 1;
     font-size: 30px;
-    color: white;
+    color: black;
+
+}
+
+.alertas-none {
+    padding: 15px;
+    border-radius: 20px;
+    background-color: #5dd7ed00;
+    width: 20%;
+    height: 180px;
+    flex-grow: 1;
+    font-size: 30px;
+    color: black;
+
+}
+
+.alertas-vermelho {
+    padding: 15px;
+    border-radius: 20px;
+    background-color: #ff3232ba;
+    width: 20%;
+    height: 180px;
+    flex-grow: 1;
+    font-size: 30px;
+    color: rgb(255, 254, 254);
 
 }
 
@@ -166,5 +236,8 @@ body {
 
 .salas {
     height: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    width: 95%;
 }
-
