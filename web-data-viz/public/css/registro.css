@@ -9,7 +9,7 @@
 /* Fundo da página */
 body {
     font-size: 30px;
-    min-height: 100vh;
+    min-height: 120vh;
     /* 100% da altura da janela */
     background-image: url(assets/background_apelo.png);
     background-size: cover;
@@ -28,7 +28,7 @@ body {
     display: flex;
     flex: row;
     width: 60%;
-    height: 40rem;
+    height: 45rem;
     justify-content: center;
     align-items: center;
     box-shadow: 0px 5px gray;
