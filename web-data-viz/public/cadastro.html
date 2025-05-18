@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/registro.css">
+    <title>Registre-se</title>
+</head>
+
+<body>
+    <div class="navbar">
+        <div class="logo">
+            <span>ControlBeef</span>
+            <img src="css/assets/logoControlBeef1.png" alt="logo ControlBeef">
+        </div>
+        <div class="menu">
+            <a href="index.html">Home</a>
+            <span>|</span>
+            <a href="sobrenos.html">Sobre Nós</a>
+            <span>|</span>
+            <div class="agora">
+            <a href="registro.html">Cadastrar</a>
+            </div>
+            <span>|</span>
+            <a href="login.html">Dashboard</a>
+        </div>
+    </div>
+    <br><br>
+    <div class="main">
+
+        <div class="cadastro">
+            <div class="imagemLogin">
+                <img src="css/assets/loginImagem.png" alt="ImagemLogin">
+            </div>
+            <div class="formulario">
+
+                <h1>Cadastre-se</h1>
+
+                <input type="text" id="ipt_nome" placeholder="Insira seu nome...">
+                <input type="text" id="ipt_email" placeholder="Insira seu email...">
+                <input type="password" id="ipt_senha" placeholder="Insira sua senha...">
+                <input type="password" id="ipt_senha_confirmation" placeholder="Insira sua senha novamente...">
+                <input type="text" id="ipt_codigo" placeholder="Insira o código de ativação...">
+
+                <button onclick="cadastrar()">Registrar</button>
+                <div id="div_resultado"></div>
+                <p>Já tem uma conta? <a href="login.html">Faça Login na Dashboard</a></p>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+
+<script>
+
+    // Array para armazenar empresas cadastradas para validação de código de ativação
+    let listaEmpresasCadastradas = [];
+
+    // Elemento para exibir mensagens de erro
+    const cardErro = document.getElementById("div_resultado");
+    const mensagem_erro = document.createElement("p");
+    cardErro.appendChild(mensagem_erro);
+    cardErro.style.display = "none"; // Inicialmente escondido
+
+    // Variável para armazenar o código de ativação
+    let codigoVar;
+    let idEmpresaVincular;
+
+    // Chama a função para listar as empresas assim que a página carrega
+    listar();
+
+    function cadastrar() {
+        // Recupere o valor da nova input pelo nome do id
+        codigoVar = ipt_codigo.value;
+        var nomeVar = ipt_nome.value;
+        var emailVar = ipt_email.value;
+        var senhaVar = ipt_senha.value;
+        var confirmacaoSenhaVar = ipt_senha_confirmation.value;
+
+        // Verificando se há algum campo em branco
+        if (
+            nomeVar == "" ||
+            emailVar == "" ||
+            senhaVar == "" ||
+            confirmacaoSenhaVar == "" ||
+            codigoVar == ""
+        ) {
+            cardErro.style.display = "block";
+            mensagem_erro.innerHTML = "(Mensagem de erro para todos os campos em branco)";
+            return; // Interrompe a função se houver erro
+        }
+
+        // Verificando se as senhas coincidem
+        if (senhaVar != confirmacaoSenhaVar) {
+            cardErro.style.display = "block";
+            mensagem_erro.innerHTML = "(Mensagem de erro: As senhas não coincidem)";
+            return; // Interrompe a função se houver erro
+        }
+
+        let codigoValido = false;
+        // Verificando se o código de ativação é de alguma empresa cadastrada
+        for (let i = 0; i < listaEmpresasCadastradas.length; i++) {
+            if (listaEmpresasCadastradas[i].codigo_ativacao == codigoVar) {
+                idEmpresaVincular = listaEmpresasCadastradas[i].id;
+                console.log("Código de ativação válido. ID da empresa:", idEmpresaVincular);
+                codigoValido = true;
+                break;
+            }
+        }
+
+        if (!codigoValido) {
+            cardErro.style.display = "block";
+            mensagem_erro.innerHTML = "(Mensagem de erro para código inválido)";
+            return; // Interrompe a função se o código for inválido
+        }
+
+        // Enviando o valor da nova input
+        fetch("/usuarios/cadastrar", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                // crie um atributo que recebe o valor recuperado aqui
+                // Agora vá para o arquivo routes/usuario.js
+                nomeServer: nomeVar,
+                emailServer: emailVar,
+                senhaServer: senhaVar,
+                idEmpresaVincularServer: idEmpresaVincular
+            }),
+        })
+            .then(function (resposta) {
+                console.log("resposta: ", resposta);
+
+                if (resposta.ok) {
+                    cardErro.style.display = "block";
+                    mensagem_erro.innerHTML =
+                        "Cadastro realizado com sucesso! Redirecionando para tela de Login...";
+
+                    setTimeout(() => {
+                        window.location = "login.html";
+                    }, 2000);
+
+                    limparFormulario();
+                } else {
+                    resposta.text().then(textoErro => {
+                        cardErro.style.display = "block";
+                        mensagem_erro.innerHTML = `Houve um erro ao tentar realizar o cadastro: ${textoErro}`;
+                    });
+                    throw "Houve um erro ao tentar realizar o cadastro!";
+                }
+            })
+            .catch(function (erro) {
+                console.error(`#ERRO: ${erro}`);
+                cardErro.style.display = "block";
+                mensagem_erro.innerHTML = `Erro na requisição: ${erro}`;
+            });
+
+        return false;
+    }
+
+    function limparFormulario() {
+        ipt_nome.value = "";
+        ipt_email.value = "";
+        ipt_senha.value = "";
+        ipt_senha_confirmation.value = "";
+        ipt_codigo.value = "";
+    }
+
+    // Listando empresas cadastradas
+    function listar() {
+        fetch("/empresas/listar", {
+            method: "GET",
+        })
+            .then(function (resposta) {
+                if (resposta.ok) {
+                    resposta.json().then((empresas) => {
+                        listaEmpresasCadastradas = empresas; // Atribui o array diretamente
+                        console.log("Empresas cadastradas:", listaEmpresasCadastradas);
+                        // O código de ativação pode ser acessado assim:
+                        // if (listaEmpresasCadastradas.length > 0) {
+                        //     console.log("Primeiro código de ativação:", listaEmpresasCadastradas[0].codigo_ativacao);
+                        // }
+                    });
+                } else {
+                    console.error("Erro ao listar empresas.");
+                    cardErro.style.display = "block";
+                    mensagem_erro.innerHTML = "Erro ao carregar códigos de ativação.";
+                }
+            })
+            .catch(function (erro) {
+                console.error(`#ERRO ao listar empresas: ${erro}`);
+                cardErro.style.display = "block";
+                mensagem_erro.innerHTML = `Erro na requisição para listar empresas: ${erro}`;
+            });
+    }
+
+    function sumirMensagem() {
+        cardErro.style.display = "none";
+    }
+
+    // Define um intervalo para a mensagem de erro sumir (opcional, pode remover se preferir)
+    setInterval(sumirMensagem, 5000);
+</script>
