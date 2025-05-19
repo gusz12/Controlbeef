@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/registro.css">
+    <title>Login</title>
+</head>
+
+<body>
+    <div class="navbar">
+        <div class="logo">
+            <span>ControlBeef</span>
+            <img src="css/assets/logoControlBeef1.png" alt="logo ControlBeef">
+        </div>
+        <div class="menu">
+            <a href="index.html">Home</a>
+            <span>|</span>
+            <a href="sobrenos.html">Sobre Nós</a>
+            <span>|</span>
+            <a href="cadastro.html">Cadastrar</a>
+            <span>|</span>
+            <div class="agora">
+                <a href="login.html">Dashboard</a>
+            </div>
+        </div>
+    </div>
+    <br><br>
+
+    <div class="main">
+
+        <div class="cadastro">
+            <div class="formulario">
+
+                <h1>Login</h1>
+
+                <input type="text" id="email_input" placeholder="Insira seu email...">
+                <input type="password" id="senha_input" placeholder="Insira sua senha...">
+
+                <button onclick="entrar()">Entrar</button>
+                <div id="div_exibir"></div>
+                <div href="dashboard.html" id="div_buttonDash"></div>
+                <p>Não tem conta? <a href="registro.html">Registre-se</a></p>
+            </div>
+            <div class="imagemLogin">
+                <img src="css/assets/loginImagem.png" alt="ImagemLogin">
+            </div>
+        </div>
+
+    </div>
+
+</body>
+
+</html>
+
+<script>
+
+
+    function entrar() {
+        aguardar();
+
+        var emailVar = email_input.value;
+        var senhaVar = senha_input.value;
+
+        if (emailVar == "" || senhaVar == "") {
+            cardErro.style.display = "block"
+            mensagem_erro.innerHTML = "(Mensagem de erro para todos os campos em branco)";
+            finalizarAguardar();
+            return false;
+        }
+        else {
+            setInterval(sumirMensagem, 5000)
+        }
+
+        console.log("FORM LOGIN: ", emailVar);
+        console.log("FORM SENHA: ", senhaVar);
+
+        fetch("/usuarios/autenticar", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                emailServer: emailVar,
+                senhaServer: senhaVar
+            })
+        }).then(function (resposta) {
+            console.log("ESTOU NO THEN DO entrar()!")
+
+            if (resposta.ok) {
+                div_exibir.innerHTML = "<p>Login realizado com sucesso!</p>";
+                console.log(resposta);
+
+                resposta.json().then(json => {
+                    console.log(json);
+                    console.log(JSON.stringify(json));
+                    sessionStorage.EMAIL_USUARIO = json.email;
+                    sessionStorage.NOME_USUARIO = json.nome;
+                    sessionStorage.ID_USUARIO = json.id;
+                    sessionStorage.AQUARIOS = JSON.stringify(json.aquarios)
+
+                    setTimeout(function () {
+                        window.location = "./dashboard/dashboard.html";
+                    }, 1000); // apenas para exibir o loading
+
+                });
+
+            } else {
+
+                console.log("Houve um erro ao tentar realizar o login!");
+
+                resposta.text().then(texto => {
+                    console.error(texto);
+                    finalizarAguardar(texto);
+                });
+            }
+
+        }).catch(function (erro) {
+            console.log(erro);
+        })
+
+        return false;
+    }
+
+    function sumirMensagem() {
+        cardErro.style.display = "none"
+    }
+
+    // Funções aguardar e finalizarAguardar (você pode ter essas funções em outro arquivo js)
+    function aguardar() {
+        // Implemente a lógica para mostrar um indicador de carregamento
+        console.log("Aguardando...");
+    }
+
+    function finalizarAguardar(mensagem) {
+        // Implemente a lógica para esconder o indicador de carregamento e exibir uma mensagem (se houver)
+        console.log("Finalizando aguardo:", mensagem);
+    }
+
+    // cardErro (você precisa ter esse elemento no seu HTML do login)
+    const cardErro = document.getElementById("div_erros_login"); // Exemplo de como você pode obter o elemento
+    const mensagem_erro = document.createElement("p");
+    if (cardErro) {
+        cardErro.appendChild(mensagem_erro);
+        cardErro.style.display = "none";
+    }
+
+</script>

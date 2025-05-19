@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/calculadora.css">
+    <title>ControlBeef</title>
+</head>
+
+<body>
+
+    <div class="navbar">
+        <div class="logo">
+            <span>ControlBeef</span>
+            <img src="css/assets/logoControlBeef1.png" alt="logo ControlBeef">
+        </div>
+        <div class="menu">
+            <div class="agora">
+            <a href="index.html">Home</a>
+            </div>
+            <span>|</span>
+            <a href="sobrenos.html">Sobre Nós</a>
+            <span>|</span>
+            <a href="registro.html">Cadastrar</a>
+            <span>|</span>
+            <a href="login.html">Dashboard</a>
+        </div>
+    </div>
+
+
+    <div class="apelo">
+        <h1>Mantenha suas carnes sempre na <br><span>temperatura ideal</span> e <br>evite prejuízos.</h1>
+    </div>
+
+    <div class="idealizacao">
+        <img src="css/assets/imagemIdealizacao.png" alt="ImagemIdealizacao">
+
+
+        <div class="textoIdealizacao">
+            <h2>Uma possibilidade de monitoramento em tempo real para seu estoque</h2>
+            <p>Nosso sistema garante um acompanhamento contínuo das variações térmicas do seu freezer ou câmara fria,
+                preservando a qualidade e a segurança das suas carnes nobres. Com sensores de alta precisão, você recebe
+                alertas imediatos sempre que a temperatura sair da faixa ideal, evitando prejuízos, contaminações e
+                multas sanitárias. <br><br>
+                Para mais informações, acesse o saiba mais ou a página sobre nós, ou cadastre-se no nosso site caso se
+                interessar em nosso serviço.
+            </p>
+
+            <a href="sobrenos.html">
+                <button>Saiba mais...</button>
+            </a>
+        </div>
+    </div>
+
+    <div class="funcionalidade"> <!--lembrar do padding-->
+        <h2>Por que monitorar seu <br>frigorífico?</h2>
+
+        <div class="principais">
+
+            <div class="caracteristica">
+                <h3>Redução de temperatura</h3>
+                <p>Garanta que suas carnes sejam armazenadas na temperatura ideal, evitando variações que podem
+                    comprometer a qualidade. O monitoramento contínuo mantém os produtos dentro das normas sanitárias e
+                    de segurança.</p>
+            </div>
+            <div class="caracteristica">
+                <h3>Redução de Perdas</h3>
+                <p>Detecte falhas em tempo real e evite desperdícios. Com um sistema de monitoramento eficiente, é
+                    possível prevenir prejuízos causados por variações de temperatura ou falhas nos equipamentos.</p>
+            </div>
+            <div class="caracteristica">
+                <h3>Maior Eficiência Operacional</h3>
+                <p>Automatize o controle do seu frigorífico e reduza custos. Com o monitoramento remoto, você otimiza o
+                    uso de energia e mantém seus equipamentos funcionando de forma eficiente.</p>
+            </div>
+        </div>
+    </div>
+    <!--Calculadora-->
+    <div class="simuladorFinanceiro">
+        <div class="titulo">
+            <H1>Calcule a sua possível perda</H1>
+            <div class="container">
+                <div class="conteudo_principal">
+                    <p>Insira o nome da carne do seu lote</p>
+                    <input type="text" id="ipt_carneInfo" placeholder="Insira o nome da carne...">
+                    <p>Insira a quantidade de carne(kg)</p>
+                    <input type="number" id="ipt_carneQnt" placeholder="Insira a quantidade de carne (kg)...">
+                    <p>Informe o valor pago pelo quilo da carne(em R$)</p>
+                    <input type="number" id="ipt_precoC"
+                        placeholder="Insira o preço pelo qual foi comprado a carne (R$)...">
+                    <p>Insira o preço do quilo para o consumidor final(em R$)</p>
+                    <input type="number" id="ipt_precoV" placeholder="Insira o preço de venda da carne (R$)...">
+                    <p>Insira a temperatura que a carne ficou armazenada(ºC)</p>
+                    <input type="number" id="ipt_temp" placeholder="Insira a temperatura que a carne ficou(ºC)...">
+                    <p>Insira a quantidade de horas que a carne ficou nessa temperatura</p>
+                    <input type="number" id="ipt_hora"
+                        placeholder="Insira a quantidade de horas que a carne ficou nessa temperatura..."> <br>
+                    <button onclick="Calcular()">Calcular perda</button> <br>
+                </div>
+                <div id="div_resp" class="div_resp" style="background-color: #f9f9f9;"><span>Esperando dados...</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="diagrama">
+        <h2>Como funcionamos?</h2>
+        <div class="imgDiagrama">
+            <img src="css/assets/diagrama.png" alt="diagramaDeNegócios">
+        </div>
+    </div>
+
+    <div class="quemSomos" id="sobre-nos">
+        <div class="textoQuemSomos">
+
+            <h2>Quem somos?</h2>
+            <p>Somos uma empresa inovadora focada em soluções inteligentes para o armazenamento de carnes bovinas. Nosso
+                objetivo é garantir que frigoríficos, açougues e distribuidores mantenham a qualidade e segurança dos
+                seus produtos, evitando desperdícios, prejuízos e problemas regulatórios.<br>
+                Com um sistema de monitoramento automatizado e em tempo real, utilizamos tecnologia de ponta para
+                oferecer controle total da temperatura, notificações instantâneas e relatórios detalhados. Nosso
+                compromisso é ajudar seu negócio a operar com mais eficiência, conformidade sanitária e rentabilidade.
+            </p>
+        </div>
+        <div>
+            <a href="sobrenos.html">
+                <button>Saiba mais...</button>
+            </a>
+        </div>
+
+    </div>
+
+    <div class="rodape">
+        <div class="contato">
+            <h2>ControlBeef</h2>
+            <p>Control Beef <br>Rua Haddock Lobo, n.º 595, Consolação, <br> São Paulo/SP - CEP 1414001</p>
+        </div>
+        <div class="copyright">
+            <p>© 2025 Control Beef. Todos os direitos reservados.</p>
+        </div>
+    </div>
+</body>
+
+</html>
+
+<script src="scripts/main.js"></script>
+<script src="scripts/calculadora.js"></script>
