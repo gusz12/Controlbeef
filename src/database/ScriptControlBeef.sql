@@ -29,8 +29,6 @@ INSERT INTO cidade (nomeC, fkestado) VALUES
 
 
 
-
-
 CREATE TABLE endereco(
     id INT PRIMARY KEY AUTO_INCREMENT,
     logradouro VARCHAR(100),
@@ -43,7 +41,7 @@ CREATE TABLE endereco(
 );
 INSERT INTO endereco (logradouro, cep, numero, complemento, bairro, fkcidade) VALUES 
 ('Rua das Carnes', '01010100', 123, '10º andar','Centro', 1),
-('Rua Congelada', '30120100', 789, '1º andar', 'Frio', 3);
+('Rua Congelada', '30120100', 789, '1º andar', 'Frio', 1);
 
 
 
@@ -65,13 +63,6 @@ INSERT INTO empresa (razao_social, fkendereco, representante, telefone, cnpj, co
 
 
 
-CREATE TABLE aviso (
-	id INT PRIMARY KEY AUTO_INCREMENT,
-	titulo VARCHAR(100),
-	descricao VARCHAR(150),
-	fk_usuario INT,
-	FOREIGN KEY (fk_usuario) REFERENCES usuario(id)
-);
 
 
 CREATE TABLE usuario(
@@ -83,10 +74,18 @@ CREATE TABLE usuario(
     CONSTRAINT fkEmpresa_usuario FOREIGN KEY (fkempresa) REFERENCES empresa(id)
 );
 INSERT INTO usuario (nome, email, senha, fkempresa) VALUES 
-('Administrador', 1, 'admin@controlbeef.com', 'senha123'),
-('Técnico Sensorial', 1, 'tecnico@controlbeef.com', 'sensor456');
+('Administrador', 'admin@controlbeef.com', 'senha123', 1),
+('Técnico Sensorial', 'tecnico@controlbeef.com', 'sensor456',  1);
 
 
+
+CREATE TABLE aviso (
+	id INT PRIMARY KEY AUTO_INCREMENT,
+	titulo VARCHAR(100),
+	descricao VARCHAR(150),
+	fk_usuario INT,
+	FOREIGN KEY (fk_usuario) REFERENCES usuario(id)
+);
 
 
 
@@ -100,8 +99,8 @@ CREATE TABLE frigorifico(
     CONSTRAINT fkendereco_frigorifico FOREIGN KEY (fkendereco) REFERENCES endereco(id)
 );
 INSERT INTO frigorifico (nomeFrigo, fkendereco, fkempresa) VALUES 
-('Frigorífico Central', 2, 1),
-('Frigo Norte', 3, 1);
+('Frigorífico Central', 1, 1),
+('Frigo Norte', 2, 1);
 
 
 
