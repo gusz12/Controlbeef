@@ -57,7 +57,7 @@ CREATE TABLE empresa(
     representante VARCHAR(40),
     telefone CHAR(10),
     cnpj CHAR(14),
-    codigo_ativacao VARCHAR(50)
+    codigo_ativacao VARCHAR(50),
     CONSTRAINT fkendereco_empresa FOREIGN KEY (fkendereco) REFERENCES endereco(id)
 );
 INSERT INTO empresa (razao_social, fkendereco, representante, telefone, cnpj, codigo_ativacao) VALUES 
