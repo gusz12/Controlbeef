@@ -11,10 +11,6 @@ INSERT INTO estado (nomeE, sigla) VALUES
 
 
 
-
-
-
-
 CREATE TABLE cidade(
     id INT PRIMARY KEY AUTO_INCREMENT,
     nomeC VARCHAR(70),
@@ -24,8 +20,6 @@ CREATE TABLE cidade(
 INSERT INTO cidade (nomeC, fkestado) VALUES 
 ('São Paulo', 1),
 ('Campinas', 1);
-
-
 
 
 
@@ -46,8 +40,6 @@ INSERT INTO endereco (logradouro, cep, numero, complemento, bairro, fkcidade) VA
 
 
 
-
-
 CREATE TABLE empresa(
     id INT PRIMARY KEY AUTO_INCREMENT,
     razao_social VARCHAR(50),
@@ -60,8 +52,6 @@ CREATE TABLE empresa(
 );
 INSERT INTO empresa (razao_social, fkendereco, representante, telefone, cnpj, codigo_ativacao) VALUES 
 ('Friboi Ltda.', 1, 'João Silva', '1199999999', '12345678912345', 'CBCODElm35');
-
-
 
 
 
@@ -80,19 +70,11 @@ INSERT INTO usuario (nome, email, senha, fkempresa) VALUES
 
 
 CREATE TABLE aviso (
-<<<<<<< HEAD
-      id INT PRIMARY KEY AUTO_INCREMENT,
-      titulo VARCHAR(100),
-      descricao VARCHAR(150),
-      fk_usuario INT,
-      FOREIGN KEY (fk_usuario) REFERENCES usuario(id)
-=======
 	id INT PRIMARY KEY AUTO_INCREMENT,
 	titulo VARCHAR(100),
 	descricao VARCHAR(150),
 	fk_usuario INT,
 	FOREIGN KEY (fk_usuario) REFERENCES usuario(id)
->>>>>>> f87e42109f6ac1b14a65737e3217c23b63ea0a07
 );
 
 
@@ -128,10 +110,6 @@ INSERT INTO salas_frias (nomeSala, fkfrigo, setor) VALUES
 
 
 
-
-
-
-
 CREATE TABLE sensor(
     id INT PRIMARY KEY AUTO_INCREMENT,
     fkSala INT,
@@ -143,13 +121,10 @@ INSERT INTO sensor (fkSala) VALUES
 
 
 
-
-
 CREATE TABLE dados(
-      id INT NOT NULL AUTO_INCREMENT,
+    id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     fksensor INT DEFAULT 1,
     sensor_analogico DECIMAL(10,2),
     data_medicao TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    primary key (id),
     CONSTRAINT fksensor_dados FOREIGN KEY (fksensor) REFERENCES sensor(id)
 );
