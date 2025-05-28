@@ -128,3 +128,4 @@ CREATE TABLE dados(
     data_medicao TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     CONSTRAINT fksensor_dados FOREIGN KEY (fksensor) REFERENCES sensor(id)
 );
+
