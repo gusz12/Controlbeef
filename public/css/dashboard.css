@@ -241,3 +241,28 @@ select {
     justify-content: center;
     width: 95%;
 }
+
+.card {
+    display: flex;
+    flex-direction: column;
+    border: 2px solid black;
+    height: 120px;
+    border-radius: 10px;
+    padding: 10px;
+}
+
+.bolinha {
+    align-self: flex-end;
+    border-radius: 100%;
+    width: 30px;
+    height: 30px;
+    background-color: red;
+}
+
+.bolaeTemperatura {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-between;
+
+}

@@ -30,17 +30,22 @@
         align-items: center;
         margin-top: 20px;
     }
+
     .containerStatus h1 {
         margin-right: 20px;
     }
+
     .status {
+        display: grid;
+        grid-template-columns: 32% 32% 32%;
+        gap: 20px;
         width: 100%;
         height: 300px;
+        overflow: hidden;
+        overflow-y: scroll;
         background-color: #f0f0f0;
-        display: flex;
         border: solid 3px #5DD7ED;
-        justify-content: center;
-        align-items: center;
+        padding: 10px;
     }
 </style>
 
@@ -73,17 +78,51 @@
 
         <div class="grauDano">
 
-            <div style="background-color: red;"></div>
-            <div style="background-color: yellow;"></div>
-            <div style="background-color: green;"></div>
+            <div style="background-color: red; text-align: center; font-size: 22px;">A partir de -4° e 5°</div>
+            <div
+                style="background-color: yellow; text-align: center; display: flex; justify-content: center; align-items: center;">
+                -3° e 4°</div>
+            <div style="background-color: green; text-align: center; font-size: 22px;">Entre -3° e 4°</div>
 
         </div>
 
         <div class="containerStatus">
 
-            <h1>status</h1>
+            <h1>Status</h1>
 
-            <div class="status"></div>
+            <div class="status">
+                <div id="card" class="card">
+
+                    <div class="bolaeTemperatura">
+                        <p>Temperatura: <span id="temp"></span>
+                        </p>
+                        <div class="bolinha">
+                        </div>
+                    </div>
+                    <p>Frigorifico:</p>
+                    <p>Sala: <span id="sala"></span></p>
+                </div>
+
+                <div class="card">
+
+                    <div class="bolaeTemperatura">
+                        <p>Temperatura:</p>
+                        <div class="bolinha">
+                        </div>
+                    </div>
+                    <p>Frigorifico:</p>
+                    <p>Sala:</p>
+                </div>
+                <div class="card">
+                    <div class="bolaeTemperatura">
+                        <p>Temperatura:</p>
+                        <div class="bolinha">
+                        </div>
+                    </div>
+                    <p>Frigorifico:</p>
+                    <p>Sala:</p>
+                </div>
+            </div>
 
         </div>
 
