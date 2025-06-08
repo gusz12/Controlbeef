@@ -1,8 +1,8 @@
 var database = require("../database/config");
 
-function listarPorFrigorifico(idFrigorifico) {
+function listarPorFrigorifico(idFrigorifico, fkEmpresa) {
     console.log("Entrei na model listar por Frigorifico")
-        instrucao = `
+    instrucao = `
     select sf.fkfrigo,
     f.nomeFrigo,
     s.fkSala as número_sala,
@@ -22,19 +22,20 @@ function listarPorFrigorifico(idFrigorifico) {
     inner join salas_frias sf on f.id = sf.fkfrigo
     inner join sensor s on s.fkSala = sf.id
     inner join dados d on d.fksensor = s.id
-    where f.id = ${idFrigorifico} 
+	where f.fkempresa = ${fkEmpresa} and f.id = ${idFrigorifico}
     group by f.nomeFrigo, sf.nomeSala, s.id, d.sensor_analogico, Status_alerta, d.data_medicao
     order by 
     case 
         when Status_alerta = 'Crítico' then 1
         when Status_alerta = 'Alerta' then 2
         else 3
-    end`;
+    end;
+    `;
     console.log(instrucao)
     return database.executar(instrucao);
 }
 
 
 module.exports = {
-     listarPorFrigorifico
+    listarPorFrigorifico
 };

@@ -129,3 +129,14 @@ CREATE TABLE dados(
     CONSTRAINT fksensor_dados FOREIGN KEY (fksensor) REFERENCES sensor(id)
 );
 
+
+
+
+
+-- verificar se a empresa tem o frigorifigo
+select 
+e.id,
+e.razao_social,
+f.id,
+f.nomeFrigo
+from empresa
