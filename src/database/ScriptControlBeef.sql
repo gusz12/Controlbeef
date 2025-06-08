@@ -87,9 +87,9 @@ CREATE TABLE usuario(
     CONSTRAINT fkEmpresa_usuario FOREIGN KEY (fkempresa) REFERENCES empresa(id)
 );
 INSERT INTO usuario (nome, email, senha, fkempresa) VALUES 
-('ADMFriboi', 'admin@friboi.com', 'senha123', 1),
-('ADMMarfrig', 'admin@marfrig.com', 'senha123', 2),
-('ADMFrigol', 'admin@frigol.com', 'senha123', 3);
+('ADMFriboi', 'admin@friboi.com', 'senha123', 2),
+('ADMMarfrig', 'admin@marfrig.com', 'senha123', 3),
+('ADMFrigol', 'admin@frigol.com', 'senha123', 4);
 
 INSERT INTO usuario (nome, email, senha, fkempresa) VALUES 
 ('Celina Benedito', 'celina.benedito@sptech.school', '123', 1),
@@ -100,7 +100,7 @@ INSERT INTO usuario (nome, email, senha, fkempresa) VALUES
 
 
 
-
+select * from usuario;
 -- -------------------------------------------------------------------------------------
 -- Tabelas gerenciamentos frigoríficos
 CREATE TABLE frigorifico(
