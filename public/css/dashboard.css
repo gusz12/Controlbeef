@@ -266,3 +266,23 @@ select {
     justify-content: space-between;
 
 }
+
+.container{
+    display: flex;
+    flex-direction: column;
+    border-radius: 10px;
+    border: #0c0968 2px solid;
+    padding: 10px;
+    gap: 20px;
+    overflow: hidden;
+    overflow-y: scroll;
+    height: 250px;
+}
+.sala{
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    gap: 5px;
+    border: #5DD7ED solid 2px;
+    border-radius: 10px;
+}

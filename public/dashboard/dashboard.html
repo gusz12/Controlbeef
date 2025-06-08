@@ -46,7 +46,6 @@
         background-color: #f0f0f0;
         border: solid 3px #5DD7ED;
         padding: 10px;
-        scrollbar-color: #5DD7ED #f0f0f0;
     }
 </style>
 
@@ -98,38 +97,6 @@
 
             <div id="Container" class="status">
 
-                <!-- <div class="card">
-                    <div class="bolaeTemperatura">
-                        <p>Temperatura:
-                        </p>
-                        <div class="bolinha">
-                        </div>
-                    </div>
-                    <p>Frigorifico:</span></p>
-                    <p>Sala: </p>
-                </div>
-
-
-
-
-                <div class="card">
-                    <div class="bolaeTemperatura">
-                        <p>Temperatura:</p>
-                        <div class="bolinha">
-                        </div>
-                    </div>
-                    <p>Frigorifico:</p>
-                    <p>Sala:</p>
-                </div>
-                <div class="card">
-                    <div class="bolaeTemperatura">
-                        <p>Temperatura:</p>
-                        <div class="bolinha">
-                        </div>
-                    </div>
-                    <p>Frigorifico:</p>
-                    <p>Sala:</p>
-                </div> -->
             </div>
         </div>
 
@@ -141,19 +108,14 @@
             <button onclick="filtroFrigorifico()">Mostrar Frigorifico</button>
         </div>
 
-        <div class="grafico-main" id="graficoFrigorifico"></div>
-
-        <div id="limpar_sub">
-            <div class="subgraficos" id="subgraficos"></div>
-        </div>
-
         <div class="containerSalas">
             <div id="div_salas" class="tabela_salas"></div>
         </div>
-
-        <div class="container" id="div_container"></div>
-
-        <div class="sensores" id="div_sensores"> </div>
+        <div id="container" style="display: none;">
+            <h1>Salas com maior problema</h1>
+            <div class="container" id="ranking" ></div>
+        </div>
+        </div>
     </div>
 
 </body>
@@ -205,9 +167,11 @@ let idFrigorifico=0;
                             bolinhas.style.backgroundColor = "#008000";
                         }
                     }
+
+                    select_frigo.innerHTML = `<option value="#">Escolha um Frigorifico</option>`
                     for (c = 0; json.length > c; c++) {
+
                         let frigorificos = json[c]
-                            select_frigo.innerHTML = `<option value="#">Escolha um Frigorifico</option>`
                             select_frigo.innerHTML +=
                                 `
                                     <option value="${frigorificos.idFrigorifico}">${frigorificos.nomeFrigo}</option>
@@ -229,10 +193,21 @@ let idFrigorifico=0;
             })
                 .then(res => {
                     res.json().then(json => {
-                        const frigorificos = json[0];
-                        console.log(frigorificos)
+                        container.style.display = ""
+                            ranking.innerHTML = ""
 
-                        
+                        for(let c = 0; json.length>c;c++){
+                            frigorificos = json[c]
+                            ranking.innerHTML += 
+                            `
+                            <div class="sala">
+                     <p>${frigorificos.nomeSala}</p>
+                     <p>${frigorificos.dadosSensor}</p>
+                     <p>Quantidade de Vezes fora do ideal</p>
+                     <p>Tempo fora do ideal</p>           
+                    </div>
+                            `
+                        }
  
                     })
                 })
