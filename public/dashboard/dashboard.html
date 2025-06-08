@@ -50,7 +50,7 @@
     }
 </style>
 
-<body onload="listarPorFrigorifico()">
+<body onload="listarFrigorificos()">
 
     <div class="navbar">
         <div class="logo">
@@ -67,14 +67,14 @@
             <a href="../login.html">Dashboard</a>
         </div>
         <div class="usuario">
-            <img src="assets/free-user-icon-3296-thumb.png" class="user-avatar" alt="Usuário">
+            <!-- <img src="assets/free-user-icon-3296-thumb.png" class="user-avatar" alt="Usuário"> -->
             <span id="nome_lateral"></span>
         </div>
     </div>
 
     <div class="main-content">
         <div class="mensagemInicial">
-            <h1 id="bem_vindo">Bem Vindo</h1>
+            <h1 id="nomeBemVindo"></h1>
         </div>
 
 
@@ -134,11 +134,11 @@
         </div>
 
         <div class="containerFrigorifico">
-            <select id="select_frigo" class="select_Frigo">
-                <option value="#">Escolha um frigorifico</option>
-            </select>
+                <select id="select_frigo" class="select_Frigo">
+                    <option value="#">Escolha um Frigorifico</option>
+                </select>
 
-            <button onclick="frigorifico()">Mostrar Frigorifico</button>
+            <button onclick="filtroFrigorifico()">Mostrar Frigorifico</button>
         </div>
 
         <div class="grafico-main" id="graficoFrigorifico"></div>
@@ -159,53 +159,83 @@
 </body>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
+    var nome_user = sessionStorage.NOME_USUARIO;
+    var idEmpresa = sessionStorage.ID_EMPRESA;
+    nomeBemVindo.innerHTML = `Bem-vindo(a), ${nome_user}`
+    nome_lateral.innerHTML = `${nome_user}`
 
-    let ID_FRIGORIFICO = 1;
-    let ID_EMPRESA = 1;
-    function listarPorFrigorifico() {
+let idFrigorifico=0;
+    function listarFrigorificos() {
 
         Container.innerHTML = ""
-        fetch(`/dashboard/listarFrigorifico/${ID_FRIGORIFICO}, ${ID_EMPRESA}`, {
+        fetch(`/dashboard/listarFrigorifico/${idEmpresa}`, {
             method: "GET"
         })
             .then(res => {
                 res.json().then(json => {
-                    const frigorificos = json[0];
-                    console.log(frigorificos)
+
                     console.log(res)
                     console.log(json)
                     for (c = 0; json.length > c; c++) {
-                        con
-                        if (frigorificos.Status_alerta == 'Alerta') {
-                            bolinha.style.backgroundColor = "yellow"
-                        }
-                        else if (frigorificos.Status_alerta == "Crítico") {
-                            bolinha.style.backgroundColor = "red"
-                        }
-                        else {
-                            bolinha.style.backgroundColor = "green"
-                        }
+                        const frigorificos = json[c];
+
                         Container.innerHTML += `
                     <div class="card">
                         <div class="bolaeTemperatura">
                             <p>Temperatura: ${frigorificos.sensor_analogico}</p>
-                            <div class="bolinha">
+                            <div class="bolinha" id="bolinha${c}">
                             </div>
                         </div>
                         <p>Figorifico: ${frigorificos.nomeFrigo}</p>
                         <p>Sala: ${frigorificos.nomeSala}</p>
-            `
+                    </div>
+            `;
                     }
                     for (c = 0; json.length > c; c++) {
-                        select_frigo.innerHTML = `<option value="#">Escolha um frigorifico</option>`
-                        select_frigo.innerHTML +=
-                            `
-                        <option value="${c + 1}">${frigorificos.nomeFrigo}</option>
-                        `
+                        const frigorificos = json[c];
+
+                        console.log(frigorificos.Status_alerta)
+                        let bolinhas = document.getElementById('bolinha' + c);
+
+                        if (frigorificos.Status_alerta == 'Alerta') {
+                            bolinhas.style.backgroundColor = "#ffff00";
+                        } else if (frigorificos.Status_alerta == "Crítico") {
+                            bolinhas.style.backgroundColor = "#ff0000";
+                        } else {
+                            bolinhas.style.backgroundColor = "#008000";
+                        }
+                    }
+                    for (c = 0; json.length > c; c++) {
+                        let frigorificos = json[c]
+                            select_frigo.innerHTML = `<option value="#">Escolha um Frigorifico</option>`
+                            select_frigo.innerHTML +=
+                                `
+                                    <option value="${frigorificos.idFrigorifico}">${frigorificos.nomeFrigo}</option>
+                                `
                     }
                 })
             })
 
+        
+        }
+    select_frigo.addEventListener('change', function() {
+    idFrigorifico = select_frigo.value;
+    console.log('Frigorífico selecionado:', idFrigorifico);
+});
+    function filtroFrigorifico() {
+        console.log("Valor do select: ",idFrigorifico)
+            fetch(`/dashboard/filtroFrigorifico/${idEmpresa}/${idFrigorifico}`, {
+                method: "GET"
+            })
+                .then(res => {
+                    res.json().then(json => {
+                        const frigorificos = json[0];
+                        console.log(frigorificos)
+
+                        
+ 
+                    })
+                })
     }
 
 </script>
