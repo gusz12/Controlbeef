@@ -1,11 +1,14 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="icon" href="/css/assets/logoControlBeef.ico">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/registro.css">
-    <title>Registre-se</title>
+    <title>CB | Cadastro</title>
 </head>
 
 <body>
@@ -20,7 +23,7 @@
             <a href="sobrenos.html">Sobre Nós</a>
             <span>|</span>
             <div class="agora">
-            <a href="registro.html">Cadastrar</a>
+                <a href="registro.html">Cadastrar</a>
             </div>
             <span>|</span>
             <a href="login.html">Dashboard</a>
@@ -63,21 +66,19 @@
     const mensagem_erro = document.createElement("p");
     cardErro.appendChild(mensagem_erro);
     cardErro.style.display = "none"; // Inicialmente escondido
-
-    // Variável para armazenar o código de ativação
-    let codigoVar;
-    let idEmpresaVincular;
+    
 
     // Chama a função para listar as empresas assim que a página carrega
     listar();
 
     function cadastrar() {
         // Recupere o valor da nova input pelo nome do id
-        codigoVar = ipt_codigo.value;
+        var codigoVar = ipt_codigo.value;
         var nomeVar = ipt_nome.value;
         var emailVar = ipt_email.value;
         var senhaVar = ipt_senha.value;
         var confirmacaoSenhaVar = ipt_senha_confirmation.value;
+        
 
         // Verificando se há algum campo em branco
         if (
@@ -88,14 +89,14 @@
             codigoVar == ""
         ) {
             cardErro.style.display = "block";
-            mensagem_erro.innerHTML = "(Mensagem de erro para todos os campos em branco)";
+            mensagem_erro.innerHTML = "Preencha todos os campos.";
             return; // Interrompe a função se houver erro
         }
 
         // Verificando se as senhas coincidem
         if (senhaVar != confirmacaoSenhaVar) {
             cardErro.style.display = "block";
-            mensagem_erro.innerHTML = "(Mensagem de erro: As senhas não coincidem)";
+            mensagem_erro.innerHTML = "As senhas devem ser iguais";
             return; // Interrompe a função se houver erro
         }
 
@@ -112,7 +113,7 @@
 
         if (!codigoValido) {
             cardErro.style.display = "block";
-            mensagem_erro.innerHTML = "(Mensagem de erro para código inválido)";
+            mensagem_erro.innerHTML = "Código de m";
             return; // Interrompe a função se o código for inválido
         }
 
@@ -128,7 +129,7 @@
                 nomeServer: nomeVar,
                 emailServer: emailVar,
                 senhaServer: senhaVar,
-                idEmpresaVincularServer: idEmpresaVincular
+                codigoServer: codigoVar
             }),
         })
             .then(function (resposta) {

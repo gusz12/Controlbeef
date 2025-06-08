@@ -1,4 +1,4 @@
-CREATE DATABASE IF NOT EXISTS ControlBeef;
+    CREATE DATABASE IF NOT EXISTS ControlBeef;
 USE ControlBeef;
 
 CREATE TABLE estado(
