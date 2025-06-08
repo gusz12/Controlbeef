@@ -160,12 +160,12 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
 
-    let ID_FRIGORIFICO = 1
-
+    let ID_FRIGORIFICO = 1;
+    let ID_EMPRESA = 1;
     function listarPorFrigorifico() {
 
         Container.innerHTML = ""
-        fetch(`/dashboard/listarFrigorifico/${ID_FRIGORIFICO}/${}`, {
+        fetch(`/dashboard/listarFrigorifico/${ID_FRIGORIFICO}, ${ID_EMPRESA}`, {
             method: "GET"
         })
             .then(res => {
@@ -175,7 +175,7 @@
                     console.log(res)
                     console.log(json)
                     for (c = 0; json.length > c; c++) {
-                        console.log("Entrei no for")
+                        con
                         if (frigorificos.Status_alerta == 'Alerta') {
                             bolinha.style.backgroundColor = "yellow"
                         }
