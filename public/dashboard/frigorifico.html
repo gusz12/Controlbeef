@@ -15,16 +15,16 @@
     <div class="navbar">
         <div class="logo">
             <span>ControlBeef</span>
-            <img src="assets/logoControlBeef1.png" alt="logo ControlBeef">
+            <img src="/css/assets/logoControlBeef1.png" alt="logo ControlBeef">
         </div>
         <div class="menu">
-            <a href="../index.html">Home</a>
+            <div class="agora">
+                <a href="dashboard.html">Dashboard</a>
+            </div>
             <span>|</span>
-            <a href="../sobrenos.html">Sobre Nós</a>
+            <a href="../cadastro.html">Cadastro de usuário</a>
             <span>|</span>
-            <a href="../registro.html">Cadastrar</a>
-            <span>|</span>
-            <a href="../login.html">Dashboard</a>
+            <a href="../index.html">Sair</a>
         </div>
         <div class="usuario">
             <span style="font-size: 50px;" id="nome_lateral"></span>
@@ -92,7 +92,7 @@
         </div>
     </div>
     <div class="containerSalas" id="containerSala">
-   
+
 
 </body>
 
@@ -105,8 +105,8 @@
 
     function sala() {
         containerPrincipal.style.display = "none"
-        title.innerHTML= 
-        `
+        title.innerHTML =
+            `
         ControlBeef | {sala}
         `
         containerSala.innerHTML =

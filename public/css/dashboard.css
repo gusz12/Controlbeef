@@ -305,6 +305,10 @@ select {
     height: 200px;
 }
 
+.select_Frigo {
+    width: 250px;
+}
+
 .containerFrigorificos {
     display: grid;
     grid-template-columns: 25% 25% 25% 25%;
@@ -315,7 +319,7 @@ select {
     overflow: hidden;
     overflow-y: scroll;
     height: 300px;
-    width: 70%;
+    width: 100%;
     align-self: center;
 }
 
