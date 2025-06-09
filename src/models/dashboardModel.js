@@ -30,7 +30,7 @@ function listarFrigorificos(fkEmpresa) {
         when Status_alerta = 'Crítico' then 1
         when Status_alerta = 'Alerta' then 2
         else 3
-    end;
+    end, sensor_analogico desc;
     `;
     console.log(instrucao)
     return database.executar(instrucao);

@@ -67,13 +67,13 @@
         </div>
         <div class="usuario">
             <!-- <img src="assets/free-user-icon-3296-thumb.png" class="user-avatar" alt="Usuário"> -->
-            <span id="nome_lateral"></span>
+            <span style="font-size: 50px;" id="nome_lateral"></span>
         </div>
     </div>
 
     <div class="main-content">
         <div class="mensagemInicial">
-            <h1 id="nomeBemVindo"></h1>
+            <span style=" font-size: 30px" id="nomeBemVindo"></span>
         </div>
 
 
@@ -101,9 +101,9 @@
         </div>
 
         <div class="containerFrigorifico">
-                <select id="select_frigo" class="select_Frigo">
-                    <option value="#">Escolha um Frigorifico</option>
-                </select>
+            <select id="select_frigo" class="select_Frigo">
+                <option value="#">Escolha um Frigorifico</option>
+            </select>
 
             <button onclick="filtroFrigorifico()">Mostrar Frigorifico</button>
         </div>
@@ -111,11 +111,11 @@
         <div class="containerSalas">
             <div id="div_salas" class="tabela_salas"></div>
         </div>
-        <div id="container" style="display: none;">
+        <div id="container" style="display: none; flex-direction: column; align-items: end;">
             <h1>Salas com maior problema</h1>
-            <div class="container" id="ranking" ></div>
+            <div class="container" id="ranking"></div>
         </div>
-        </div>
+    </div>
     </div>
 
 </body>
@@ -123,10 +123,10 @@
 <script>
     var nome_user = sessionStorage.NOME_USUARIO;
     var idEmpresa = sessionStorage.ID_EMPRESA;
-    nomeBemVindo.innerHTML = `Bem-vindo(a), ${nome_user}`
+    nomeBemVindo.innerHTML = `Bem-vindo(a) de volta, ${nome_user}.`
     nome_lateral.innerHTML = `${nome_user}`
 
-let idFrigorifico=0;
+    let idFrigorifico = 0;
     function listarFrigorificos() {
 
         Container.innerHTML = ""
@@ -169,36 +169,42 @@ let idFrigorifico=0;
                     }
 
                     select_frigo.innerHTML = `<option value="#">Escolha um Frigorifico</option>`
-                    for (c = 0; json.length > c; c++) {
 
-                        let frigorificos = json[c]
+                    var frigos = [];
+
+                    for (c = 0; json.length > c; c++) {
+                        let frigorificos = json[c];
+
+                        if (!frigos.includes(frigorificos.nomeFrigo)) {
+                            frigos.push(frigorificos.nomeFrigo)
                             select_frigo.innerHTML +=
                                 `
-                                    <option value="${frigorificos.idFrigorifico}">${frigorificos.nomeFrigo}</option>
-                                `
+                                        <option value="${frigorificos.idFrigorifico}">${frigorificos.nomeFrigo}</option>
+                                    `
+                        }
                     }
                 })
             })
 
-        
-        }
-    select_frigo.addEventListener('change', function() {
-    idFrigorifico = select_frigo.value;
-    console.log('Frigorífico selecionado:', idFrigorifico);
-});
-    function filtroFrigorifico() {
-        console.log("Valor do select: ",idFrigorifico)
-            fetch(`/dashboard/filtroFrigorifico/${idEmpresa}/${idFrigorifico}`, {
-                method: "GET"
-            })
-                .then(res => {
-                    res.json().then(json => {
-                        container.style.display = ""
-                            ranking.innerHTML = ""
 
-                        for(let c = 0; json.length>c;c++){
-                            frigorificos = json[c]
-                            ranking.innerHTML += 
+    }
+    select_frigo.addEventListener('change', function () {
+        idFrigorifico = select_frigo.value;
+        console.log('Frigorífico selecionado:', idFrigorifico);
+    });
+    function filtroFrigorifico() {
+        console.log("Valor do select: ", idFrigorifico)
+        fetch(`/dashboard/filtroFrigorifico/${idEmpresa}/${idFrigorifico}`, {
+            method: "GET"
+        })
+            .then(res => {
+                res.json().then(json => {
+                    container.style.display = "flex"
+                    ranking.innerHTML = ""
+
+                    for (let c = 0; json.length > c; c++) {
+                        frigorificos = json[c]
+                        ranking.innerHTML +=
                             `
                             <div class="sala">
                      <p>${frigorificos.nomeSala}</p>
@@ -207,10 +213,10 @@ let idFrigorifico=0;
                      <p>Tempo fora do ideal</p>           
                     </div>
                             `
-                        }
- 
-                    })
+                    }
+
                 })
+            })
     }
 
 </script>

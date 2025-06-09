@@ -276,7 +276,8 @@ select {
     gap: 20px;
     overflow: hidden;
     overflow-y: scroll;
-    height: 250px;
+    height: 400px;
+    width: 45%;
 }
 .sala{
     display: flex;

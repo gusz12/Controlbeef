@@ -99,7 +99,6 @@ INSERT INTO usuario (nome, email, senha, fkempresa) VALUES
 ('Lucas Previtero', 'lucas.previtero@sptech.school', '123',  1);
 
 
-
 select * from usuario;
 -- -------------------------------------------------------------------------------------
 -- Tabelas gerenciamentos frigoríficos
@@ -417,3 +416,18 @@ f.nomeFrigo
 from empresa e
 left join frigorifico f on e.id = f.fkempresa 
 where f.fkempresa = 2;
+
+
+
+
+select 
+e.id as idEmpresa, e.razao_social as nomeEmpresa, e.representante,
+f.id as idFrigorifico, f.nomeFrigo as nomeFrigorifico, f.fkempresa,
+s.id as idSala, s.nomeSala, so.id as  idSensor, so.fkSala, d.    id as idDados,
+d.fksensor, d.sensor_analogico as dadosSensor, d.data_medicao as dataMedicao
+from empresa e
+inner join frigorifico f on e.id = f.fkempresa
+inner join salas_frias s on f.id = s.fkfrigo
+inner join sensor so on s.id = so.fkSala
+inner join dados d on so.id=d.fksensor
+where f.fkempresa = 2 and f.id = 1;
