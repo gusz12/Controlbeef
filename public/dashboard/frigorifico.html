@@ -92,7 +92,26 @@
         </div>
     </div>
     <div class="containerSalas" id="containerSala">
-        <div>
+   
+
+</body>
+
+</html>
+<script src="../js/dados.js"></script>
+<script>
+    var nome_user = sessionStorage.NOME_USUARIO;
+    var idEmpresa = sessionStorage.ID_EMPRESA;
+    nome_lateral.innerHTML = `${nome_user}`
+
+    function sala() {
+        containerPrincipal.style.display = "none"
+        title.innerHTML= 
+        `
+        ControlBeef | {sala}
+        `
+        containerSala.innerHTML =
+            `
+                <div>
             <p>Sala: {frigorifico.sala}</p>
             <canvas id="graficoSala"></canvas>
             <p>Ultima atualização
@@ -128,25 +147,6 @@
             </div>
         </div>
     </div>
-
-</body>
-
-</html>
-<script src="../js/dados.js"></script>
-<script>
-    var nome_user = sessionStorage.NOME_USUARIO;
-    var idEmpresa = sessionStorage.ID_EMPRESA;
-    nome_lateral.innerHTML = `${nome_user}`
-
-    function sala() {
-        containerPrincipal.style.display = "none"
-        title.innerHTML= 
-        `
-        ControlBeef | {sala}
-        `
-        containerSala.innerHTML =
-            `
-            Sala: {frigorifico.sala}
         `
 
 
