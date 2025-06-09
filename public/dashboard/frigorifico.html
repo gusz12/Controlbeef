@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ControlBeef | Frigorifico</title>
+
+    <link rel="icon" href="/css/assets/iconControlBeef.ico">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/frigorifico.css">
+</head>
+
+<body>
+    <div class="navbar">
+        <div class="logo">
+            <span>ControlBeef</span>
+            <img src="assets/logoControlBeef1.png" alt="logo ControlBeef">
+        </div>
+        <div class="menu">
+            <a href="../index.html">Home</a>
+            <span>|</span>
+            <a href="../sobrenos.html">Sobre Nós</a>
+            <span>|</span>
+            <a href="../registro.html">Cadastrar</a>
+            <span>|</span>
+            <a href="../login.html">Dashboard</a>
+        </div>
+        <div class="usuario">
+            <span style="font-size: 50px;" id="nome_lateral"></span>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <div class="mensagemInicial">
+            <h1>Frigorifico: </h1>
+        </div>
+
+        <div class="informacoes">
+            <div class="KPIS">
+                <div class="kpi">
+                    Total de Salas:
+                </div>
+                <div class="kpi">
+                    Salas dentro do ideal:
+                </div>
+                <div class="kpi">
+                    Salas fora do ideal:
+                </div>
+            </div>
+            <div class="SalasKPI">
+                <div class="cardSala">
+                    <div class="alinhar"><p>Temperatura:</p><div class="bolinha" id="bolinha"></div></div>
+                    <p>Sala:</p>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>
+
+<script>
+    var nome_user = sessionStorage.NOME_USUARIO;
+    var idEmpresa = sessionStorage.ID_EMPRESA;
+    nome_lateral.innerHTML = `${nome_user}`
+</script>

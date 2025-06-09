@@ -17,10 +17,10 @@ var app = express();
 
 var indexRouter = require("./src/routes/index");
 var usuarioRouter = require("./src/routes/usuarios");
-var avisosRouter = require("./src/routes/avisos");
-var medidasRouter = require("./src/routes/medidas");
-var empresasRouter = require("./src/routes/empresas");
 var dashboardRouter = require("./src/routes/dashboard");
+// var dashbordFrigoRouter = require("./src/routes/dashboardFrigo");
+// var dashbordSalaRouter = require("./src/routes/dashbordSala");
+
 
 
 app.use(express.json());
@@ -31,10 +31,10 @@ app.use(cors());
 
 app.use("/", indexRouter);
 app.use("/usuarios", usuarioRouter);
-app.use("/avisos", avisosRouter);
-app.use("/medidas", medidasRouter);
-app.use("/empresas", empresasRouter);
+
 app.use("/dashboard", dashboardRouter);
+// app.use("/dashboardFrigo", dashbordFrigoRouter);
+// app.use("/dashbordSala", dashbordSalaRouter);
 
 
 app.listen(PORTA_APP, function () {

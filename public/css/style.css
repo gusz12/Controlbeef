@@ -12,15 +12,19 @@
 body {
     overflow-x: hidden;
     font-size: 25px;
+    margin: 0;
+    padding: 0;
 }
 
-
+html{
+    margin: 0;
+}
 /* Navbar */
 .navbar {
     margin: 0;
     font-size: 35px;
+    position: fixed;
     display: flex;
-    position: fixed; 
     justify-content: space-between;
     align-items: center;
     padding: 21px 32px;
@@ -60,7 +64,10 @@ body {
 }
 
 
-
+.main-content {
+    flex: 1;
+    padding: 40px;
+}
 /* APELO */
 .apelo {
     padding: 50px;
@@ -284,4 +291,6 @@ body {
 
 .rodape h2{
     font-weight: 600;
-}   
+}
+
+

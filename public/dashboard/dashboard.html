@@ -5,49 +5,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>ControlBeef | Dashboard</title>
+    <title>ControlBeef | Geral</title>
+    <link rel="icon" href="/css/assets/iconControlBeef.ico">
     <link rel="stylesheet" href="../css/dashboard.css">
     <link rel="stylesheet" href="../css/style.css">
 </head>
-<style>
-    .grauDano {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        margin-top: 20px;
-        margin-bottom: 20px;
-    }
 
-    .grauDano div {
-        width: 125px;
-        height: 50px;
-    }
-
-    .containerStatus {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        margin-top: 20px;
-    }
-
-    .containerStatus h1 {
-        margin-right: 20px;
-    }
-
-    .status {
-        display: grid;
-        grid-template-columns: 32% 32% 32%;
-        gap: 20px;
-        width: 100%;
-        height: 300px;
-        overflow: hidden;
-        overflow-y: scroll;
-        background-color: #f0f0f0;
-        border: solid 3px #5DD7ED;
-        padding: 10px;
-    }
-</style>
 
 <body onload="listarFrigorificos()">
 
@@ -66,7 +29,6 @@
             <a href="../login.html">Dashboard</a>
         </div>
         <div class="usuario">
-            <!-- <img src="assets/free-user-icon-3296-thumb.png" class="user-avatar" alt="Usuário"> -->
             <span style="font-size: 50px;" id="nome_lateral"></span>
         </div>
     </div>
@@ -99,13 +61,80 @@
 
             </div>
         </div>
-
+        <div class="KPIS">
+            <div class="kpi">
+                Frigorificos:
+            </div>
+            <div class="kpi">
+                Total de Salas:
+            </div>
+            <div class="kpi">
+                Salas dentro do ideal:
+            </div>
+            <div class="kpi">
+                Salas fora do ideal:
+            </div>
+        </div>
         <div class="containerFrigorifico">
-            <select id="select_frigo" class="select_Frigo">
-                <option value="#">Escolha um Frigorifico</option>
-            </select>
+            <div>
+                <select id="select_frigo" class="select_Frigo">
+                    <option value="#">Escolha um Frigorifico</option>
+                </select>
+                <button onclick="filtroFrigorifico()">Mostrar Frigorifico</button>
+            </div>
 
-            <button onclick="filtroFrigorifico()">Mostrar Frigorifico</button>
+            <div class="containerFrigorificos" id="containerFrigorificos">
+                <a style="text-decoration: none; color: black;" href="frigorifico.html">
+                    <div class="cardFrigorifico">
+                        <p>Frigorifico:</p>
+                        <p>Salas:</p>
+                        <p>Salas dentro do ideal:</p>
+                        <p>Salas fora do ideal:</p>
+                    </div>
+                </a>
+                <div class="cardFrigorifico">
+                    <p>Frigorifico:</p>
+                    <p>Salas:</p>
+                    <p>Salas dentro do ideal:</p>
+                    <p>Salas fora do ideal:</p>
+                </div>
+                <div class="cardFrigorifico">
+                    <p>Frigorifico:</p>
+                    <p>Salas:</p>
+                    <p>Salas dentro do ideal:</p>
+                    <p>Salas fora do ideal:</p>
+                </div>
+                <div class="cardFrigorifico">
+                    <p>Frigorifico:</p>
+                    <p>Salas:</p>
+                    <p>Salas dentro do ideal:</p>
+                    <p>Salas fora do ideal:</p>
+                </div>
+                <div class="cardFrigorifico">
+                    <p>Frigorifico:</p>
+                    <p>Salas:</p>
+                    <p>Salas dentro do ideal:</p>
+                    <p>Salas fora do ideal:</p>
+                </div>
+                <div class="cardFrigorifico">
+                    <p>Frigorifico:</p>
+                    <p>Salas:</p>
+                    <p>Salas dentro do ideal:</p>
+                    <p>Salas fora do ideal:</p>
+                </div>
+                <div class="cardFrigorifico">
+                    <p>Frigorifico:</p>
+                    <p>Salas:</p>
+                    <p>Salas dentro do ideal:</p>
+                    <p>Salas fora do ideal:</p>
+                </div>
+                <div class="cardFrigorifico">
+                    <p>Frigorifico:</p>
+                    <p>Salas:</p>
+                    <p>Salas dentro do ideal:</p>
+                    <p>Salas fora do ideal:</p>
+                </div>
+            </div>
         </div>
 
         <div class="containerSalas">
@@ -192,28 +221,21 @@
         idFrigorifico = select_frigo.value;
         console.log('Frigorífico selecionado:', idFrigorifico);
     });
-    function filtroFrigorifico() {
+
+
+
+
+
+    function KPIdash() {
         console.log("Valor do select: ", idFrigorifico)
-        fetch(`/dashboard/filtroFrigorifico/${idEmpresa}/${idFrigorifico}`, {
+        fetch(`/dashboard/KPIdash/${idEmpresa}/${idFrigorifico}`, {
             method: "GET"
         })
             .then(res => {
                 res.json().then(json => {
-                    container.style.display = "flex"
-                    ranking.innerHTML = ""
 
-                    for (let c = 0; json.length > c; c++) {
-                        frigorificos = json[c]
-                        ranking.innerHTML +=
-                            `
-                            <div class="sala">
-                     <p>${frigorificos.nomeSala}</p>
-                     <p>${frigorificos.dadosSensor}</p>
-                     <p>Quantidade de Vezes fora do ideal</p>
-                     <p>Tempo fora do ideal</p>           
-                    </div>
-                            `
-                    }
+
+
 
                 })
             })

@@ -38,29 +38,33 @@ function listarFrigorificos(fkEmpresa) {
 
 
 
-function filtroFrigorifico(idEmpresa, idFrigorifico){
+function KPIdash(idEmpresa, idFrigorifico) {
 
-    console.log("Entrei no model filtro frigorifico")
-
-    instrucao = 
-    `
-    select 
-e.id as idEmpresa, e.razao_social as nomeEmpresa, e.representante,
-f.id as idFrigorifico, f.nomeFrigo as nomeFrigorifico, f.fkempresa,
-s.id as idSala, s.nomeSala, so.id as  idSensor, so.fkSala, d.    id as idDados,
-d.fksensor, d.sensor_analogico as dadosSensor, d.data_medicao as dataMedicao
-from empresa e
-inner join frigorifico f on e.id = f.fkempresa
-inner join salas_frias s on f.id = s.fkfrigo
-inner join sensor so on s.id = so.fkSala
-inner join dados d on so.id=d.fksensor
-where f.fkempresa = ${idEmpresa} and f.id = ${idFrigorifico};
+    instrucao =
+        `
+    
     `
     console.log(instrucao)
     return database.executar(instrucao)
 }
 
+
+function KPIfrigoGeral(idEmpresa, idFrigorifico) {
+
+    instrucao =
+        `
+    
+    `
+    console.log(instrucao)
+    return database.executar(instrucao)
+}
+
+
+
+
+
 module.exports = {
     listarFrigorificos,
-    filtroFrigorifico
+    KPIdash,
+    KPIfrigoGeral
 };
