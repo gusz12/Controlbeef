@@ -325,10 +325,10 @@ select {
     align-self: center;
 
 }
-.card{
+.card, .cardSala{
     transition: all 0.3s;
 }
-.card:hover {
+.card:hover, .cardSala:hover {
     cursor: pointer;
     transform: scale(1.02);
     border: #5DD7ED 5px solid;
