@@ -38,15 +38,100 @@ function listarFrigorificos(fkEmpresa) {
 
 
 
-function KPIdash(idEmpresa, idFrigorifico) {
 
+
+function KPItotal_frigo(idEmpresa) {
     instrucao =
-        `
-    
+        `select count(f.id) as total_frigo
+        from frigorifico f 
+        inner join empresa e on f.fkempresa = e.id
+        where f.fkempresa = ${idEmpresa};
     `
     console.log(instrucao)
     return database.executar(instrucao)
+
 }
+
+
+
+function KPItotal_salas(idEmpresa) {
+    instrucao =
+        `
+        select count(*) as total_salas
+        from salas_frias sf
+        inner join frigorifico f on sf.fkfrigo = f.id
+        inner join empresa e on f.fkempresa = e.id
+        where e.id = ${idEmpresa};
+    `
+    console.log(instrucao)
+    return database.executar(instrucao)
+
+}
+
+
+
+
+
+function KPIsalas_ideal(idEmpresa) {
+    instrucao =
+        `
+         select 
+    count(*) as salas_ideal
+    from
+    (select
+    e.razao_social,
+    f.nomeFrigo,
+    avg(d.sensor_analogico) as media_sala,
+    case
+	when avg(d.sensor_analogico) > -3 and avg(d.sensor_analogico) < 4 then 1
+    else null
+    end as verificacao_fora_ideal
+    from empresa e
+    inner join frigorifico f on f.fkempresa = e.id
+    inner join salas_frias sf on sf.fkfrigo = f.id
+    inner join sensor s on s.fkSala = sf.id
+    inner join dados d on d.fksensor = s.id
+    where e.id = ${idEmpresa}
+    group by e.razao_social, f.nomeFrigo, sf.nomeSala) as medias_salas
+    where verificacao_fora_ideal = 1;
+    `
+    console.log(instrucao)
+    return database.executar(instrucao)
+
+}
+
+
+
+function KPIsalas_naoIdeal(idEmpresa) {
+    instrucao =
+        `
+        select 
+    count(*) as salas_naoIdeal
+    from
+    (select
+    e.razao_social,
+    f.nomeFrigo,
+    avg(d.sensor_analogico) as media_sala,
+    case
+	when avg(d.sensor_analogico) > -3 and avg(d.sensor_analogico) < 4 then null
+    else 1
+    end as verificacao_fora_ideal
+    from empresa e
+    inner join frigorifico f on f.fkempresa = e.id
+    inner join salas_frias sf on sf.fkfrigo = f.id
+    inner join sensor s on s.fkSala = sf.id
+    inner join dados d on d.fksensor = s.id
+    where e.id = ${idEmpresa}
+    group by e.razao_social, f.nomeFrigo, sf.nomeSala) as medias_salas
+    where verificacao_fora_ideal = 1;
+    `
+    console.log(instrucao)
+    return database.executar(instrucao)
+
+}
+
+
+
 
 
 function KPIfrigoGeral(idEmpresa, idFrigorifico) {
@@ -65,6 +150,9 @@ function KPIfrigoGeral(idEmpresa, idFrigorifico) {
 
 module.exports = {
     listarFrigorificos,
-    KPIdash,
+    KPItotal_frigo,
+    KPItotal_salas,
+    KPIsalas_ideal,
+    KPIsalas_naoIdeal,
     KPIfrigoGeral
 };

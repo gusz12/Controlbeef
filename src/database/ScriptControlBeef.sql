@@ -449,25 +449,69 @@ select * from usuario;
     
 
     
-select
-count(
-case 
-	when d.sensor_analogico > 4 then 1
-    when d.sensor_analogico < -3 then 1
-    else null
-end
-) as qtdSalas_fora_ideal,
-count(
-case 
-	when d.sensor_analogico between-3 and 4 then 1
-    else null
-end
-) as qtdSalas_dentro_ideal,
-count(sf.id) as salas_totais
-from empresa e
-inner join frigorifico f on e.id = f.fkempresa
-inner join salas_frias sf on sf.fkfrigo = f.id
-inner join sensor s on s.fksala = sf.id
-inner join dados d on d.fksensor = s.id;
+select * from frigorifico;
 
-select * from dados;
+
+select count(f.id) as total_frigo
+ from frigorifico f 
+ inner join empresa e on f.fkempresa = e.id
+ where f.fkempresa = 2;
+
+
+
+select count(*) as total_salas
+from salas_frias sf
+inner join frigorifico f on sf.fkfrigo = f.id
+inner join empresa e on f.fkempresa = e.id
+where e.id = 2;
+
+
+
+
+
+
+
+select 
+nomeFrigo,
+count(*) as totais_salas_fora_ideal
+from
+(select
+e.razao_social,
+f.nomeFrigo,
+avg(d.sensor_analogico) as media_sala,
+case
+	when avg(d.sensor_analogico) > -3 and avg(d.sensor_analogico) < 4 then 1
+    else null
+end as verificacao_fora_ideal
+from empresa e
+inner join frigorifico f on f.fkempresa = e.id
+inner join salas_frias sf on sf.fkfrigo = f.id
+inner join sensor s on s.fkSala = sf.id
+inner join dados d on d.fksensor = s.id
+where e.id = 4
+group by e.razao_social, f.nomeFrigo, sf.nomeSala) as medias_salas
+where verificacao_fora_ideal = 1
+group by nomeFrigo;
+
+
+select 
+nomeFrigo,
+count(*) as totais_salas_fora_ideal
+from
+(select
+e.razao_social,
+f.nomeFrigo,
+avg(d.sensor_analogico) as media_sala,
+case
+	when avg(d.sensor_analogico) > -3 and avg(d.sensor_analogico) < 4 then null
+    else 1
+end as verificacao_fora_ideal
+from empresa e
+inner join frigorifico f on f.fkempresa = e.id
+inner join salas_frias sf on sf.fkfrigo = f.id
+inner join sensor s on s.fkSala = sf.id
+inner join dados d on d.fksensor = s.id
+where e.id = 4
+group by e.razao_social, f.nomeFrigo, sf.nomeSala) as medias_salas
+where verificacao_fora_ideal = 1
+group by nomeFrigo;

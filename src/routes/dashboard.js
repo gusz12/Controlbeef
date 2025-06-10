@@ -7,9 +7,26 @@ router.get("/listarFrigorifico/:idEmpresa", function (req, res) {
     dashboardController.listarFrigorificos(req, res);
 });
 
-router.get("/KPIdash/:idEmpresa", function (req, res) {
-    dashboardController.KPIdash(req, res);
+
+router.get("/KPItotal_frigo/:idEmpresa", function (req, res) {
+    dashboardController.KPItotal_frigo(req, res);
 });
+
+
+router.get("/KPItotal_salas/:idEmpresa", function (req, res) {
+    dashboardController.KPItotal_salas(req, res);
+});
+
+
+router.get("/KPIsalas_ideal/:idEmpresa", function (req, res) {
+    dashboardController.KPIsalas_ideal(req, res);
+});
+
+
+router.get("/KPIsalas_naoIdeal/:idEmpresa", function (req, res) {
+    dashboardController.KPIsalas_naoIdeal(req, res);
+});
+
 
 router.get("/KPIfrigoGeral/:idEmpresa", function (req, res) {
     dashboardController.KPIfrigoGeral(req, res);

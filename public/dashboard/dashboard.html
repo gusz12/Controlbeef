@@ -12,7 +12,7 @@
 </head>
 
 
-<body onload="listarFrigorificos()">
+<body onload="listarFrigorificos(), KPItotal_frigo()">
 
     <div class="navbar">
         <div class="logo">
@@ -63,19 +63,19 @@
         </div>
         <div class="KPIS">
             <div class="kpi">
-                <div>Frigorificos: <br><br> <span style="font-size: 80px;" id="total_frigo">2</span></div>
+                <div>Frigorificos: <br><br> <span style="font-size: 80px;" id="total_frigo"></span></div>
             </div>
 
             <div class="kpi">
-                <div>Total de Salas: <br><br> <span style="font-size: 80px;" id="total_salas">8</span></div>
+                <div>Total de Salas: <br><br> <span style="font-size: 80px;" id="total_salas"></span></div>
             </div>
 
             <div class="kpi">
-                <div>Salas dentro do ideal: <br><br> <span style="font-size: 80px;" id="salas_ideal">4</span></div>
+                <div>Salas dentro do ideal: <br><br> <span style="font-size: 80px;" id="salas_ideal"></span></div>
             </div>
 
             <div class="kpi">
-                <div> Salas fora do ideal: <br><br> <span style="font-size: 80px;" id="salas_naoIdeal">4</span></div>
+                <div> Salas fora do ideal: <br><br> <span style="font-size: 80px;" id="salas_naoIdeal"></span></div>
             </div>
         </div>
         <div class="containerFrigorifico">
@@ -104,48 +104,9 @@
                         <p>Salas fora do ideal:</p>
                     </div>
                 </a>
-                <div class="cardFrigorifico">
-                    <p>Frigorifico:</p>
-                    <p>Salas:</p>
-                    <p>Salas dentro do ideal:</p>
-                    <p>Salas fora do ideal:</p>
-                </div>
-                <div class="cardFrigorifico">
-                    <p>Frigorifico:</p>
-                    <p>Salas:</p>
-                    <p>Salas dentro do ideal:</p>
-                    <p>Salas fora do ideal:</p>
-                </div>
-                <div class="cardFrigorifico">
-                    <p>Frigorifico:</p>
-                    <p>Salas:</p>
-                    <p>Salas dentro do ideal:</p>
-                    <p>Salas fora do ideal:</p>
-                </div>
-                <div class="cardFrigorifico">
-                    <p>Frigorifico:</p>
-                    <p>Salas:</p>
-                    <p>Salas dentro do ideal:</p>
-                    <p>Salas fora do ideal:</p>
-                </div>
-                <div class="cardFrigorifico">
-                    <p>Frigorifico:</p>
-                    <p>Salas:</p>
-                    <p>Salas dentro do ideal:</p>
-                    <p>Salas fora do ideal:</p>
-                </div>
-                <div class="cardFrigorifico">
-                    <p>Frigorifico:</p>
-                    <p>Salas:</p>
-                    <p>Salas dentro do ideal:</p>
-                    <p>Salas fora do ideal:</p>
-                </div>
-                <div class="cardFrigorifico">
-                    <p>Frigorifico:</p>
-                    <p>Salas:</p>
-                    <p>Salas dentro do ideal:</p>
-                    <p>Salas fora do ideal:</p>
-                </div>
+
+
+
             </div>
         </div>
 
@@ -222,22 +183,62 @@
 
 
 
-    function KPIdash() {
-        fetch(`/dashboard/KPIdash/${idEmpresa}`, {
+
+    function KPItotal_frigo() {
+        fetch(`/dashboard/KPItotal_frigo/${idEmpresa}`, {
             method: "GET"
         })
             .then(res => {
                 res.json().then(json => {
+                    total_frigo.innerHTML = `${json[0].total_frigo}`;
+                })
+            })
+        KPItotal_salas();
+    }
 
-                    console.log(json);
+    function KPItotal_salas() {
+        fetch(`/dashboard/KPItotal_salas/${idEmpresa}`, {
+            method: "GET"
+        })
+            .then(res => {
+                res.json().then(json => {
+                    total_salas.innerHTML = `${json[0].total_salas}`;
+                })
+            })
+        KPIsalas_ideal();
+    }
 
+    function KPIsalas_ideal() {
+        fetch(`/dashboard/KPIsalas_ideal/${idEmpresa}`, {
+            method: "GET"
+        })
+            .then(res => {
+                res.json().then(json => {
+                    salas_ideal.innerHTML = `${json[0].salas_ideal}`;
+                })
+            })
+        KPIsalas_naoIdeal();
+    }
 
-
-
+    function KPIsalas_naoIdeal() {
+        fetch(`/dashboard/KPIsalas_naoIdeal/${idEmpresa}`, {
+            method: "GET"
+        })
+            .then(res => {
+                res.json().then(json => {
+                    salas_naoIdeal.innerHTML = `${json[0].salas_naoIdeal}`;
                 })
             })
     }
 
+
+
+
+
+
+    function salvarFrigo(id) {
+        var nomeFrigo = id.nomeFrigo;
+    }
 
 
 
@@ -254,12 +255,12 @@
 
                     for (var i = 0; i < json.length; i++) {
                         containerFrigorificos.innerHTML += `
-                         <a style="text-decoration: none; color: black;" href="frigorifico.html">
+                         <a onclick="salvarFrigo(${json[i]})" style="text-decoration: none; color: black;" href="frigorifico.html">
                     <div class="cardFrigorifico">
-                        <p>Frigorifico:</p>
-                        <p>Salas:</p>
-                        <p>Salas dentro do ideal:</p>
-                        <p>Salas fora do ideal:</p>
+                        <p>Frigorifico:${json[i].nomeFrigo}</p>
+                        <p>Salas:${json[i].total_salas}</p>
+                        <p>Salas dentro do ideal:${json[i].salas_ideal}</p>
+                        <p>Salas fora do ideal:${json[i].salas_naoIdeal}</p>
                     </div>
                 </a>
                 `
