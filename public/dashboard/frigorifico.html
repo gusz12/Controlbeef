@@ -185,6 +185,7 @@
             method: "GET"
         }).then(res=>{
             res.json().then(json => {
+                let dados = json[0];
                 
             })
         })
@@ -297,7 +298,7 @@
                     frigorificos = json[c]
                     containerSalasTotal.innerHTML += 
                     `
-                    <a onclick="sala(${frigorificos.id})">
+                    <a onclick="sala(${frigorificos.id}) class="aComHover">
                     <div class="cardSala">
                         <div class="alinhar">
                             <p>Temperatura:${frigorificos.temperatura_media_sala}ºC</p>

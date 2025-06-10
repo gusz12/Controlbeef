@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>ControlBeef | Dash Geral</title>
+    <title>ControlBeef | Dashboard </title>
     <link rel="icon" href="/css/assets/iconControlBeef.ico">
     <link rel="stylesheet" href="../css/dashboard.css">
     <link rel="stylesheet" href="../css/style.css">
@@ -168,8 +168,11 @@
             } else if (frigorificos.Status_alerta == "Crítico") {
                 bolinhas.style.backgroundColor = "#ff0000";
                 console.log(bolinhas.style.backgroundColor)
-            } else {
+            }else if(frigorificos.Status_alerta == "Ideal"){
                 bolinhas.style.backgroundColor = "#008000";
+
+            } else {
+                bolinhas.style.backgroundColor = "gray"
                 console.log(bolinhas.style.backgroundColor)
             }
             }
