@@ -168,6 +168,16 @@
         }
     }
 
+    function atualizarGrafico(){
+        fetch(`/frigorifico/criarGrafico/:idSala`,{
+            method: "GET"
+        }).then(res=>{
+            res.json().then(json => {
+                
+            })
+        })
+    }
+
     function criarGráficoSala(id) {
        let idSala = id;
         let dadosInteresse = {
@@ -209,11 +219,7 @@
         );
     }
 
-    function atualizarGrafico(){
-        fetch(`/frigorifico/criarGrafico/:idSala`,{
-            method: "GET"
-        })
-    }
+
 
     function totalSalasFrigo() {
 
