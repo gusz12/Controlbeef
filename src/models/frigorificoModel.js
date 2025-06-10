@@ -92,10 +92,12 @@ group by f.nomeFrigo, sf.nomeSala, sf.id;
 }
 
 function dadosSala(idSala){
+    console.log("Cheguei no model dadosSala")
     instrucao = 
     `
     select * from salas_frias where id = ${idSala};
     `
+    return database.executar(instrucao);
 }
 
 

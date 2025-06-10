@@ -112,16 +112,18 @@
         containerSala.style.display = ""
         fetch(`frigorifico/dadosSala/${idSala}`,{
             method: "GET"
-        })
+        }).then(res=>{
+            res.json().then(json => {
+                let sala = json[0]
         title.innerHTML =
             `
-        ControlBeef | {sala}
+        ControlBeef | ${sala.nomeSala}
         `
         containerSala.innerHTML =
             `
                 <div>
             <button onclick="voltarFrigos()">Voltar</button>
-            <p>Sala: {frigorifico.sala}</p>
+            <p>Sala: ${sala.nomeSala}</p>
             <canvas id="graficoSala"></canvas>
             <p>Ultima atualização
                 <br>
@@ -157,6 +159,10 @@
         </div>
     </div>
         `
+
+            })
+        })
+       
 
         //criando gráfico
         criarGráficoSala();

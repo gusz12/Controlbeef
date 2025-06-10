@@ -220,7 +220,7 @@ USE ControlBeef;
 
 
     CREATE TABLE dados(
-        id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+        id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
         fksensor INT DEFAULT 1,
         sensor_analogico DECIMAL(10,2),
         data_medicao TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
