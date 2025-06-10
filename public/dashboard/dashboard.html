@@ -146,9 +146,12 @@
                         bolinhas.style.backgroundColor = "#ffff00";
                     } else if (frigorificos.Status_alerta == "Crítico") {
                         bolinhas.style.backgroundColor = "#ff0000";
+                    } else if (frigorificos.Status_alerta == "Sem Dados") {
+                        bolinhas.style.backgroundColor = "#808080"; // cinza para indicar sem dados
                     } else {
                         bolinhas.style.backgroundColor = "#008000";
                     }
+
                 }
             })
         })
