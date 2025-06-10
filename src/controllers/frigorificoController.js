@@ -55,6 +55,16 @@ function listarSalas(req, res) {
     });
 }
 
+function dadosSala(req,res) {
+    console.log("Chegeui no controller dadosSala");
+    var idSala = req.params.idSala;
+    frigorificoModel.dadosSala(idSala).then(function(resultado){
+        res.status(200).json(resultado);
+    }).catch(function(erro){
+        res.status(500).json(erro.sqlMessage);
+    });
+}
+
 
 
 
@@ -62,5 +72,6 @@ module.exports = {
     totalSalasFrigo,
     totalSalasIdealFrigo,
     totalSalasNIdealFrigo,
-    listarSalas
+    listarSalas,
+    dadosSala
 }

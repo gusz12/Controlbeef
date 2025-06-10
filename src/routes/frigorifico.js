@@ -19,9 +19,9 @@ router.get("/listarSalas/:idEmpresa/:idFrigorifico", function(req,res){
     frigorificoController.listarSalas(req,res);
 });
 
-router.get("/dadosSala/:idSala", function())
-
-
+router.get("/dadosSala/:idSala", function(req,res){
+    frigorificoController.dadosSala(req,res);
+});
 
 
 

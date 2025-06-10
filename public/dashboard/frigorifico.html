@@ -106,8 +106,13 @@
 
 
     function sala(id) {
+        let idSala = id;
+        console.log(idSala)
         containerPrincipal.style.display = "none"
         containerSala.style.display = ""
+        fetch(`frigorifico/dadosSala/${idSala}`,{
+            method: "GET"
+        })
         title.innerHTML =
             `
         ControlBeef | {sala}
