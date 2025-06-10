@@ -71,20 +71,7 @@
 
                 </div>
             </div> -->
-            <div>
-                <p>Salas que mais dão problema</p>
-                <div class="rankingContainer">
-                    <div class="RankingCard">
-                        <p>Sala:</p>
-                        <p>Temperatura atual:</p>
-                    </div>
-                    <div class="RankingCard">
-                        <p>Sala:</p>
-                        <p>Temperatura atual:</p>
-                    </div>
-
-                </div>
-            </div>
+            
         </div>
     </div>
     <div class="containerSalas" id="containerSala">
@@ -110,6 +97,7 @@
         console.log(idSala)
         containerPrincipal.style.display = "none"
         containerSala.style.display = ""
+        
         fetch(`/frigorifico/dadosSala/${idSala}`,{
             method: "GET"
         }).then(res=>{
