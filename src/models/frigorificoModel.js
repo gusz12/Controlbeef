@@ -106,7 +106,7 @@ function criarGrafico(idSala){
     `
     select 
     sf.nomeSala,
-    truncate(avg(d.sensor_analogico), 2) avg,
+    truncate(avg(d.sensor_analogico), 2),
     max(d.data_medicao) as Data_atual
     from empresa e
     inner join frigorifico f on e.id = f.fkempresa
