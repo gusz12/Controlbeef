@@ -116,7 +116,7 @@ function KPIsalas_ideal(idEmpresa) {
     f.nomeFrigo,
     avg(d.sensor_analogico) as media_sala,
     case
-	when avg(d.sensor_analogico) > -3 and avg(d.sensor_analogico) < 4 then 1
+	when avg(d.sensor_analogico) >= -3 and avg(d.sensor_analogico) <= 4 then 1
     else null
     end as verificacao_fora_ideal
     from empresa e
@@ -125,7 +125,7 @@ function KPIsalas_ideal(idEmpresa) {
     inner join sensor s on s.fkSala = sf.id
     inner join dados d on d.fksensor = s.id
     where e.id = ${idEmpresa}
-    group by e.razao_social, f.nomeFrigo, sf.nomeSala) as medias_salas
+    group by e.razao_social, f.nomeFrigo, sf.id, sf.nomeSala) as medias_salas
     where verificacao_fora_ideal = 1;
     `
     console.log(instrucao)
@@ -146,7 +146,7 @@ function KPIsalas_naoIdeal(idEmpresa) {
     f.nomeFrigo,
     avg(d.sensor_analogico) as media_sala,
     case
-	when avg(d.sensor_analogico) > -3 and avg(d.sensor_analogico) < 4 then null
+	when avg(d.sensor_analogico) >= -3 and avg(d.sensor_analogico) <= 4 then null
     else 1
     end as verificacao_fora_ideal
     from empresa e
@@ -155,7 +155,7 @@ function KPIsalas_naoIdeal(idEmpresa) {
     inner join sensor s on s.fkSala = sf.id
     inner join dados d on d.fksensor = s.id
     where e.id = ${idEmpresa}
-    group by e.razao_social, f.nomeFrigo, sf.nomeSala) as medias_salas
+    group by e.razao_social, f.nomeFrigo, sf.id, sf.nomeSala) as medias_salas
     where verificacao_fora_ideal = 1;
     `
     console.log(instrucao)
