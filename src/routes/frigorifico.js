@@ -23,6 +23,10 @@ router.get("/dadosSala/:idSala", function(req,res){
     frigorificoController.dadosSala(req,res);
 });
 
+router.get("/criarGrafico/:idSala", function(req,res){
+    frigorificoController.criarGrafico(req,res);
+});
+
 
 
 module.exports = router;

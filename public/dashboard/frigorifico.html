@@ -110,19 +110,21 @@
         console.log(idSala)
         containerPrincipal.style.display = "none"
         containerSala.style.display = ""
-        fetch(`frigorifico/dadosSala/${idSala}`,{
+        fetch(`/frigorifico/dadosSala/${idSala}`,{
             method: "GET"
-        })
+        }).then(res=>{
+            res.json().then(json => {
+                let sala = json[0]
         title.innerHTML =
             `
-        ControlBeef | {sala}
+        ControlBeef | ${sala.nomeSala}
         `
         containerSala.innerHTML =
             `
                 <div>
             <button onclick="voltarFrigos()">Voltar</button>
-            <p>Sala: {frigorifico.sala}</p>
-            <canvas id="graficoSala"></canvas>
+            <p>Sala: ${sala.nomeSala}</p>
+            <canvas id="graficoSala${sala.id}"></canvas>
             <p>Ultima atualização
                 <br>
                 09/06/2025
@@ -157,9 +159,14 @@
         </div>
     </div>
         `
+          //criando gráfico
+        criarGráficoSala(sala.id);
 
-        //criando gráfico
-        criarGráficoSala();
+            })
+        })
+       
+
+      
 
     }
 
@@ -173,7 +180,8 @@
         }
     }
 
-    function criarGráficoSala() {
+    function criarGráficoSala(id) {
+       let idSala = id;
         let dadosInteresse = {
             labels: ['14:00', '13:00', '12:00'],
             datasets: [{
@@ -208,9 +216,15 @@
             data: dadosInteresse,
         };
         let Interesses = new Chart(
-            document.getElementById(`graficoSala`),
+            document.getElementById(`graficoSala${idSala}`),
             configInteresse
         );
+    }
+
+    function atualizarGrafico(){
+        fetch(`/frigorifico/criarGrafico/:idSala`,{
+            method: "GET"
+        })
     }
 
     function totalSalasFrigo() {

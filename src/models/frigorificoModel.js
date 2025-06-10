@@ -92,10 +92,31 @@ group by f.nomeFrigo, sf.nomeSala, sf.id;
 }
 
 function dadosSala(idSala){
+    console.log("Cheguei no model dadosSala")
     instrucao = 
     `
     select * from salas_frias where id = ${idSala};
     `
+    return database.executar(instrucao);
+}
+
+function criarGrafico(idSala){
+    console.log("Entrei no model criar gráfico")
+    var instrucao =
+    `
+    select 
+    sf.nomeSala,
+    truncate(avg(d.sensor_analogico), 2) avg,
+    max(d.data_medicao) as Data_atual
+    from empresa e
+    inner join frigorifico f on e.id = f.fkempresa
+    inner join salas_frias sf on sf.fkfrigo = f.id
+    inner join sensor s on sf.id = s.fkSala
+    inner join dados d on d.fksensor = s.id
+    where sf.id = ${idSala} 
+    group by sf.nomeSala;
+    `;
+    return database.executar(instrucao);
 }
 
 
@@ -104,5 +125,6 @@ module.exports = {
     totalSalasIdealFrigo,
     totalSalasNIdealFrigo,
     listarSalas,
-    dadosSala
+    dadosSala,
+    criarGrafico
 };
