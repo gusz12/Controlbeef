@@ -3,8 +3,8 @@ var router = express.Router();
 
 var dashboardController = require("../controllers/dashboardController");
 
-router.get("/listarFrigorifico/:idEmpresa", function (req, res) {
-    dashboardController.listarFrigorificos(req, res);
+router.get("/listarSalasTotais/:idEmpresa", function (req, res) {
+    dashboardController.listarSalasTotais(req, res);
 });
 
 

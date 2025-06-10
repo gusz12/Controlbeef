@@ -41,15 +41,14 @@
 
                 <h3 style="text-align: center; font-weight: bolder;">Cadastre um novo usuário</h3>
 
-                <input type="text" id="ipt_nome" placeholder="Insira seu nome...">
-                <input type="text" id="ipt_email" placeholder="Insira seu email...">
-                <input type="password" id="ipt_senha" placeholder="Insira sua senha...">
-                <input type="password" id="ipt_senha_confirmation" placeholder="Insira sua senha novamente...">
+                <input type="text" id="ipt_nome" placeholder="Insira o nome do usuário...">
+                <input type="text" id="ipt_email" placeholder="Insira email o email do usuário...">
+                <input type="password" id="ipt_senha" placeholder="Insira senha do usuário...">
+                <input type="password" id="ipt_senha_confirmation" placeholder="Insira a senha do usuário novamente...">
                 <input type="text" id="ipt_codigo" placeholder="Insira o código de ativação...">
 
                 <button onclick="cadastrar()">Registrar</button>
                 <div id="div_resultado"></div>
-                <p>Já tem uma conta? <a href="login.html">Faça Login seu Login</a></p>
             </div>
         </div>
 
@@ -62,18 +61,10 @@
     var idEmpresa = sessionStorage.ID_EMPRESA;
     nome_lateral.innerHTML = `${nome_user}`
 
-
-
-
-
-
-
-
     const cardErro = document.getElementById("div_resultado");
     const mensagem_erro = document.createElement("h3");
     cardErro.appendChild(mensagem_erro);
     cardErro.style.display = "none";
-
 
     function cadastrar() {
         // Recupere o valor da nova input pelo nome do id

@@ -18,8 +18,7 @@ var app = express();
 var indexRouter = require("./src/routes/index");
 var usuarioRouter = require("./src/routes/usuarios");
 var dashboardRouter = require("./src/routes/dashboard");
-// var dashbordFrigoRouter = require("./src/routes/dashboardFrigo");
-// var dashbordSalaRouter = require("./src/routes/dashbordSala");
+var frigorificoRouter = require("./src/routes/frigorifico");
 
 
 
@@ -31,10 +30,8 @@ app.use(cors());
 
 app.use("/", indexRouter);
 app.use("/usuarios", usuarioRouter);
-
 app.use("/dashboard", dashboardRouter);
-// app.use("/dashboardFrigo", dashbordFrigoRouter);
-// app.use("/dashbordSala", dashbordSalaRouter);
+app.use("/frigorifico", frigorificoRouter);
 
 
 app.listen(PORTA_APP, function () {

@@ -1,11 +1,12 @@
 var dashboardModel = require("../models/dashboardModel");
 
-function listarFrigorificos(req, res) {
+function listarSalasTotais(req, res) {
     console.log("Entrei na controller listarPorFrigorifico")
 
     var idEmpresa = req.params.idEmpresa;
 
-    dashboardModel.listarFrigorificos(idEmpresa).then(function (resultado) {
+    
+    dashboardModel.listarSalasTotais(idEmpresa).then(function (resultado) {
         res.status(200).json(resultado);
     }).catch(function (erro) {
         res.status(500).json(erro.sqlMessage);
@@ -80,15 +81,26 @@ function KPIfrigoGeral(req, res) {
 
 
 
+function mostrarTotaisSalasFrigorificoEspecifico(req, res){
+    console.log('Entrei no controller para mostrar os totais das salas pelo frigorífico');
+     var idEmpresa = req.params.idEmpresa;
+        var nomeFrigo = req.body.nomeFrigo;
 
+        dashboardModel.mostrarTotaisSalasFrigorificoEspecifico(idEmpresa, nomeFrigo).then(function (resultado){
+            res.status(200).json(resultado);
+        }).catch(function (erro){
+            res.status(500).json(erro.sqlMessage);
+        })
+}
 
 
 
 module.exports = {
-    listarFrigorificos,
+    listarSalasTotais,
     KPItotal_frigo,
     KPItotal_salas,
     KPIsalas_ideal,
     KPIsalas_naoIdeal,
-    KPIfrigoGeral
+    KPIfrigoGeral,
+    mostrarTotaisSalasFrigorificoEspecifico
 }
