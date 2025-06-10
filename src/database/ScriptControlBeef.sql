@@ -538,3 +538,23 @@ inner join dados d on d.fksensor = s.id
 where s.id = 1
  group by sensor_analogico;
 
+
+ select 
+    count(*) as salas_naoIdeal
+    from
+    (select
+    e.razao_social,
+    f.nomeFrigo,
+    avg(d.sensor_analogico) as media_sala,
+    case
+	when avg(d.sensor_analogico) > -3 and avg(d.sensor_analogico) < 4 then null
+    else 1
+    end as verificacao_fora_ideal
+    from empresa e
+    inner join frigorifico f on f.fkempresa = e.id
+    inner join salas_frias sf on sf.fkfrigo = f.id
+    inner join sensor s on s.fkSala = sf.id
+    inner join dados d on d.fksensor = s.id
+    where e.id = ${idEmpresa}
+    group by e.razao_social, f.nomeFrigo, sf.nomeSala) as medias_salas
+    where verificacao_fora_ideal = 1;
