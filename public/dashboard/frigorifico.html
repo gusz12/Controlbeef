@@ -5,13 +5,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title id="title">ControlBeef | Frigorifico</title>
-
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="icon" href="/css/assets/iconControlBeef.ico">
     <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="../css/frigorifico.css">
 </head>
 
-<body onload="preencher()">
+<body onload="totalSalasFrigo(), listarSalas()">
     <div class="navbar">
         <div class="logo">
             <span>ControlBeef</span>
@@ -24,7 +24,7 @@
             <span>|</span>
             <a href="../cadastro.html">Cadastro de usuário</a>
             <span>|</span>
-            <a href="../index.html">Sair</a>
+            <a onclick="sessionClear()" href="../index.html">Sair</a>
         </div>
         <div class="usuario">
             <span style="font-size: 50px;" id="nome_lateral"></span>
@@ -34,35 +34,30 @@
     <br><br><br>
     <div class="main-content" id="containerPrincipal">
         <div class="mensagemInicial">
-            <h1>Frigorifico:</h1>
+            <h1>Frigorifico: <span id="nomeFrigorifico"></span></h1>
         </div>
 
         <div class="informacoes">
             <div class="KPIS">
                 <div class="kpi">
-                    Total de Salas:
+                    Total de Salas: <h1 id="totalSalas">0</h1>
                 </div>
                 <div class="kpi">
-                    Salas dentro do ideal:
+                    Salas dentro do ideal: <h1 id="totalSalasIdeal">0</h1>
                 </div>
                 <div class="kpi">
-                    Salas fora do ideal:
+                    Salas fora do ideal: <h1 id="totalSalasNaoIdeal">0</h1>
                 </div>
             </div>
-            <div class="SalasKPI">
-                <div class="cardSala">
-                    <div class="alinhar">
-                        <p>Temperatura:</p>
-                        <div class="bolinha" id="bolinha"></div>
-                    </div>
-                    <p>Sala:</p>
-                </div>
+            <div class="SalasKPI" id="containerSalasTotal">
+                
+
 
             </div>
         </div>
 
         <div class="rankings">
-            <div>
+            <!-- <div>
                 <p>Salas fora do ideal agora</p>
                 <div class="rankingContainer">
                     <div class="RankingCard">
@@ -75,7 +70,7 @@
                     </div>
 
                 </div>
-            </div>
+            </div> -->
             <div>
                 <p>Salas que mais dão problema</p>
                 <div class="rankingContainer">
@@ -98,14 +93,26 @@
 </body>
 
 </html>
-<script src="../js/dados.js"></script>
+<script src="/js/dados.js"></script>
 <script>
-    var nome_user = sessionStorage.NOME_USUARIO;
-    var idEmpresa = sessionStorage.ID_EMPRESA;
-    nome_lateral.innerHTML = `${nome_user}`
+    nomeFrigorifico.innerHTML = sessionStorage.NOME_FRIGO_ATUAL
+    nome_lateral.innerHTML = `${sessionStorage.NOME_USUARIO}`
+    title.innerHTML = `
+            ControlBeef | ${sessionStorage.NOME_FRIGO_ATUAL}
+    `
 
-    function sala() {
+    var idEmpresa = sessionStorage.ID_EMPRESA;
+    var idFrigo = sessionStorage.FRIGO_ATUAL;
+
+
+    function sala(id) {
+        let idSala = id;
+        console.log(idSala)
         containerPrincipal.style.display = "none"
+        containerSala.style.display = ""
+        fetch(`frigorifico/dadosSala/${idSala}`,{
+            method: "GET"
+        })
         title.innerHTML =
             `
         ControlBeef | {sala}
@@ -113,6 +120,7 @@
         containerSala.innerHTML =
             `
                 <div>
+            <button onclick="voltarFrigos()">Voltar</button>
             <p>Sala: {frigorifico.sala}</p>
             <canvas id="graficoSala"></canvas>
             <p>Ultima atualização
@@ -139,10 +147,10 @@
                 <div class="Cabecalho">Dados Sala:</div>
                 <div class="corpo">
                     <div class="linha">
-                        <div class="data item">Data</div> 
-                        <div class="hora item">Hora</div>
+                        <div class="data item">Data/Hora</div> 
                         <div class="temperatura item">Temperatua</div>
-                        <div class="ocorrencia item"> Ocorrência</div> 
+                        <div class="ocorrencia item"> Ocorrência</div>
+                        <div class="sensor item"> Sensor</div> 
                         <div class="status item">Status</div></div>
                 </div>
             </div>
@@ -150,7 +158,142 @@
     </div>
         `
 
+        //criando gráfico
+        criarGráficoSala();
 
+    }
+
+    function voltarFrigos(){
+        if(containerSala.style.display != "none"){
+            containerSala.style.display = "none"
+            containerPrincipal.style.display = ""
+        } else {
+            containerSala.style.display = ""
+            containerPrincipal.style.display = "none"
+        }
+    }
+
+    function criarGráficoSala() {
+        let dadosInteresse = {
+            labels: ['14:00', '13:00', '12:00'],
+            datasets: [{
+                label: 'Temperatura',
+                data: [2, 3, 3],
+                borderColor: '#5DD7ED',
+                backgroundColor: '#5DD7ED',
+
+                tension: 0.1,
+                borderWidth: 2
+            }],
+            options: {
+                animation: {
+                    duration: 1500,
+                    easing: 'easeOutBounce'
+                },
+                plugins: {
+                    id: 'custom-icons',
+                    afterDatasetsDraw(chart, args, pluginOptions) {
+
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: false
+                    }
+                }
+            }
+        }
+        const configInteresse = {
+            type: 'line',
+            data: dadosInteresse,
+        };
+        let Interesses = new Chart(
+            document.getElementById(`graficoSala`),
+            configInteresse
+        );
+    }
+
+    function totalSalasFrigo() {
+
+        var idEmpresa = sessionStorage.ID_EMPRESA;
+        var idFrigo = sessionStorage.FRIGO_ATUAL;
+
+        fetch(`/frigorifico/totalSalasFrigo/${idEmpresa}/${idFrigo}`, {
+            method: "GET"
+        })
+            .then(res => {
+                res.json().then(json => {
+                    totalSalas.innerHTML = `<h1 style="margin:0px; font-size: 60px">${json[0].totalSalas}</h1>`
+                })
+            });
+        totalSalasIdealFrigo();
+    }
+
+
+
+
+    function totalSalasIdealFrigo() {
+
+        var idEmpresa = sessionStorage.ID_EMPRESA;
+        var idFrigo = sessionStorage.FRIGO_ATUAL;
+
+        fetch(`/frigorifico/totalSalasIdealFrigo/${idEmpresa}/${idFrigo}`, {
+            method: "GET"
+        })
+            .then(res => {
+                res.json().then(json => {
+                    totalSalasIdeal.innerHTML = `<h1 style="margin:0px; font-size: 60px">${json[0].salasIdealFrigo}</h1>`
+                })
+            });
+        totalSalasNIdealFrigo();
+    }
+
+
+
+    function totalSalasNIdealFrigo() {
+
+        var idEmpresa = sessionStorage.ID_EMPRESA;
+        var idFrigo = sessionStorage.FRIGO_ATUAL;
+
+        fetch(`/frigorifico/totalSalasNIdealFrigo/${idEmpresa}/${idFrigo}`, {
+            method: "GET"
+        })
+            .then(res => {
+                res.json().then(json => {
+                    totalSalasNaoIdeal.innerHTML = `<h1 style="margin:0px; font-size: 60px">${json[0].salasNIdealFrigo}</h1>`
+                })
+            });
+    }
+
+
+    function listarSalas(){
+        var idEmpresa = sessionStorage.ID_EMPRESA;
+        var idFrigo = sessionStorage.FRIGO_ATUAL;
+        fetch(`/frigorifico/listarSalas/${idEmpresa}/${idFrigo}`,{
+            method: "GET"
+        }).then(res => {
+            res.json().then(json =>{
+                for(let c = 0; json.length > c; c++){
+                    frigorificos = json[c]
+                    containerSalasTotal.innerHTML += 
+                    `
+                    <a onclick="sala(${frigorificos.id})">
+                    <div class="cardSala">
+                        <div class="alinhar">
+                            <p>Temperatura:${frigorificos.temperatura_media_sala}ºC</p>
+                            <div class="bolinha" id="bolinha"></div>
+                        </div>
+                        <p>Sala: ${frigorificos.nomeSala}</p>
+                    </div>
+                </a>
+                    `
+                }
+            })
+        })
+    }
+
+    function sessionClear() {
+        sessionStorage.clear();
     }
 
 </script>

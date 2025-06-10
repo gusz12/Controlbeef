@@ -24,7 +24,7 @@ html {
 .navbar {
     margin: 0;
     font-size: 35px;
-    position: fixed;
+    position: absolute;
     display: flex;
     justify-content: space-between;
     align-items: center;

@@ -246,12 +246,14 @@ select {
     display: flex;
     flex-direction: column;
     border: 2px solid black;
-    height: 120px;
+    /* height: 120px; */
+    height: 150px;
     border-radius: 10px;
     padding: 10px;
 }
 
 .bolinha {
+    display: block;
     align-self: flex-end;
     border-radius: 100%;
     width: 30px;
@@ -321,17 +323,15 @@ select {
     height: 300px;
     width: 100%;
     align-self: center;
-}
 
-.containerFrigorificos a :hover {
+}
+.card{
+    transition: all 0.3s;
+}
+.card:hover {
+    cursor: pointer;
+    transform: scale(1.02);
     border: #5DD7ED 5px solid;
-
-}
-
-.cardFrigorifico :hover {
-    border-radius: 10px !important;
-    border: black 0px solid !important;
-    width: 95% !important;
 }
 
 
@@ -341,6 +341,7 @@ select {
     border: black 2px solid;
     padding: 10px;
     width: 95%;
+    transition: 0.2s;
 }
 
 
@@ -388,4 +389,8 @@ select {
     background-color: #f0f0f0;
     border: solid 3px #5DD7ED;
     padding: 10px;
+}
+.containerStatus input{
+    font-size: large;
+    padding: 5px;
 }

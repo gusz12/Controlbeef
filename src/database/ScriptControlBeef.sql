@@ -1,6 +1,5 @@
-    CREATE DATABASE IF NOT EXISTS ControlBeef;
-    USE ControlBeef;
-
+CREATE DATABASE IF NOT EXISTS ControlBeef;
+USE ControlBeef;
 
 
     -- -------------------------------------------------------------------------------------
@@ -57,7 +56,7 @@
     CREATE TABLE empresa(
         id INT PRIMARY KEY AUTO_INCREMENT,
         razao_social VARCHAR(50),
-        fkendereco INT,
+        fkendereco INT unique,
         representante VARCHAR(40),
         telefone VARCHAR(11),
         cnpj CHAR(14),
@@ -95,14 +94,12 @@
     ('Gustavo Menezes', 'gustavo.menezes@sptech.school', '123', 1),
     ('Lucas Previtero', 'lucas.previtero@sptech.school', '123',  1);
 
-
-    select * from usuario;
     -- -------------------------------------------------------------------------------------
     -- Tabelas gerenciamentos frigoríficos
     CREATE TABLE frigorifico(
         id INT PRIMARY KEY AUTO_INCREMENT,
         nomeFrigo VARCHAR(30),
-        fkendereco INT,
+        fkendereco INT unique,
         fkempresa INT,
         CONSTRAINT fkEmpresa_frigorifico FOREIGN KEY (fkempresa) REFERENCES empresa(id),
         CONSTRAINT fkendereco_frigorifico FOREIGN KEY (fkendereco) REFERENCES endereco(id)
@@ -283,194 +280,129 @@
 
     CREATE TABLE aviso (
         id INT PRIMARY KEY AUTO_INCREMENT,
-        titulo VARCHAR(100),
-        descricao VARCHAR(150),
-        fk_usuario INT,
-        FOREIGN KEY (fk_usuario) REFERENCES usuario(id)
+        dataHora datetime default now() not null,
+        temperatura decimal(10, 2) not null,
+        fkSala int not null,
+        FOREIGN KEY (fkSala) REFERENCES salas_frias(id)
     );
-
-
-
-    -- Select para para os cards 
-        select sf.fkfrigo,
-        f.nomeFrigo,
+    -- insert( now())
+   -- alter table aviso add column
     
-        sf.nomeSala,
-        s.id as número_sensor,
-        d.sensor_analogico,
-            case 
-            when sensor_analogico > 4.0 then 'Crítico'
-            when sensor_analogico < -3.0 then 'Crítico'
-            when sensor_analogico = -3.0 then 'Alerta'
-            when sensor_analogico = 4.0 then 'Alerta'
-            else 'Ideal'
-        end as Status_alerta,
-        d.data_medicao
-
-        from frigorifico f
-        inner join salas_frias sf on f.id = sf.fkfrigo
-        inner join sensor s on s.fkSala = sf.id
-        inner join dados d on d.fksensor = s.id
-        where f.fkempresa = 2 and f.id = 1
-        
-        group by f.nomeFrigo, sf.nomeSala, s.id, d.sensor_analogico, Status_alerta, d.data_medicao
-        order by 
-        case 
-            when Status_alerta = 'Crítico' then 1
-            when Status_alerta = 'Alerta' then 2
-            else 3
-        end;
-
-
-
-
-
-    select 
-    e.id as idEmpresa, e.razao_social as nomeEmpresa, e.representante,
-    f.id as idFrigorifico, f.nomeFrigo as nomeFrigorifico, f.fkempresa,
-    s.id as idSala, s.nomeSala, so.id as  idSensor, so.fkSala, d.    id as idDados,
-    d.fksensor, d.sensor_analogico as dadosSensor, d.data_medicao as dataMedicao
-    from empresa e
-    inner join frigorifico f on e.id = f.fkempresa
-    inner join salas_frias s on f.id = s.fkfrigo
-    inner join sensor so on s.id = so.fkSala
-    inner join dados d on so.id=d.fksensor
-    where f.fkempresa = 2 and f.id = 1;
-
-
-
-
-
-
-
-
-select * from usuario;
-
-
-
-    -- Ranking de frigorificos maiores médias fora do ideal
-    select
-        sf.fkfrigo,
-        f.nomeFrigo,
-        s.fkSala as número_sala,
-        sf.nomeSala,
-        avg(d.sensor_analogico) as média_sala
-        from frigorifico f
-        inner join salas_frias sf on f.id = sf.fkfrigo
-        inner join sensor s on s.fkSala = sf.id
-        inner join dados d on d.fksensor = s.id
-        where f.fkempresa = 2 and f.id = 2
-        group by sf.fkfrigo,
-        f.nomeFrigo,
-        s.fkSala,
-        sf.nomeSala
-        having média_sala > 4 or média_sala < -3
-    ;
-
-
-
-    -- Nome sala 
-    -- Quantidade de vezes fora da temperatura ideal 
-    -- Tempo fora do ideal
-    -- Mostrar vezes fora do ideal e tempo fora do ideal 
-    use Controlbeef;
-    select 
-    sf.fkfrigo as Numero_Frigo,
+    
+-- --------------------------------------------------------------
+-- Selects:    
+-- --------------------------------------------------------------
+-- Select para os cards 
+    SELECT 
+    sf.fkfrigo,
+    f.nomeFrigo,
     sf.nomeSala,
-    concat(
-    count(
-        case 
-            when d.sensor_analogico > 4 then 1
-            when d.sensor_analogico < -3 then 1
-            else null
-        end
-    )*2, ' Segundos') as Tempo_Fora_Ideal
-    from salas_frias sf
-    inner join frigorifico f on f.id = sf.fkfrigo
+    truncate(AVG(d.sensor_analogico), 2) as temperatura_media,
+    CASE 
+        WHEN AVG(d.sensor_analogico) > 4.0 THEN 'Crítico'
+        WHEN AVG(d.sensor_analogico) < -3.0 THEN 'Crítico'
+        WHEN AVG(d.sensor_analogico) = -3.0 THEN 'Alerta'
+        WHEN AVG(d.sensor_analogico) = 4.0 THEN 'Alerta'
+        ELSE 'Ideal'
+    END as Status_alerta
+FROM frigorifico f
+INNER JOIN salas_frias sf ON f.id = sf.fkfrigo
+INNER JOIN sensor s ON s.fkSala = sf.id
+INNER JOIN dados d ON d.fksensor = s.id
+WHERE f.fkempresa = 2
+GROUP BY sf.fkfrigo, f.nomeFrigo, sf.id, sf.nomeSala
+ORDER BY 
+    CASE 
+        WHEN Status_alerta = 'Crítico' THEN 1
+        WHEN Status_alerta = 'Alerta' THEN 2
+        ELSE 3
+    END,
+    sf.id;
+
+-- Ranking de frigorificos maiores médias fora do ideal
+select
+	sf.fkfrigo,
+    f.nomeFrigo,
+    s.fkSala as número_sala,
+    sf.nomeSala,
+    avg(d.sensor_analogico) as média_sala
+	from frigorifico f
+    inner join salas_frias sf on f.id = sf.fkfrigo
     inner join sensor s on s.fkSala = sf.id
     inner join dados d on d.fksensor = s.id
-    where f.fkempresa = 2 and f.id = 1
-    group by sf.fkfrigo, sf.nomeSala;
+	where f.fkempresa = 2 and f.id = 2
+    group by sf.fkfrigo,
+    f.nomeFrigo,
+    s.fkSala,
+    sf.nomeSala
+    having média_sala > 4 or média_sala < -3
+;
 
-
-
-
-
-    -- Feito pelo chat
-    SELECT 
-        sf.fkfrigo AS Numero_Frigo,
-        sf.nomeSala,
-        COUNT(
-            CASE 
-                WHEN d.sensor_analogico > 4 THEN 1
-                WHEN d.sensor_analogico < -3 THEN 1
-                ELSE NULL
-            END
-        ) AS Quantidade_Vezes_Fora_Ideal
-    FROM salas_frias sf
-    INNER JOIN frigorifico f ON f.id = sf.fkfrigo
-    INNER JOIN sensor s ON s.fkSala = sf.id
-    INNER JOIN dados d ON d.fksensor = s.id
-    WHERE f.fkempresa = 2 AND f.id = 1
-    GROUP BY sf.fkfrigo, sf.nomeSala;
-    select * from salas_frias;
-    select * from dados;
-    select * from sensor;
-
-
-
-
-    -- select de verificação
-    select * from frigorifico join salas_frias join sensor join dados;
-    -- verificar se a empresa tem o frigorifigo
-    select 
-    e.id,
-    e.razao_social,
-    f.id,
-    f.nomeFrigo
-    from empresa e
-    left join frigorifico f on e.id = f.fkempresa 
-    where f.fkempresa = 2;
-
-
-
-
-    select 
-    e.id as idEmpresa, e.razao_social as nomeEmpresa, e.representante,
-    f.id as idFrigorifico, f.nomeFrigo as nomeFrigorifico, f.fkempresa,
-    s.id as idSala, s.nomeSala, so.id as  idSensor, so.fkSala, d.    id as idDados,
-    d.fksensor, d.sensor_analogico as dadosSensor, d.data_medicao as dataMedicao
-    from empresa e
-    inner join frigorifico f on e.id = f.fkempresa
-    inner join salas_frias s on f.id = s.fkfrigo
-    inner join sensor so on s.id = so.fkSala
-    inner join dados d on so.id=d.fksensor
-    where f.fkempresa = 2 and f.id = 1;
-    
-
-    
-select * from frigorifico;
-
-
-select count(f.id) as total_frigo
- from frigorifico f 
- inner join empresa e on f.fkempresa = e.id
- where f.fkempresa = 2;
-
-
-
-select count(*) as total_salas
+-- Nome sala 
+-- Quantidade de vezes fora da temperatura ideal 
+-- Tempo fora do ideal
+-- Mostrar vezes fora do ideal e tempo fora do ideal 
+select 
+sf.fkfrigo as Numero_Frigo,
+sf.nomeSala,
+concat(
+count(
+	case 
+		when d.sensor_analogico > 4 then 1
+        when d.sensor_analogico < -3 then 1
+		else null
+	end
+)*2, ' Segundos') as Tempo_Fora_Ideal
 from salas_frias sf
-inner join frigorifico f on sf.fkfrigo = f.id
-inner join empresa e on f.fkempresa = e.id
-where e.id = 2;
+inner join frigorifico f on f.id = sf.fkfrigo
+inner join sensor s on s.fkSala = sf.id
+inner join dados d on d.fksensor = s.id
+where f.fkempresa = 2 and f.id = 2
+group by sf.fkfrigo, sf.nomeSala;
 
 
+-- select de verificação
+
+-- verificar se a empresa tem o frigorifigo
+select 
+e.id,
+e.razao_social,
+f.id,
+f.nomeFrigo
+from empresa e
+left join frigorifico f on e.id = f.fkempresa 
+where f.fkempresa = 2;
+select * from usuario;
+-- ------------------------------------------------------------------------------------
+-- selects para kpis
+-- ------------------------------------------------------------------------------------
+-- Mostrar firgorificos totais, total de salas, salas ok, salas em risco
+select
+count(
+case 
+	when d.sensor_analogico > 4 then 1
+    when d.sensor_analogico < -3 then 1
+    else null
+end
+) as qtdSalas_fora_ideal,
+count(
+case 
+	when d.sensor_analogico between-3 and 4 then 1
+    else null
+end
+) as qtdSalas_dentro_ideal,
+count(distinct sf.id) as salas_totais
+from empresa e
+inner join frigorifico f on e.id = f.fkempresa
+inner join salas_frias sf on sf.fkfrigo = f.id
+inner join sensor s on s.fkSala = sf.id
+inner join dados d on d.fksensor = s.id
+where e.id = 2
+;
+select e.id, count(f.id) from empresa e inner join frigorifico f on f.fkempresa = e.id group by e.id;
 
 
-
-
-
+-- Select médias das salas
 select 
 nomeFrigo,
 count(*) as totais_salas_fora_ideal
@@ -483,6 +415,7 @@ case
 	when avg(d.sensor_analogico) > -3 and avg(d.sensor_analogico) < 4 then 1
     else null
 end as verificacao_fora_ideal
+
 from empresa e
 inner join frigorifico f on f.fkempresa = e.id
 inner join salas_frias sf on sf.fkfrigo = f.id
@@ -492,26 +425,116 @@ where e.id = 4
 group by e.razao_social, f.nomeFrigo, sf.nomeSala) as medias_salas
 where verificacao_fora_ideal = 1
 group by nomeFrigo;
+
+select
+avg(d.sensor_analogico) as media_sensores,
+count(
+
+)
+from 
+(select 
+count(
+sf.id
+) as total_salas_frigo
+from empresa e
+inner join frigorifico f on f.fkempresa = e.id
+inner join salas_frias sf on sf.fkfrigo = f.id
+where e.id = 2 and f.id = 2);
+
+
+
+SELECT 
+    nomeFrigo,
+    COUNT(*) AS totais_salas_fora_ideal
+FROM (
+    SELECT 
+        f.nomeFrigo,
+        sf.nomeSala,
+        AVG(d.sensor_analogico) AS media_sala
+    FROM empresa e
+    INNER JOIN frigorifico f ON f.fkempresa = e.id
+    INNER JOIN salas_frias sf ON sf.fkfrigo = f.id
+    INNER JOIN sensor s ON s.fkSala = sf.id
+    INNER JOIN dados d ON d.fksensor = s.id
+    WHERE e.id = 4
+    GROUP BY f.nomeFrigo, sf.nomeSala
+    HAVING AVG(d.sensor_analogico) NOT BETWEEN -3 AND 4
+) AS sub
+GROUP BY nomeFrigo;
+
+-- Function: mostrarTotaisSalasFrigorificoEspecifico() | Mostrar o total de salas de um frigorífico específico
+select 
+count(sf.id)
+from empresa e
+inner join frigorifico f on f.fkempresa = e.id
+inner join salas_frias sf on sf.fkfrigo = f.id
+where e.id = 4 and f.nomeFrigo = 'Frigol Frigorifíco 2';
+
+
+-- Function: totalDeSalasDentroDoIdealPorFirgorificoEspecifico() | Mostra o total de salas com a temperatura certa de um frigorífico
+select
+	count(*) as salas_dentro_ideal
+from 
+(select 
+	f.nomeFrigo,
+    sf.nomeSala,
+    avg(d.sensor_analogico) as media_sala
+from empresa e
+inner join frigorifico f on f.fkempresa = e.id
+inner join salas_frias sf on sf.fkfrigo = f.id
+inner join sensor s on sf.id = s.fkSala
+inner join dados d on d.fksensor = s.id
+where e.id = 2 and f.id = 2
+
+    group by f.nomeFrigo, sf.nomeSala
+    having avg(d.sensor_analogico) between -3 and 4
+    ) as sub
+    group by nomeFrigo
+;
+
+-- Function: totalDeSalasForaDoIdealPorFirgorificoEspecifico() | Mostra o total de salas com a temperatura errada de um frigorífico
+select
+	count(*) as salas_fora_ideal
+from 
+(select 
+	f.nomeFrigo,
+    sf.nomeSala,
+    avg(d.sensor_analogico) as media_sala
+from empresa e
+inner join frigorifico f on f.fkempresa = e.id
+inner join salas_frias sf on sf.fkfrigo = f.id
+inner join sensor s on sf.id = s.fkSala
+inner join dados d on d.fksensor = s.id
+where e.id = 2 and f.id = 2
+
+    group by f.nomeFrigo, sf.nomeSala
+    having avg(d.sensor_analogico) not between -3 and 4
+    ) as sub
+    group by nomeFrigo
+;
+
+-- Temperatura media da sala e a sala
+select
+f.id,
+sf.nomeSala,
+truncate(avg(d.sensor_analogico), 2) as temperatura_media_sala
+from empresa e
+inner join frigorifico f on e.id = f.fkempresa
+inner join salas_frias sf on sf.fkfrigo = f.id
+inner join sensor s on sf.id = s.fkSala
+inner join dados d on d.fksensor = s.id
+where e.id = 2 and f.id = 2
+group by f.nomeFrigo, sf.nomeSala; 
 
 
 select 
-nomeFrigo,
-count(*) as totais_salas_fora_ideal
-from
-(select
-e.razao_social,
-f.nomeFrigo,
-avg(d.sensor_analogico) as media_sala,
-case
-	when avg(d.sensor_analogico) > -3 and avg(d.sensor_analogico) < 4 then null
-    else 1
-end as verificacao_fora_ideal
+d.sensor_analogico,
+max(d.data_medicao)
 from empresa e
-inner join frigorifico f on f.fkempresa = e.id
+inner join frigorifico f on e.id = f.fkempresa
 inner join salas_frias sf on sf.fkfrigo = f.id
-inner join sensor s on s.fkSala = sf.id
+inner join sensor s on sf.id = s.fkSala
 inner join dados d on d.fksensor = s.id
-where e.id = 4
-group by e.razao_social, f.nomeFrigo, sf.nomeSala) as medias_salas
-where verificacao_fora_ideal = 1
-group by nomeFrigo;
+where s.id = 1
+ group by sensor_analogico;
+
