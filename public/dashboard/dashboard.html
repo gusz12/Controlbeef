@@ -161,17 +161,14 @@
             let bolinhas = document.getElementById(`bolinha${c}`);
 
             console.log(`Posição ${c} com o Frigorico de status ${frigorificos.Status_alerta}`)
-            if(bolinhas != null){
-                if (frigorificos.Status_alerta == 'Alerta') {
+            if (frigorificos.Status_alerta == 'Alerta') {
                 bolinhas.style.backgroundColor = "#ffff00";
-                console.log(bolinhas.style.backgroundColor)
             } else if (frigorificos.Status_alerta == "Crítico") {
                 bolinhas.style.backgroundColor = "#ff0000";
-                console.log(bolinhas.style.backgroundColor)
+            } else if (frigorificos.Status_alerta == "Sem Dados") {
+                bolinhas.style.backgroundColor = "#808080"; // cinza para indicar sem dados
             } else {
                 bolinhas.style.backgroundColor = "#008000";
-                console.log(bolinhas.style.backgroundColor)
-            }
             }
             
         }
