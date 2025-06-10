@@ -35,7 +35,7 @@
 
     <div class="main-content">
         <div class="mensagemInicial">
-            <span style=" font-size: 30px" id="nomeBemVindo"></span>
+            <span style=" font-size: 40px" id="nomeBemVindo"></span>
         </div>
 
 
@@ -63,16 +63,19 @@
         </div>
         <div class="KPIS">
             <div class="kpi">
-                Frigorificos:
+                <div>Frigorificos: <br><br> <span style="font-size: 80px;" id="total_frigo">2</span></div>
             </div>
+
             <div class="kpi">
-                Total de Salas:
+                <div>Total de Salas: <br><br> <span style="font-size: 80px;" id="total_salas">8</span></div>
             </div>
+
             <div class="kpi">
-                Salas dentro do ideal:
+                <div>Salas dentro do ideal: <br><br> <span style="font-size: 80px;" id="salas_ideal">4</span></div>
             </div>
+
             <div class="kpi">
-                Salas fora do ideal:
+                <div> Salas fora do ideal: <br><br> <span style="font-size: 80px;" id="salas_naoIdeal">4</span></div>
             </div>
         </div>
         <div class="containerFrigorifico">
@@ -205,22 +208,6 @@
                             bolinhas.style.backgroundColor = "#008000";
                         }
                     }
-
-                    select_frigo.innerHTML = `<option value="#">Escolha um Frigorifico</option>`
-
-                    var frigos = [];
-
-                    for (c = 0; json.length > c; c++) {
-                        let frigorificos = json[c];
-
-                        if (!frigos.includes(frigorificos.nomeFrigo)) {
-                            frigos.push(frigorificos.nomeFrigo)
-                            select_frigo.innerHTML +=
-                                `
-                                        <option value="${frigorificos.idFrigorifico}">${frigorificos.nomeFrigo}</option>
-                                    `
-                        }
-                    }
                 })
             })
 
@@ -236,16 +223,47 @@
 
 
     function KPIdash() {
-        console.log("Valor do select: ", idFrigorifico)
-        fetch(`/dashboard/KPIdash/${idEmpresa}/${idFrigorifico}`, {
+        fetch(`/dashboard/KPIdash/${idEmpresa}`, {
             method: "GET"
         })
             .then(res => {
                 res.json().then(json => {
 
+                    console.log(json);
 
 
 
+
+                })
+            })
+    }
+
+
+
+
+
+
+    function KPIfrigoGeral() {
+        fetch(`/dashboard/KPIfrigoGeral/${idEmpresa}`, {
+            method: "GET"
+        })
+            .then(res => {
+                res.json().then(json => {
+
+                    console.log(json);
+
+                    for (var i = 0; i < json.length; i++) {
+                        containerFrigorificos.innerHTML += `
+                         <a style="text-decoration: none; color: black;" href="frigorifico.html">
+                    <div class="cardFrigorifico">
+                        <p>Frigorifico:</p>
+                        <p>Salas:</p>
+                        <p>Salas dentro do ideal:</p>
+                        <p>Salas fora do ideal:</p>
+                    </div>
+                </a>
+                `
+                    }
                 })
             })
     }

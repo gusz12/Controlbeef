@@ -323,12 +323,28 @@ select {
     align-self: center;
 }
 
+.containerFrigorificos a :hover {
+    border: #5DD7ED 8px solid;
+
+}
+
+.cardFrigorifico :hover {
+    border-radius: 10px !important;
+    border: black 0px solid !important;
+    width: 95% !important;
+}
+
+
+
 .cardFrigorifico {
     border-radius: 10px;
     border: black 2px solid;
     padding: 10px;
     width: 95%;
 }
+
+
+
 
 .containerFrigorifico {
     display: flex;

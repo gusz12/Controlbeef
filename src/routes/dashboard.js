@@ -7,11 +7,11 @@ router.get("/listarFrigorifico/:idEmpresa", function (req, res) {
     dashboardController.listarFrigorificos(req, res);
 });
 
-router.get("/KPIdash/:idEmpresa/:idFrigorifico", function (req, res) {
+router.get("/KPIdash/:idEmpresa", function (req, res) {
     dashboardController.KPIdash(req, res);
 });
 
-router.get("/KPIfrigoGeral/:idEmpresa/:idFrigorifico", function (req, res) {
+router.get("/KPIfrigoGeral/:idEmpresa", function (req, res) {
     dashboardController.KPIfrigoGeral(req, res);
 });
 

@@ -80,7 +80,7 @@
         nome VARCHAR(40),
         email VARCHAR(60) UNIQUE,
         senha VARCHAR(60),
-        fkempresa INT,
+        fkempresa INT NOT NULL,
         CONSTRAINT fkEmpresa_usuario FOREIGN KEY (fkempresa) REFERENCES empresa(id)
     );
     INSERT INTO usuario (nome, email, senha, fkempresa) VALUES 
@@ -140,7 +140,22 @@
     ('Sala 1', 3, 1),
     ('Sala 2', 3, 1),
     ('Sala 3', 3, 2),
-    ('Sala 4', 3, 2);
+    ('Sala 4', 3, 2),
+    
+	('Sala 1', 4, 1),
+    ('Sala 2', 4, 1),
+    ('Sala 3', 4, 2),
+    ('Sala 4', 4, 2),
+
+    ('Sala 1', 5, 1),
+    ('Sala 2', 5, 1),
+    ('Sala 3', 5, 2),
+    ('Sala 4', 5, 2),
+
+    ('Sala 1', 6, 1),
+    ('Sala 2', 6, 1),
+    ('Sala 3', 6, 2),
+    ('Sala 4', 6, 2);
 
 
 
@@ -150,10 +165,6 @@
         fkSala INT,
         CONSTRAINT fksala_sensor FOREIGN KEY (fkSala) REFERENCES salas_frias(id)
     );
-
-    /*select * from sensor s inner join salas_frias sf on sf.id = s.fkSala
-    inner join frigorifico f on sf.fkFrigorifico = f.id;*/
-
     INSERT INTO sensor (fkSala) VALUES 
     (1),
     (1),
@@ -163,6 +174,7 @@
     (3),
     (4),
     (4),
+    
     (5),
     (5),
     (6),
@@ -171,6 +183,7 @@
     (7),
     (8),
     (8),
+    
     (9),
     (9),
     (10),
@@ -178,7 +191,34 @@
     (11),
     (11),
     (12),
-    (12);
+    (12),
+    
+    (13),
+    (13),
+    (14),
+    (14),
+    (15),
+    (15),
+    (16),
+    (16),
+    
+    (17),
+    (17),
+    (18),
+    (18),
+    (19),
+    (19),
+    (20),
+    (20),
+    
+    (21),
+    (21),
+    (22),
+    (22),
+    (23),
+    (23),
+    (24),
+    (24);
 
 
 
@@ -213,7 +253,31 @@
     (21, 3.5),
     (22, 2.9),
     (23, -8.6),  
-    (24, 0.7);
+    (24, 0.7),
+	(25, -2.5),
+    (26, -3.0),
+    (27, 0.5),
+    (28, 1.2),
+    (29, -4.7),  
+    (30, 5.3),    
+    (31, 2.0),
+    (32, -2.2),
+    (33, 3.8),
+    (34, 4.1),  
+    (35, -3.2),  
+    (36, -10.5), 
+    (37, 3.4),
+    (38, 3.9),
+    (39, 0.0),
+    (40, 1.8),
+    (41, 6.0),  
+    (42, 7.8),  
+    (43, -1.3),
+    (44, -2.8),
+    (45, 3.5),
+    (46, 2.9),
+    (47, -8.6),  
+    (48, 0.7);
 
 
 
@@ -224,61 +288,6 @@
         fk_usuario INT,
         FOREIGN KEY (fk_usuario) REFERENCES usuario(id)
     );
-
-
-    /*
-    -- Dados para teste
-    insert into dados(fksensor, sensor_analogico, data_medicao)
-    values
-    (1, 4.00, '2025-06-06'),
-    (1, 2.00, '2025-06-06'),
-    (1, 5.00, '2025-06-06'),
-    (1, 1.00, '2025-06-06'),
-    (1, 0.00, '2025-06-06');
-
-
-
-
-
-
-    -- 1. Inserir estados
-    INSERT INTO estado (nomeE, sigla) VALUES
-    ('São Paulo', 'SP'),
-    ('Minas Gerais', 'MG');
-
-    -- 2. Inserir cidades
-    INSERT INTO cidade (nomeC, fkestado) VALUES
-    ('São Paulo', 1),
-    ('Belo Horizonte', 2);
-
-    -- 3. Inserir endereços
-    INSERT INTO endereco (logradouro, cep, numero, complemento, bairro, fkcidade) VALUES
-    ('Rua A', '01001000', 123, 'Apto 1', 'Centro', 1),
-    ('Rua B', '30130000', 456, 'Casa', 'Savassi', 2);
-
-    -- 4. Inserir empresas
-    INSERT INTO empresa (razao_social, fkendereco, representante, telefone, cnpj, codigo_ativacao) VALUES
-    ('Empresa SP', 1, 'João Silva', '1123456789', '12345678000199', 'ABC123'),
-    ('Empresa MG', 2, 'Maria Souza', '3134567890', '98765432000188', 'XYZ789');
-
-    -- 5. Inserir frigoríficos
-    INSERT INTO frigorifico (nomeFrigo, fkendereco, fkempresa) VALUES
-    ('Frigorífico SP', 1, 1),
-    ('Frigorífico MG', 2, 2);
-
-    -- 6. Inserir 4 salas para o Frigorífico SP (id = 1)
-    INSERT INTO salas_frias (nomeSala, fkfrigo, setor) VALUES
-    ('Sala 1A', 1, 'Setor A'),
-    ('Sala 1B', 1, 'Setor B'),
-    ('Sala 1C', 1, 'Setor C'),
-    ('Sala 1D', 1, 'Setor D');
-
-    -- 7. Inserir 4 salas para o Frigorífico MG (id = 2)
-    */
-
-
-
-
 
 
 
@@ -335,7 +344,7 @@
 
 
 
-
+select * from usuario;
 
 
 
@@ -357,6 +366,8 @@
         sf.nomeSala
         having média_sala > 4 or média_sala < -3
     ;
+
+
 
     -- Nome sala 
     -- Quantidade de vezes fora da temperatura ideal 
@@ -381,6 +392,10 @@
     where f.fkempresa = 2 and f.id = 1
     group by sf.fkfrigo, sf.nomeSala;
 
+
+
+
+
     -- Feito pelo chat
     SELECT 
         sf.fkfrigo AS Numero_Frigo,
@@ -396,11 +411,14 @@
     INNER JOIN frigorifico f ON f.id = sf.fkfrigo
     INNER JOIN sensor s ON s.fkSala = sf.id
     INNER JOIN dados d ON d.fksensor = s.id
-    WHERE f.fkempresa = 1 AND f.id = 1
+    WHERE f.fkempresa = 2 AND f.id = 1
     GROUP BY sf.fkfrigo, sf.nomeSala;
     select * from salas_frias;
     select * from dados;
     select * from sensor;
+
+
+
 
     -- select de verificação
     select * from frigorifico join salas_frias join sensor join dados;
@@ -428,3 +446,28 @@
     inner join sensor so on s.id = so.fkSala
     inner join dados d on so.id=d.fksensor
     where f.fkempresa = 2 and f.id = 1;
+    
+
+    
+select
+count(
+case 
+	when d.sensor_analogico > 4 then 1
+    when d.sensor_analogico < -3 then 1
+    else null
+end
+) as qtdSalas_fora_ideal,
+count(
+case 
+	when d.sensor_analogico between-3 and 4 then 1
+    else null
+end
+) as qtdSalas_dentro_ideal,
+count(sf.id) as salas_totais
+from empresa e
+inner join frigorifico f on e.id = f.fkempresa
+inner join salas_frias sf on sf.fkfrigo = f.id
+inner join sensor s on s.fksala = sf.id
+inner join dados d on d.fksensor = s.id;
+
+select * from dados;
