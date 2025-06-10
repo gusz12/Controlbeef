@@ -91,10 +91,18 @@ group by f.nomeFrigo, sf.nomeSala, sf.id;
     return database.executar(instrucao)
 }
 
+function dadosSala(idSala){
+    instrucao = 
+    `
+    select * from salas_frias where id = ${idSala};
+    `
+}
+
 
 module.exports = {
     totalSalasFrigo,
     totalSalasIdealFrigo,
     totalSalasNIdealFrigo,
-    listarSalas
+    listarSalas,
+    dadosSala
 };

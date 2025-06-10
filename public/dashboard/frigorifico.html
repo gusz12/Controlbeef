@@ -107,6 +107,7 @@
 
     function sala(id) {
         containerPrincipal.style.display = "none"
+        containerSala.style.display = ""
         title.innerHTML =
             `
         ControlBeef | {sala}
@@ -158,8 +159,13 @@
     }
 
     function voltarFrigos(){
-        containerSala.style.display = "none"
-        containerPrincipal.style.display = ""
+        if(containerSala.style.display != "none"){
+            containerSala.style.display = "none"
+            containerPrincipal.style.display = ""
+        } else {
+            containerSala.style.display = ""
+            containerPrincipal.style.display = "none"
+        }
     }
 
     function criarGráficoSala() {

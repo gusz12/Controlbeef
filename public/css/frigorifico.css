@@ -7,6 +7,14 @@ button {
     cursor: pointer;
 }
 
+button:hover {
+    background-color: #7cddee;
+}
+
+button:active {
+    background-color: #9ae0ec;
+}
+
 .informacoes {
     display: grid;
     grid-template-columns: 30% 70%;
