@@ -5,112 +5,268 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>ControlBeef | Dashboard</title>
+    <title>ControlBeef | Dash Geral</title>
+    <link rel="icon" href="/css/assets/iconControlBeef.ico">
     <link rel="stylesheet" href="../css/dashboard.css">
     <link rel="stylesheet" href="../css/style.css">
 </head>
-<style>
-    .grauDano {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        margin-top: 20px;
-        margin-bottom: 20px;
-    }
 
-    .grauDano div {
-        width: 125px;
-        height: 50px;
-    }
 
-    .containerStatus {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        margin-top: 20px;
-    }
-    .containerStatus h1 {
-        margin-right: 20px;
-    }
-    .status {
-        width: 100%;
-        height: 300px;
-        background-color: #f0f0f0;
-        display: flex;
-        border: solid 3px #5DD7ED;
-        justify-content: center;
-        align-items: center;
-    }
-</style>
-
-<body>
+<body onload="listarFrigorificos(), KPItotal_frigo()">
 
     <div class="navbar">
         <div class="logo">
             <span>ControlBeef</span>
-            <img src="assets/logoControlBeef1.png" alt="logo ControlBeef">
+            <img src="/css/assets/logoControlBeef1.png" alt="logo ControlBeef">
         </div>
         <div class="menu">
-            <a href="../index.html">Home</a>
+            <div class="agora">
+                <a href="dashboard.html">Dashboard</a>
+            </div>
             <span>|</span>
-            <a href="../sobrenos.html">Sobre Nós</a>
+            <a href="../cadastro.html">Cadastro de usuário</a>
             <span>|</span>
-            <a href="../registro.html">Cadastrar</a>
-            <span>|</span>
-            <a href="../login.html">Dashboard</a>
+            <a href="../index.html">Sair</a>
         </div>
         <div class="usuario">
-            <img src="assets/free-user-icon-3296-thumb.png" class="user-avatar" alt="Usuário">
-            <span id="nome_lateral"></span>
+            <span style="font-size: 50px;" id="nome_lateral"></span>
         </div>
     </div>
 
     <div class="main-content">
         <div class="mensagemInicial">
-            <h1 id="bem_vindo">Bem Vindo</h1>
+            <span style=" font-size: 40px" id="nomeBemVindo"></span>
         </div>
+
 
         <div class="grauDano">
 
-            <div style="background-color: red;"></div>
-            <div style="background-color: yellow;"></div>
-            <div style="background-color: green;"></div>
+            <div
+                style="background-color: red; text-align: center; font-size: 18px; display: flex; justify-content: center; align-items: center;">
+                Fora do ideal (&lt; -3°C e &gt; 4°C) </div>
+            <div
+                style="background-color: yellow; text-align: center; font-size: 18px; display: flex; justify-content: center; align-items: center; margin-left: 10px;">
+                Em alerta <br>(-3ºC e 4ºC)</div>
+            <div
+                style="background-color: green; text-align: center; font-size: 18px; display: flex; justify-content: center; align-items: center; margin-left: 10px;">
+                Ideal<br> (&gt;-3°C e &lt;4°C)</div>
 
         </div>
 
         <div class="containerStatus">
 
-            <h1>status</h1>
+            <h1>Status Gerais</h1>
 
-            <div class="status"></div>
+            <div id="Container" class="status">
 
+            </div>
         </div>
+        <div class="KPIS">
+            <div class="kpi">
+                <div>Frigorificos: <br><br> <span style="font-size: 80px;" id="total_frigo"></span></div>
+            </div>
 
+            <div class="kpi">
+                <div>Total de Salas: <br><br> <span style="font-size: 80px;" id="total_salas"></span></div>
+            </div>
+
+            <div class="kpi">
+                <div>Salas dentro do ideal: <br><br> <span style="font-size: 80px;" id="salas_ideal"></span></div>
+            </div>
+
+            <div class="kpi">
+                <div> Salas fora do ideal: <br><br> <span style="font-size: 80px;" id="salas_naoIdeal"></span></div>
+            </div>
+        </div>
         <div class="containerFrigorifico">
-            <select id="select_frigo" class="select_Frigo">
-                <option value="#">Escolha um frigorifico</option>
-                <option value="1">Frigorifico XPTO</option>
-            </select>
 
-            <button onclick="frigorifico()">Mostrar Frigorifico</button>
-        </div>
+            <br>
 
-        <div class="grafico-main" id="graficoFrigorifico"></div>
+            <h1>Busque por frigorífico:</h1>
+            <div style="display: flex; flex-direction: row; align-items: center;">
+                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
+                    fill="#00000">
+                    <path
+                        d="M784-120 532-372q-30 24-69 38t-83 14q-109 0-184.5-75.5T120-580q0-109 75.5-184.5T380-840q109 0 184.5 75.5T640-580q0 44-14 83t-38 69l252 252-56 56ZM380-400q75 0 127.5-52.5T560-580q0-75-52.5-127.5T380-760q-75 0-127.5 52.5T200-580q0 75 52.5 127.5T380-400Z" />
+                </svg>
 
-        <div id="limpar_sub">
-            <div class="subgraficos" id="subgraficos"></div>
+                <input id="ipt_frigo" class="select_Frigo" type="text" placeholder="Digite o nome do frigorífico...">
+                <button onclick="buscaFrigorifico()">Buscar Frigorífico</button>
+            </div>
+
+            <div class="containerFrigorificos" id="containerFrigorificos">
+
+                <a style="text-decoration: none; color: black;" href="frigorifico.html">
+                    <div class="cardFrigorifico">
+                        <p>Frigorifico:</p>
+                        <p>Salas:</p>
+                        <p>Salas dentro do ideal:</p>
+                        <p>Salas fora do ideal:</p>
+                    </div>
+                </a>
+
+
+
+            </div>
         </div>
 
         <div class="containerSalas">
             <div id="div_salas" class="tabela_salas"></div>
         </div>
-
-        <div class="container" id="div_container"></div>
-
-        <div class="sensores" id="div_sensores"> </div>
+        <div id="container" style="display: none; flex-direction: column; align-items: end;">
+            <h1>Salas com maior problema</h1>
+            <div class="container" id="ranking"></div>
+        </div>
+    </div>
     </div>
 
 </body>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script src="../js/main.js"></script>
+<script>
+    var nome_user = sessionStorage.NOME_USUARIO;
+    var idEmpresa = sessionStorage.ID_EMPRESA;
+    nomeBemVindo.innerHTML = `Bem-vindo(a) de volta, ${nome_user}.`
+    nome_lateral.innerHTML = `${nome_user}`
+
+    let idFrigorifico = 0;
+    function listarFrigorificos() {
+
+        Container.innerHTML = ""
+        fetch(`/dashboard/listarFrigorifico/${idEmpresa}`, {
+            method: "GET"
+        })
+            .then(res => {
+                res.json().then(json => {
+
+                    console.log(res)
+                    console.log(json)
+                    for (c = 0; json.length > c; c++) {
+                        const frigorificos = json[c];
+
+                        Container.innerHTML += `
+                    <div class="card">
+                        <div class="bolaeTemperatura">
+                            <p>Temperatura: ${frigorificos.sensor_analogico}</p>
+                            <div class="bolinha" id="bolinha${c}">
+                            </div>
+                        </div>
+                        <p>Figorifico: ${frigorificos.nomeFrigo}</p>
+                        <p>Sala: ${frigorificos.nomeSala}</p>
+                    </div>
+            `;
+                    }
+                    for (c = 0; json.length > c; c++) {
+                        const frigorificos = json[c];
+
+                        console.log(frigorificos.Status_alerta)
+                        let bolinhas = document.getElementById('bolinha' + c);
+
+                        if (frigorificos.Status_alerta == 'Alerta') {
+                            bolinhas.style.backgroundColor = "#ffff00";
+                        } else if (frigorificos.Status_alerta == "Crítico") {
+                            bolinhas.style.backgroundColor = "#ff0000";
+                        } else {
+                            bolinhas.style.backgroundColor = "#008000";
+                        }
+                    }
+                })
+            })
+
+
+    }
+    select_frigo.addEventListener('change', function () {
+        idFrigorifico = select_frigo.value;
+        console.log('Frigorífico selecionado:', idFrigorifico);
+    });
+
+
+
+
+
+
+    function KPItotal_frigo() {
+        fetch(`/dashboard/KPItotal_frigo/${idEmpresa}`, {
+            method: "GET"
+        })
+            .then(res => {
+                res.json().then(json => {
+                    total_frigo.innerHTML = `${json[0].total_frigo}`;
+                })
+            })
+        KPItotal_salas();
+    }
+
+    function KPItotal_salas() {
+        fetch(`/dashboard/KPItotal_salas/${idEmpresa}`, {
+            method: "GET"
+        })
+            .then(res => {
+                res.json().then(json => {
+                    total_salas.innerHTML = `${json[0].total_salas}`;
+                })
+            })
+        KPIsalas_ideal();
+    }
+
+    function KPIsalas_ideal() {
+        fetch(`/dashboard/KPIsalas_ideal/${idEmpresa}`, {
+            method: "GET"
+        })
+            .then(res => {
+                res.json().then(json => {
+                    salas_ideal.innerHTML = `${json[0].salas_ideal}`;
+                })
+            })
+        KPIsalas_naoIdeal();
+    }
+
+    function KPIsalas_naoIdeal() {
+        fetch(`/dashboard/KPIsalas_naoIdeal/${idEmpresa}`, {
+            method: "GET"
+        })
+            .then(res => {
+                res.json().then(json => {
+                    salas_naoIdeal.innerHTML = `${json[0].salas_naoIdeal}`;
+                })
+            })
+    }
+
+
+
+
+
+
+    function salvarFrigo(id) {
+        var nomeFrigo = id.nomeFrigo;
+    }
+
+
+
+
+
+    function KPIfrigoGeral() {
+        fetch(`/dashboard/KPIfrigoGeral/${idEmpresa}`, {
+            method: "GET"
+        })
+            .then(res => {
+                res.json().then(json => {
+
+                    console.log(json);
+
+                    for (var i = 0; i < json.length; i++) {
+                        containerFrigorificos.innerHTML += `
+                         <a onclick="salvarFrigo(${json[i]})" style="text-decoration: none; color: black;" href="frigorifico.html">
+                    <div class="cardFrigorifico">
+                        <p>Frigorifico:${json[i].nomeFrigo}</p>
+                        <p>Salas:${json[i].total_salas}</p>
+                        <p>Salas dentro do ideal:${json[i].salas_ideal}</p>
+                        <p>Salas fora do ideal:${json[i].salas_naoIdeal}</p>
+                    </div>
+                </a>
+                `
+                    }
+                })
+            })
+    }
+
+</script>
