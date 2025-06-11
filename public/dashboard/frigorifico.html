@@ -50,7 +50,7 @@
                 </div>
             </div>
             <div class="SalasKPI" id="containerSalasTotal">
-                
+
 
 
             </div>
@@ -73,33 +73,34 @@
     var idEmpresa = sessionStorage.ID_EMPRESA;
     var idFrigo = sessionStorage.FRIGO_ATUAL;
 
-        let idSala = 0;
+    let idSala = 0;
 
-   function sala(id) {
-    idSala = id; // define a sala atual
-    containerPrincipal.style.display = "none";
-    containerSala.style.display = "";
+    function sala(id) {
+        idSala = id;
+        containerPrincipal.style.display = "none";
+        containerSala.style.display = "";
 
-    fetch(`/frigorifico/dadosSala/${idSala}`)
-        .then(res => res.json())
-        .then(json => {
-            let sala = json[0];
+        fetch(`/frigorifico/dadosSala/${idSala}`)
+            .then(res => res.json())
+            .then(json => {
+                let sala = json[0];
 
-            // Atualiza o título da aba
-            title.innerHTML = `ControlBeef | ${sala.nomeSala}`;
 
-            // Atualiza o container da sala com o gráfico
-            containerSala.innerHTML = `
+                title.innerHTML = `ControlBeef | ${sala.nomeSala}`;
+
+
+                containerSala.innerHTML = `
                 <div>
                     <button onclick="voltarFrigos()">Voltar</button>
                     <p>Sala: ${sala.nomeSala}</p>
                     <canvas id="graficoSala${sala.id}" width="400" height="200"></canvas>
-                    <p>Última atualização: <span id="ultimaAtualizacao"></span></p>
-                </div>
+                    <h1>Sensores</h1>
+                    <div id="containerSensores" class="containerSensores"></div>
+                    </div>
                 <div>
                     <div class="KPIS">
-                        <div class="kpi">Temperatura atual:</div>
-                        <div class="kpi">Tempo fora do ideal:</div>
+                        <div class="kpi">Temperatura atual: <h1 id="tempAtual"></h1></div>
+                        <div class="kpi">Tempo fora do ideal: <h1 id="tempForaAtual"</h1></div>
                     </div>
                     <div class="containerRegistro" id="containerRegistros">
                         <div class="Cabecalho">Dados Sala:</div>
@@ -107,27 +108,39 @@
                             <div class="linha">
                                 <div class="data item">Data/Hora</div> 
                                 <div class="temperatura item">Temperatura</div>
-                                <div class="ocorrencia item">Ocorrência</div>
                                 <div class="sensor item">Sensor</div> 
-                                <div class="status item">Status</div>
+                               
                             </div>
                         </div>
                     </div>
                 </div>
             `;
 
-            // Buscar dados da sala e plota o gráfico inicial
-            buscarDadosSala(idSala).then(dados => {
-                plotarGraficoSala(idSala, dados);
-                atualizarGraficoSala(idSala); // inicia atualização a cada 2 segundos
-            });
-        })
-        .catch(erro => console.error('Erro ao carregar dados da sala:', erro));
-}
- 
+                atualizarsensores();
+                buscarDadosSala(idSala).then(dados => {
+                    plotarGraficoSala(idSala, dados);
+                    atualizarGraficoSala(idSala);
+                });
+            })
+            .catch(erro => console.error('Erro ao carregar dados da sala:', erro));
+    }
 
-    function voltarFrigos(){
-        if(containerSala.style.display != "none"){
+    function atualizarsensores() {
+
+        // for (let c = 0; json.length>c;c++){
+
+        //     containerSensores.innerHTML += 
+        //    `
+        //    <div class="cardSensor">
+        //        <p>Sensor: </p>
+        //        <p>Temperatura atual: </p>
+        //    </div>
+        //    `
+        //}
+    }
+
+    function voltarFrigos() {
+        if (containerSala.style.display != "none") {
             containerSala.style.display = "none"
             containerPrincipal.style.display = ""
         } else {
@@ -136,62 +149,15 @@
         }
     }
 
-    function atualizarGrafico(){
-        fetch(`/frigorifico/criarGrafico/:idSala`,{
-            method: "GET"
-        }).then(res=>{
-            res.json().then(json => {
-                let dados = json[0];
-                
-            })
-        })
-    }
 
-    function criarGráficoSala(id) {
-       let idSala = id;
-        let dadosInteresse = {
-            labels: ['14:00', '13:00', '12:00'],
-            datasets: [{
-                label: 'Temperatura',
-                data: [2, 3, 3],
-                borderColor: '#5DD7ED',
-                backgroundColor: '#5DD7ED',
 
-                tension: 0.1,
-                borderWidth: 2
-            }],
-            options: {
-                animation: {
-                    duration: 1500,
-                    easing: 'easeOutBounce'
-                },
-                plugins: {
-                    id: 'custom-icons',
-                    afterDatasetsDraw(chart, args, pluginOptions) {
 
-                    }
-                },
-                scales: {
-                    y: {
-                        beginAtZero: false
-                    }
-                }
-            }
-        }
-        const configInteresse = {
-            type: 'line',
-            data: dadosInteresse,
-        };
-        let Interesses = new Chart(
-            document.getElementById(`graficoSala${idSala}`),
-            configInteresse
-        );
-    }
+
+
 
 
 
     function totalSalasFrigo() {
-
         var idEmpresa = sessionStorage.ID_EMPRESA;
         var idFrigo = sessionStorage.FRIGO_ATUAL;
 
@@ -206,11 +172,7 @@
         totalSalasIdealFrigo();
     }
 
-
-
-
     function totalSalasIdealFrigo() {
-
         var idEmpresa = sessionStorage.ID_EMPRESA;
         var idFrigo = sessionStorage.FRIGO_ATUAL;
 
@@ -225,10 +187,7 @@
         totalSalasNIdealFrigo();
     }
 
-
-
     function totalSalasNIdealFrigo() {
-
         var idEmpresa = sessionStorage.ID_EMPRESA;
         var idFrigo = sessionStorage.FRIGO_ATUAL;
 
@@ -243,21 +202,22 @@
                 })
             });
     }
-let globalJson;
 
-    function listarSalas(){
+    let globalJson;
+
+    function listarSalas() {
         var idEmpresa = sessionStorage.ID_EMPRESA;
         var idFrigo = sessionStorage.FRIGO_ATUAL;
-        fetch(`/frigorifico/listarSalas/${idEmpresa}/${idFrigo}`,{
+        fetch(`/frigorifico/listarSalas/${idEmpresa}/${idFrigo}`, {
             method: "GET"
         }).then(res => {
-            res.json().then(json =>{
+            res.json().then(json => {
                 globalJson = json;
-                for(let c = 0; json.length > c; c++){
+                for (let c = 0; json.length > c; c++) {
                     frigorificos = json[c]
                     console.log(frigorificos.id)
-                    containerSalasTotal.innerHTML += 
-                    `
+                    containerSalasTotal.innerHTML +=
+                        `
                     <a onclick="sala(${frigorificos.id})" class="aComHover">
                     <div class="cardSala">
                         <div class="alinhar">
@@ -269,90 +229,136 @@ let globalJson;
                 </a>
                     `
                 }
-        funcaoBolinhas()
-
+                funcaoBolinhas()
             })
         })
     }
-  function funcaoBolinhas() {
+
+    function funcaoBolinhas() {
         for (c = 0; c < globalJson.length; c++) {
             let frigorificos = globalJson[c];
 
             let bolinhas = document.getElementById(`bolinha${c}`);
 
             console.log(`Posição ${c} com o Frigorico de status ${frigorificos.status_alerta}`)
-            if(bolinhas != null){
+            if (bolinhas != null) {
                 console.log("Entrou no if")
                 if (frigorificos.status_alerta == 'Alerta') {
-                bolinhas.style.backgroundColor = "#ffff00";
-                console.log(bolinhas.style.backgroundColor)
-            } else if (frigorificos.status_alerta == "Crítico") {
-                bolinhas.style.backgroundColor = "#ff0000";
-                console.log(bolinhas.style.backgroundColor)
-            }else if(frigorificos.status_alerta == "Ideal"){
-                bolinhas.style.backgroundColor = "#008000";
-            } else {
-                bolinhas.style.backgroundColor = "grey"
-                console.log(bolinhas.style.backgroundColor)
+                    bolinhas.style.backgroundColor = "#ffff00";
+                    console.log(bolinhas.style.backgroundColor)
+                } else if (frigorificos.status_alerta == "Crítico") {
+                    bolinhas.style.backgroundColor = "#ff0000";
+                    console.log(bolinhas.style.backgroundColor)
+                } else if (frigorificos.status_alerta == "Ideal") {
+                    bolinhas.style.backgroundColor = "#008000";
+                } else {
+                    bolinhas.style.backgroundColor = "grey"
+                    console.log(bolinhas.style.backgroundColor)
+                }
             }
-            }
-            
+
         }
     }
 
     function buscarDadosSala(idSala) {
-    return fetch(`/frigorifico/criarGrafico/${idSala}`)
-        .then(res => res.json())
-        .then(json => {
-            console.log("Dados recebidos do backend:", json);
-            return json;
+        return fetch(`/frigorifico/criarGrafico/${idSala}`)
+            .then(res => res.json())
+            .then(json => {
+                console.log("Dados recebidos do backend:", json);
+                return json;
+            });
+    }
+
+    var graficoSala = null;
+
+    function plotarGraficoSala(idSala, dados) {
+        const ctx = document.getElementById(`graficoSala${idSala}`).getContext('2d');
+
+        if (graficoSala) {
+            graficoSala.destroy();
+        }
+
+        const labels = dados.map(item => item.data_medicao);
+        const temperaturas = dados.map(item => item.temperatura);
+
+        graficoSala = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Temperatura (°C)',
+                    data: temperaturas,
+                    borderColor: '#5DD7ED',
+                    backgroundColor: '#5DD7ED',
+                    tension: 0.1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: false
+                    }
+                }
+            }
         });
     }
 
-    var graficoSala = null; // Variável global para atualizar depois
-
-function plotarGraficoSala(idSala, dados) {
-    const ctx = document.getElementById(`graficoSala${idSala}`).getContext('2d');
-
-    if (graficoSala) {
-        graficoSala.destroy();
+    function atualizarGraficoSala(idSala) {
+        setInterval(() => {
+            buscarDadosSala(idSala)
+                .then(dados => {
+                    plotarGraficoSala(idSala, dados);
+                    atualizarKpiTempAtual(dados);
+                })
+                .catch(erro => console.error('Erro ao atualizar gráfico:', erro));
+        }, 2000);
     }
 
-    const labels = dados.map(item => item.data);
-    const temperaturas = dados.map(item => item.temperatura);
+    function atualizarKpiTempAtual(dados) {
+        for (let i = 0; i < dados.length; i++) {
 
-    graficoSala = new Chart(ctx, {
-        type: 'line',
-        data: {
-            labels: labels.reverse(),
-            datasets: [{
-                label: 'Temperatura (°C)',
-                data: temperaturas.reverse(),
-                borderColor: '#5DD7ED',
-                backgroundColor: '#5DD7ED',
-                tension: 0.1
-            }]
-        },
-        options: {
-            scales: {
-                y: {
-                    beginAtZero: false
-                }
-            }
+            console.log(dados[i].temperatura);
+            tempAtual.innerHTML = `${dados[i].temperatura}`
         }
-    });
-}
+    }
 
 
-function atualizarGraficoSala(idSala) {
-    setInterval(() => {
-        buscarDadosSala(idSala)
-            .then(dados => {
-                plotarGraficoSala(idSala, dados);
+    function tempoForaIdealSala(idEmpresa, idFrigorifico, idSala) {
+        var idEmpresa = sessionStorage.ID_EMPRESA;
+        var idFrigo = sessionStorage.FRIGO_ATUAL;
+        idSala = idSala;
+
+        fetch(`/frigorifico/tempoForaIdealSala/${idEmpresa}/${idFrigorifico}/${idSala}`)
+            .then(res => res.json())
+            .then(json => {
+                console.log("Dados KPI FORA DO TEMPO ATUAL:", json);
+                atualizarKpiTempForaAtual(json);
             })
-            .catch(erro => console.error('Erro ao atualizar gráfico:', erro));
+            .catch(err => console.error("Erro ao buscar tempo fora do ideal:", err));
+    }
+
+    function atualizarKpiTempForaAtual(dados) {
+        tempForaAtual.innerHTML = dados.map(item => `${item.Tempo_Fora_Ideal}`).join(" | ");
+    }
+
+    setInterval(() => {
+        idSala = idSala;
+        tempoForaIdealSala(sessionStorage.ID_EMPRESA, sessionStorage.FRIGO_ATUAL, idSala);
     }, 2000);
-}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
     function sessionClear() {

@@ -226,7 +226,45 @@ USE ControlBeef;
         data_medicao TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         CONSTRAINT fksensor_dados FOREIGN KEY (fksensor) REFERENCES sensor(id)
     );
-    INSERT INTO dados (fksensor, sensor_analogico) VALUES
+   
+
+    CREATE TABLE aviso (
+        id INT PRIMARY KEY AUTO_INCREMENT,
+        dataHora datetime default now() not null,
+        temperatura decimal(10, 2) not null,
+        fkSala int not null,
+        FOREIGN KEY (fkSala) REFERENCES salas_frias(id)
+    );
+
+   DELIMITER $$
+    CREATE TRIGGER atualizar_avisos
+AFTER INSERT ON controlbeef.dados
+FOR EACH ROW
+BEGIN
+    DECLARE idSala INT;
+    DECLARE tempMedia DECIMAL(5,2);
+
+    SELECT s.fkSala INTO idSala
+    FROM sensor s
+    WHERE s.id = NEW.fkSensor;
+
+    SELECT truncate(AVG(d.sensor_analogico), 2)
+    INTO tempMedia
+    FROM dados d
+    INNER JOIN sensor s ON d.fkSensor = s.id
+    WHERE s.fkSala = idSala;
+
+    if tempMedia > 4 OR tempMedia < -3 THEN
+        INSERT INTO aviso (temperatura, fkSala)
+        VALUES (tempMedia, idSala);
+    END IF;
+
+END$$
+
+DELIMITER ;
+
+
+ INSERT INTO dados (fksensor, sensor_analogico) VALUES
     (1, -2.5),
     (2, -3.0),
     (3, 0.5),
@@ -275,19 +313,30 @@ USE ControlBeef;
     (46, 2.9),
     (47, -8.6),  
     (48, 0.7);
-
-
-
-    CREATE TABLE aviso (
-        id INT PRIMARY KEY AUTO_INCREMENT,
-        dataHora datetime default now() not null,
-        temperatura decimal(10, 2) not null,
-        fkSala int not null,
-        FOREIGN KEY (fkSala) REFERENCES salas_frias(id)
-    );
-    -- insert( now())
-   -- alter table aviso add column
     
+
+    
+    select * from aviso;
+    
+    
+    
+    
+    select 
+sf.nomeSala,
+concat(
+count(
+	case 
+		when d.sensor_analogico > 4 then 1
+        when d.sensor_analogico < -3 then 1
+		else null
+	end
+)*2, ' Segundos') as Tempo_Fora_Ideal
+from salas_frias sf
+inner join frigorifico f on f.id = sf.fkfrigo
+inner join sensor s on s.fkSala = sf.id
+inner join dados d on d.fksensor = s.id
+where f.fkempresa = 2 and f.id = 2 and sf.id = 5
+group by sf.fkfrigo, sf.nomeSala;
     
 -- --------------------------------------------------------------
 -- Selects:    
@@ -559,29 +608,3 @@ where s.id = 1
     group by e.razao_social, f.nomeFrigo, sf.nomeSala) as medias_salas
     where verificacao_fora_ideal = 1;
 
-DELIMITER $$
-    CREATE TRIGGER atualizar_avisos
-AFTER INSERT ON controlbeef.dados
-FOR EACH ROW
-BEGIN
-    DECLARE idSala INT;
-    DECLARE tempMedia DECIMAL(5,2);
-
-    SELECT s.fkSala INTO idSala
-    FROM sensor s
-    WHERE s.id = NEW.fkSensor;
-
-    SELECT truncate(AVG(d.sensor_analogico), 2)
-    INTO tempMedia
-    FROM dados d
-    INNER JOIN sensor s ON d.fkSensor = s.id
-    WHERE s.fkSala = idSala;
-
-    if tempMedia > 4 OR tempMedia < -3 THEN
-        INSERT INTO aviso (temperatura, fkSala)
-        VALUES (tempMedia, idSala);
-    END IF;
-
-END$$
-
-DELIMITER ;

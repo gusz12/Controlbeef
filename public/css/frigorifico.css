@@ -132,3 +132,20 @@ button:active {
 .aComHover{
     height: fit-content;
 }
+.containerSensores{
+    border: #5DD7ED 2px solid;
+    padding: 10px;
+    display: grid;
+    grid-template-columns: 32% 32% 32%;
+    gap: 20px;
+    width: 100%;
+    border-radius: 10px;
+}
+
+.cardSensor{
+    border: black 2px solid;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    border-radius: 10px;
+}

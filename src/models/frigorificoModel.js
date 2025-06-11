@@ -70,11 +70,11 @@ where e.id = ${idEmpresa} and f.id = ${idFrigo}
 
 
 
-function listarSalas(idEmpresa,idFrigorifico){
+function listarSalas(idEmpresa, idFrigorifico) {
     console.log("Chegeui no model listar salas");
 
-    var instrucao = 
-    `
+    var instrucao =
+        `
   select
     f.nomeFrigo,
     sf.nomeSala,
@@ -106,42 +106,28 @@ function listarSalas(idEmpresa,idFrigorifico){
     return database.executar(instrucao)
 }
 
-function dadosSala(idSala){
+
+
+
+
+
+function dadosSala(idSala) {
     console.log("Cheguei no model dadosSala")
-    instrucao = 
-    `
+    instrucao =
+        `
     select * from salas_frias where id = ${idSala};
     `
     return database.executar(instrucao);
 }
 
-// function criarGrafico(idSala){
-//     console.log("Entrei no model criar gráfico")
-//     var instrucao =
-//     `
-//     select 
-//     sf.nomeSala,
-//     truncate(avg(d.sensor_analogico), 2),
-//     max(d.data_medicao) as Data_atual
-//     from empresa e
-//     inner join frigorifico f on e.id = f.fkempresa
-//     inner join salas_frias sf on sf.fkfrigo = f.id
-//     inner join sensor s on sf.id = s.fkSala
-//     inner join dados d on d.fksensor = s.id
-//     where sf.id = ${idSala} 
-//     group by sf.nomeSala;
-//     `;
-//     return database.executar(instrucao);
-// }
 
-// nessa query aqui limita pros 10
-function criarGrafico(idSala){
+function criarGrafico(idSala) {
     console.log("Entrei no model criar gráfico")
     var instrucao =
-    `
+        `
     select 
         d.sensor_analogico as temperatura,
-        d.data_medicao as data
+        (SELECT DATE_FORMAT(d.data_medicao, '%d/%m/%Y %H:%i:%s'))  as data_medicao
     from dados d
     inner join sensor s on d.fksensor = s.id
     inner join salas_frias sf on s.fkSala = sf.id
@@ -153,6 +139,41 @@ function criarGrafico(idSala){
 }
 
 
+function tempoForaIdealSala(idEmpresa, idFrigorifico, idSala) {
+    console.log("Entrei no model criar gráfico")
+    var instrucao =
+        `
+   select
+sf.nomeSala,
+concat(
+count(
+	case 
+		when d.sensor_analogico > 4 then 1
+        when d.sensor_analogico < -3 then 1
+		else null
+	end
+)*2, ' Minutos') as Tempo_Fora_Ideal
+from salas_frias sf
+inner join frigorifico f on f.id = sf.fkfrigo
+inner join sensor s on s.fkSala = sf.id
+inner join dados d on d.fksensor = s.id
+where f.fkempresa = ${idEmpresa} and f.id = ${idFrigorifico} and sf.id = ${idSala}
+group by sf.fkfrigo, sf.nomeSala;
+    `;
+    return database.executar(instrucao);
+}
+
+
+
+
+
+
+
+
+
+
+
+
 
 module.exports = {
     totalSalasFrigo,
@@ -160,5 +181,6 @@ module.exports = {
     totalSalasNIdealFrigo,
     listarSalas,
     dadosSala,
-    criarGrafico
+    criarGrafico,
+    tempoForaIdealSala
 };

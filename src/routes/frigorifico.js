@@ -15,16 +15,20 @@ router.get("/totalSalasNIdealFrigo/:idEmpresa/:idFrigo", function (req, res) {
     frigorificoController.totalSalasNIdealFrigo(req, res);
 });
 
-router.get("/listarSalas/:idEmpresa/:idFrigorifico", function(req,res){
-    frigorificoController.listarSalas(req,res);
+router.get("/listarSalas/:idEmpresa/:idFrigorifico", function (req, res) {
+    frigorificoController.listarSalas(req, res);
 });
 
-router.get("/dadosSala/:idSala", function(req,res){
-    frigorificoController.dadosSala(req,res);
+router.get("/dadosSala/:idSala", function (req, res) {
+    frigorificoController.dadosSala(req, res);
 });
 
-router.get("/criarGrafico/:idSala", function(req,res){
-    frigorificoController.criarGrafico(req,res);
+router.get("/criarGrafico/:idSala", function (req, res) {
+    frigorificoController.criarGrafico(req, res);
+});
+
+router.get("/tempoForaIdealSala/:idEmpresa/:idFrigorifico/:idSala", function (req, res) {
+    frigorificoController.tempoForaIdealSala(req, res);
 });
 
 

@@ -55,12 +55,12 @@ function listarSalas(req, res) {
     });
 }
 
-function dadosSala(req,res) {
+function dadosSala(req, res) {
     console.log("Chegeui no controller dadosSala");
     var idSala = req.params.idSala;
-    frigorificoModel.dadosSala(idSala).then(function(resultado){
+    frigorificoModel.dadosSala(idSala).then(function (resultado) {
         res.status(200).json(resultado);
-    }).catch(function(erro){
+    }).catch(function (erro) {
         res.status(500).json(erro.sqlMessage);
     });
 }
@@ -68,12 +68,34 @@ function dadosSala(req,res) {
 function criarGrafico(req, res) {
     console.log("Entrei no controller Criar gráfico");
     var idSala = req.params.idSala;
-    frigorificoModel.criarGrafico(idSala).then(function(resultado){
+    frigorificoModel.criarGrafico(idSala).then(function (resultado) {
         res.status(200).json(resultado);
-    }).catch(function(erro){
+    }).catch(function (erro) {
         res.status(500).json(erro.sqlMessage);
     });
 }
+
+
+
+function tempoForaIdealSala(req, res) {
+    console.log("Entrei no controller tempoForaIdealSala");
+    var idFrigorifico = req.params.idFrigorifico;
+    var idEmpresa = req.params.idEmpresa;
+    var idSala = req.params.idSala;
+
+
+    frigorificoModel.tempoForaIdealSala(idEmpresa, idFrigorifico, idSala).then(function (resultado) {
+        res.status(200).json(resultado);
+    }).catch(function (erro) {
+        res.status(500).json(erro.sqlMessage);
+    });
+}
+
+
+
+
+
+
 
 
 
@@ -83,5 +105,6 @@ module.exports = {
     totalSalasNIdealFrigo,
     listarSalas,
     dadosSala,
-    criarGrafico
+    criarGrafico,
+    tempoForaIdealSala
 }
