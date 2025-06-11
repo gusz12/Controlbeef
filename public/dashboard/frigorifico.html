@@ -55,24 +55,6 @@
 
             </div>
         </div>
-
-        <div class="rankings">
-            <!-- <div>
-                <p>Salas fora do ideal agora</p>
-                <div class="rankingContainer">
-                    <div class="RankingCard">
-                        <p>Sala:</p>
-                        <p>Temperatura atual:</p>
-                    </div>
-                    <div class="RankingCard">
-                        <p>Sala:</p>
-                        <p>Temperatura atual:</p>
-                    </div>
-
-                </div>
-            </div> -->
-            
-        </div>
     </div>
     <div class="containerSalas" id="containerSala">
 
@@ -91,9 +73,10 @@
     var idEmpresa = sessionStorage.ID_EMPRESA;
     var idFrigo = sessionStorage.FRIGO_ATUAL;
 
+        let idSala;
 
     function sala(id) {
-        let idSala = id;
+        idSala = id
         console.log(idSala)
         containerPrincipal.style.display = "none"
         containerSala.style.display = ""
@@ -138,7 +121,7 @@
                 <div class="corpo">
                     <div class="linha">
                         <div class="data item">Data/Hora</div> 
-                        <div class="temperatura item">Temperatua</div>
+                        <div class="temperatura item">Temperatura</div>
                         <div class="ocorrencia item"> Ocorrência</div>
                         <div class="sensor item"> Sensor</div> 
                         <div class="status item">Status</div></div>
@@ -173,6 +156,7 @@
             method: "GET"
         }).then(res=>{
             res.json().then(json => {
+                let dados = json[0];
                 
             })
         })
@@ -272,7 +256,7 @@
                 })
             });
     }
-
+let globalJson;
 
     function listarSalas(){
         var idEmpresa = sessionStorage.ID_EMPRESA;
@@ -281,11 +265,12 @@
             method: "GET"
         }).then(res => {
             res.json().then(json =>{
+                globalJson = json;
                 for(let c = 0; json.length > c; c++){
                     frigorificos = json[c]
                     containerSalasTotal.innerHTML += 
                     `
-                    <a onclick="sala(${frigorificos.id})" style="height: fit-content; width: fit-content">
+                    <a onclick="sala(${frigorificos.id})" class="aComHover">
                     <div class="cardSala">
                         <div class="alinhar">
                             <p>Temperatura:${frigorificos.temperatura_media_sala}ºC</p>
@@ -296,10 +281,37 @@
                 </a>
                     `
                 }
+        funcaoBolinhas()
+
             })
         })
     }
+  function funcaoBolinhas() {
+        for (c = 0; c < globalJson.length; c++) {
+            let frigorificos = globalJson[c];
 
+            console.log(globalJson.length);
+
+            let bolinhas = document.getElementById(`bolinha${c}`);
+
+            console.log(`Posição ${c} com o Frigorico de status ${frigorificos.Status_alerta}`)
+            if(bolinhas != null){
+                if (frigorificos.Status_alerta == 'Alerta') {
+                bolinhas.style.backgroundColor = "#ffff00";
+                console.log(bolinhas.style.backgroundColor)
+            } else if (frigorificos.Status_alerta == "Crítico") {
+                bolinhas.style.backgroundColor = "#ff0000";
+                console.log(bolinhas.style.backgroundColor)
+            }else if(frigorificos.Status_alerta == "Ideal"){
+                bolinhas.style.backgroundColor = "#008000";
+            } else {
+                bolinhas.style.backgroundColor = "grey"
+                console.log(bolinhas.style.backgroundColor)
+            }
+            }
+            
+        }
+    }
     function sessionClear() {
         sessionStorage.clear();
     }
