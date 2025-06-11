@@ -115,24 +115,43 @@ function dadosSala(idSala){
     return database.executar(instrucao);
 }
 
+// function criarGrafico(idSala){
+//     console.log("Entrei no model criar gráfico")
+//     var instrucao =
+//     `
+//     select 
+//     sf.nomeSala,
+//     truncate(avg(d.sensor_analogico), 2),
+//     max(d.data_medicao) as Data_atual
+//     from empresa e
+//     inner join frigorifico f on e.id = f.fkempresa
+//     inner join salas_frias sf on sf.fkfrigo = f.id
+//     inner join sensor s on sf.id = s.fkSala
+//     inner join dados d on d.fksensor = s.id
+//     where sf.id = ${idSala} 
+//     group by sf.nomeSala;
+//     `;
+//     return database.executar(instrucao);
+// }
+
+// nessa query aqui limita pros 10
 function criarGrafico(idSala){
     console.log("Entrei no model criar gráfico")
     var instrucao =
     `
     select 
-    sf.nomeSala,
-    truncate(avg(d.sensor_analogico), 2),
-    max(d.data_medicao) as Data_atual
-    from empresa e
-    inner join frigorifico f on e.id = f.fkempresa
-    inner join salas_frias sf on sf.fkfrigo = f.id
-    inner join sensor s on sf.id = s.fkSala
-    inner join dados d on d.fksensor = s.id
-    where sf.id = ${idSala} 
-    group by sf.nomeSala;
+        d.sensor_analogico as temperatura,
+        d.data_medicao as data
+    from dados d
+    inner join sensor s on d.fksensor = s.id
+    inner join salas_frias sf on s.fkSala = sf.id
+    where sf.id = ${idSala}
+    order by d.data_medicao desc
+    limit 10;
     `;
     return database.executar(instrucao);
 }
+
 
 
 module.exports = {
