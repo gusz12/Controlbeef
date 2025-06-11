@@ -68,7 +68,7 @@ button:active {
     border-radius: 100%;
     width: 30px;
     height: 30px;
-   
+
 
 }
 
@@ -108,9 +108,10 @@ button:active {
 
 .linha {
     display: grid;
-    grid-template-columns: 20% 20% 20% 20% 20%;
+    grid-template-columns: 33% 33% 33%;
     border: black 2px solid;
     text-align: center;
+
 }
 
 .item {
@@ -120,19 +121,23 @@ button:active {
 .containerRegistro {
     margin-top: 20px;
 }
-.cardSala{
+
+.cardSala {
     transition: all 0.3s;
 }
+
 .cardSala:hover {
     padding: 3px;
     cursor: pointer;
     transform: scale(1.02);
     border: #5DD7ED 5px solid;
 }
-.aComHover{
+
+.aComHover {
     height: fit-content;
 }
-.containerSensores{
+
+.containerSensores {
     border: #5DD7ED 2px solid;
     padding: 10px;
     display: grid;
@@ -142,7 +147,7 @@ button:active {
     border-radius: 10px;
 }
 
-.cardSensor{
+.cardSensor {
     border: black 2px solid;
     padding: 10px;
     display: flex;

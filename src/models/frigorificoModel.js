@@ -170,8 +170,25 @@ group by sf.fkfrigo, sf.nomeSala;
 
 
 
-
-
+function avisoSalas(idEmpresa, idFrigorifico) {
+    console.log("Entrei no model avisoSalas")
+    var instrucao =
+        `
+   select  
+   (SELECT DATE_FORMAT(d.data_medicao, '%d/%m/%Y %H:%i:%s'))  as data_hora, 
+    concat((d.sensor_analogico), 'ºC') as temperatura,  
+    d.fksensor  
+from empresa e  
+inner join frigorifico f on e.id = f.fkempresa  
+inner join salas_frias sf on sf.fkfrigo = f.id  
+inner join sensor s on sf.id = s.fkSala  
+inner join dados d on d.fksensor = s.id  
+where e.id = ${idEmpresa} and f.id = ${idFrigorifico}
+having temperatura not between -3 and 4  
+order by data_medicao desc;
+    `;
+    return database.executar(instrucao);
+}
 
 
 
@@ -182,5 +199,6 @@ module.exports = {
     listarSalas,
     dadosSala,
     criarGrafico,
-    tempoForaIdealSala
+    tempoForaIdealSala,
+    avisoSalas
 };

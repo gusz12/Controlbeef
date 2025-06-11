@@ -94,8 +94,6 @@
                     <button onclick="voltarFrigos()">Voltar</button>
                     <p>Sala: ${sala.nomeSala}</p>
                     <canvas id="graficoSala${sala.id}" width="400" height="200"></canvas>
-                    <h1>Sensores</h1>
-                    <div id="containerSensores" class="containerSensores"></div>
                     </div>
                 <div>
                     <div class="KPIS">
@@ -103,20 +101,21 @@
                         <div class="kpi">Tempo fora do ideal: <h1 id="tempForaAtual"</h1></div>
                     </div>
                     <div class="containerRegistro" id="containerRegistros">
-                        <div class="Cabecalho">Dados Sala:</div>
+                        <div class="Cabecalho">Avisos Salas:</div>
                         <div class="corpo">
                             <div class="linha">
                                 <div class="data item">Data/Hora</div> 
                                 <div class="temperatura item">Temperatura</div>
                                 <div class="sensor item">Sensor</div> 
-                               
+                            </div>
+                             <div id="avisos" class="linha">
                             </div>
                         </div>
                     </div>
                 </div>
             `;
 
-                atualizarsensores();
+
                 buscarDadosSala(idSala).then(dados => {
                     plotarGraficoSala(idSala, dados);
                     atualizarGraficoSala(idSala);
@@ -125,19 +124,7 @@
             .catch(erro => console.error('Erro ao carregar dados da sala:', erro));
     }
 
-    function atualizarsensores() {
 
-        // for (let c = 0; json.length>c;c++){
-
-        //     containerSensores.innerHTML += 
-        //    `
-        //    <div class="cardSensor">
-        //        <p>Sensor: </p>
-        //        <p>Temperatura atual: </p>
-        //    </div>
-        //    `
-        //}
-    }
 
     function voltarFrigos() {
         if (containerSala.style.display != "none") {
@@ -318,10 +305,9 @@
         for (let i = 0; i < dados.length; i++) {
 
             console.log(dados[i].temperatura);
-            tempAtual.innerHTML = `${dados[i].temperatura}`
+            tempAtual.innerHTML = `${dados[i].temperatura} °C`
         }
     }
-
 
     function tempoForaIdealSala(idEmpresa, idFrigorifico, idSala) {
         var idEmpresa = sessionStorage.ID_EMPRESA;
@@ -354,6 +340,38 @@
 
 
 
+
+
+
+
+    function avisoSalas(idEmpresa, idFrigorifico) {
+        var idEmpresa = sessionStorage.ID_EMPRESA;
+        var idFrigo = sessionStorage.FRIGO_ATUAL;
+
+
+        fetch(`/frigorifico/avisoSalas/${idEmpresa}/${idFrigorifico}`)
+            .then(res => res.json())
+            .then(json => {
+                console.log("Dados tabela avisoSalas:", json);
+                atualizarAvisoSalas(json);
+            })
+            .catch(err => console.error("Erro ao buscar tempo fora do ideal:", err));
+    }
+
+    function atualizarAvisoSalas(dados) {
+        avisos.innerHTML = '';
+        for (let i = 0; i < dados.length; i++) {
+            avisos.innerHTML += `
+            <div class="data item" > ${dados[i].data_hora}</div >
+            <div class="temperatura item">${dados[i].temperatura}</div >
+                <div class="sensor item">${dados[i].fksensor}</div>`
+
+        }
+    }
+
+    setInterval(() => {
+        avisoSalas(sessionStorage.ID_EMPRESA, sessionStorage.FRIGO_ATUAL);
+    }, 2000);
 
 
 

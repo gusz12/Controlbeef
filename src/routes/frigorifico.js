@@ -33,4 +33,19 @@ router.get("/tempoForaIdealSala/:idEmpresa/:idFrigorifico/:idSala", function (re
 
 
 
+
+
+router.get("/tempoForaIdealSala/:idEmpresa/:idFrigorifico/:idSala", function (req, res) {
+    frigorificoController.tempoForaIdealSala(req, res);
+});
+
+router.get("/avisoSalas/:idEmpresa/:idFrigorifico", function (req, res) {
+    frigorificoController.avisoSalas(req, res);
+});
+
+
+
+
+
+
 module.exports = router;

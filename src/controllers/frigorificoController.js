@@ -91,6 +91,19 @@ function tempoForaIdealSala(req, res) {
     });
 }
 
+function avisoSalas(req, res) {
+    console.log("Entrei no controller avisoSalas");
+    var idFrigorifico = req.params.idFrigorifico;
+    var idEmpresa = req.params.idEmpresa;
+
+
+
+    frigorificoModel.avisoSalas(idEmpresa, idFrigorifico).then(function (resultado) {
+        res.status(200).json(resultado);
+    }).catch(function (erro) {
+        res.status(500).json(erro.sqlMessage);
+    });
+}
 
 
 
@@ -106,5 +119,6 @@ module.exports = {
     listarSalas,
     dadosSala,
     criarGrafico,
-    tempoForaIdealSala
+    tempoForaIdealSala,
+    avisoSalas
 }
