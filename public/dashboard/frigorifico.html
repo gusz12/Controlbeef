@@ -75,71 +75,56 @@
 
         let idSala = 0;
 
-    function sala(id) {
-        idSala = id
-        console.log(idSala)
-        containerPrincipal.style.display = "none"
-        containerSala.style.display = ""
-        
-        fetch(`/frigorifico/dadosSala/${idSala}`,{
-            method: "GET"
-        }).then(res=>{
-            res.json().then(json => {
-                let sala = json[0]
-        title.innerHTML =
-            `
-        ControlBeef | ${sala.nomeSala}
-        `
-        containerSala.innerHTML =
-            `
+   function sala(id) {
+    idSala = id; // define a sala atual
+    containerPrincipal.style.display = "none";
+    containerSala.style.display = "";
+
+    fetch(`/frigorifico/dadosSala/${idSala}`)
+        .then(res => res.json())
+        .then(json => {
+            let sala = json[0];
+
+            // Atualiza o título da aba
+            title.innerHTML = `ControlBeef | ${sala.nomeSala}`;
+
+            // Atualiza o container da sala com o gráfico
+            containerSala.innerHTML = `
                 <div>
-            <button onclick="voltarFrigos()">Voltar</button>
-            <p>Sala: ${sala.nomeSala}</p>
-            <canvas id="graficoSala${sala.id}"></canvas>
-            <p>Ultima atualização
-                <br>
-                09/06/2025
-                <br>
-                14:30
-            </p>
-            <select id="sensores">
-                <option value="#">Selecione um sensor</option>
-                <canvas id="graficoSensor"></canvas>
-            </select>
-        </div>
-        <div>
-            <div class="KPIS">
-                <div class="kpi">
-                    Temperatura atual:
+                    <button onclick="voltarFrigos()">Voltar</button>
+                    <p>Sala: ${sala.nomeSala}</p>
+                    <canvas id="graficoSala${sala.id}" width="400" height="200"></canvas>
+                    <p>Última atualização: <span id="ultimaAtualizacao"></span></p>
                 </div>
-                <div class="kpi">
-                    Tempo fora do ideal:
+                <div>
+                    <div class="KPIS">
+                        <div class="kpi">Temperatura atual:</div>
+                        <div class="kpi">Tempo fora do ideal:</div>
+                    </div>
+                    <div class="containerRegistro" id="containerRegistros">
+                        <div class="Cabecalho">Dados Sala:</div>
+                        <div class="corpo">
+                            <div class="linha">
+                                <div class="data item">Data/Hora</div> 
+                                <div class="temperatura item">Temperatura</div>
+                                <div class="ocorrencia item">Ocorrência</div>
+                                <div class="sensor item">Sensor</div> 
+                                <div class="status item">Status</div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </div>
-            <div class="containerRegistro" id="containerRegistros">
-                <div class="Cabecalho">Dados Sala:</div>
-                <div class="corpo">
-                    <div class="linha">
-                        <div class="data item">Data/Hora</div> 
-                        <div class="temperatura item">Temperatura</div>
-                        <div class="ocorrencia item"> Ocorrência</div>
-                        <div class="sensor item"> Sensor</div> 
-                        <div class="status item">Status</div></div>
-                </div>
-            </div>
-        </div>
-    </div>
-        `
-          //criando gráfico
-        criarGráficoSala(sala.id);
+            `;
 
-            })
+            // Buscar dados da sala e plota o gráfico inicial
+            buscarDadosSala(idSala).then(dados => {
+                plotarGraficoSala(idSala, dados);
+                atualizarGraficoSala(idSala); // inicia atualização a cada 2 segundos
+            });
         })
-       
-
-      
-
-    }
+        .catch(erro => console.error('Erro ao carregar dados da sala:', erro));
+}
+ 
 
     function voltarFrigos(){
         if(containerSala.style.display != "none"){
@@ -314,6 +299,62 @@ let globalJson;
             
         }
     }
+
+    function buscarDadosSala(idSala) {
+    return fetch(`/frigorifico/criarGrafico/${idSala}`)
+        .then(res => res.json())
+        .then(json => {
+            console.log("Dados recebidos do backend:", json);
+            return json;
+        });
+    }
+
+    var graficoSala = null; // Variável global para atualizar depois
+
+function plotarGraficoSala(idSala, dados) {
+    const ctx = document.getElementById(`graficoSala${idSala}`).getContext('2d');
+
+    if (graficoSala) {
+        graficoSala.destroy();
+    }
+
+    const labels = dados.map(item => item.data);
+    const temperaturas = dados.map(item => item.temperatura);
+
+    graficoSala = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: labels.reverse(),
+            datasets: [{
+                label: 'Temperatura (°C)',
+                data: temperaturas.reverse(),
+                borderColor: '#5DD7ED',
+                backgroundColor: '#5DD7ED',
+                tension: 0.1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: false
+                }
+            }
+        }
+    });
+}
+
+
+function atualizarGraficoSala(idSala) {
+    setInterval(() => {
+        buscarDadosSala(idSala)
+            .then(dados => {
+                plotarGraficoSala(idSala, dados);
+            })
+            .catch(erro => console.error('Erro ao atualizar gráfico:', erro));
+    }, 2000);
+}
+
+
     function sessionClear() {
         sessionStorage.clear();
     }

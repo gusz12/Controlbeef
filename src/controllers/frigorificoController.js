@@ -65,15 +65,16 @@ function dadosSala(req,res) {
     });
 }
 
-function criarGrafico(idSala){
+function criarGrafico(req, res) {
     console.log("Entrei no controller Criar gráfico");
     var idSala = req.params.idSala;
     frigorificoModel.criarGrafico(idSala).then(function(resultado){
         res.status(200).json(resultado);
     }).catch(function(erro){
         res.status(500).json(erro.sqlMessage);
-    })
+    });
 }
+
 
 
 module.exports = {
