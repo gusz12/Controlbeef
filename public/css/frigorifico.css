@@ -129,3 +129,6 @@ button:active {
     transform: scale(1.02);
     border: #5DD7ED 5px solid;
 }
+.aComHover{
+    height: fit-content;
+}
