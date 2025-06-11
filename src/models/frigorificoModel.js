@@ -76,17 +76,17 @@ function listarSalas(idEmpresa,idFrigorifico){
     var instrucao = 
     `
     select
-f.id,
-sf.id,
-sf.nomeSala,
-truncate(avg(d.sensor_analogico), 2) as temperatura_media_sala
-from empresa e
-inner join frigorifico f on e.id = f.fkempresa
-inner join salas_frias sf on sf.fkfrigo = f.id
-inner join sensor s on sf.id = s.fkSala
-inner join dados d on d.fksensor = s.id
-where e.id = ${idEmpresa} and f.id = ${idFrigorifico}
-group by f.nomeFrigo, sf.nomeSala, sf.id; 
+    f.id,
+    sf.id,
+    sf.nomeSala,
+    truncate(avg(d.sensor_analogico), 2) as temperatura_media_sala
+    from empresa e
+    inner join frigorifico f on e.id = f.fkempresa
+    inner join salas_frias sf on sf.fkfrigo = f.id
+    inner join sensor s on sf.id = s.fkSala
+    inner join dados d on d.fksensor = s.id
+    where e.id = ${idEmpresa} and f.id = ${idFrigorifico}
+    group by f.nomeFrigo, sf.nomeSala, sf.id; 
     `
     return database.executar(instrucao)
 }
