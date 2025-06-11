@@ -106,6 +106,12 @@ button:active {
     padding: 30px;
 }
 
+.corpo {
+    overflow: none;
+    overflow-y: scroll;
+    height: 350px;
+}
+
 .linha {
     display: grid;
     grid-template-columns: 33% 33% 33%;
