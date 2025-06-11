@@ -126,17 +126,13 @@ function criarGrafico(idSala) {
     
     var instrucao =
         `
-     select 
-        sf.nomeSala,
-        truncate(avg(d.sensor_analogico), 2) as temperatura,
-        d.data_medicao as data
-  from empresa e
-    inner join frigorifico f on e.id = f.fkempresa
-    inner join salas_frias sf on sf.fkfrigo = f.id
-    inner join sensor s on sf.id = s.fkSala
-    inner join dados d on d.fksensor = s.id
+    select 
+        d.sensor_analogico as temperatura,
+        (SELECT DATE_FORMAT(d.data_medicao, '%d/%m/%Y %H:%i:%s'))  as data_medicao
+    from dados d
+    inner join sensor s on d.fksensor = s.id
+    inner join salas_frias sf on s.fkSala = sf.id
     where sf.id = ${idSala}
-    group by sf.nomeSala, d.data_medicao
     order by d.data_medicao desc
     limit 10;
     `;
