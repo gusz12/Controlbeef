@@ -558,3 +558,30 @@ where s.id = 1
     where e.id = ${idEmpresa}
     group by e.razao_social, f.nomeFrigo, sf.nomeSala) as medias_salas
     where verificacao_fora_ideal = 1;
+
+DELIMITER $$
+    CREATE TRIGGER atualizar_avisos
+AFTER INSERT ON controlbeef.dados
+FOR EACH ROW
+BEGIN
+    DECLARE idSala INT;
+    DECLARE tempMedia DECIMAL(5,2);
+
+    SELECT s.fkSala INTO idSala
+    FROM sensor s
+    WHERE s.id = NEW.fkSensor;
+
+    SELECT truncate(AVG(d.sensor_analogico), 2)
+    INTO tempMedia
+    FROM dados d
+    INNER JOIN sensor s ON d.fkSensor = s.id
+    WHERE s.fkSala = idSala;
+
+    if tempMedia > 4 OR tempMedia < -3 THEN
+        INSERT INTO aviso (temperatura, fkSala)
+        VALUES (tempMedia, idSala);
+    END IF;
+
+END$$
+
+DELIMITER ;
