@@ -141,7 +141,7 @@
                 for (c = 0; json.length > c; c++) {
                     const frigorificos = json[c];
                     let bolinhas = document.getElementById('bolinha' + c);
-
+                    
                     if (frigorificos.Status_alerta == 'Alerta') {
                         bolinhas.style.backgroundColor = "#ffff00";
                     } else if (frigorificos.Status_alerta == "Crítico") {
@@ -164,16 +164,18 @@
             let bolinhas = document.getElementById(`bolinha${c}`);
 
             console.log(`Posição ${c} com o Frigorico de status ${frigorificos.Status_alerta}`)
-            if (frigorificos.Status_alerta == 'Alerta') {
-                bolinhas.style.backgroundColor = "#ffff00";
-            } else if (frigorificos.Status_alerta == "Crítico") {
-                bolinhas.style.backgroundColor = "#ff0000";
-                console.log(bolinhas.style.backgroundColor)
-            }else if(frigorificos.Status_alerta == "Ideal"){
-                bolinhas.style.backgroundColor = "#008000";
-            } else {
-                bolinhas.style.backgroundColor = "grey"
-                console.log(bolinhas.style.backgroundColor)
+            if(bolinhas != null){
+                if (frigorificos.Status_alerta == 'Alerta') {
+                    bolinhas.style.backgroundColor = "#ffff00";
+                } else if (frigorificos.Status_alerta == "Crítico") {
+                    bolinhas.style.backgroundColor = "#ff0000";
+                    console.log(bolinhas.style.backgroundColor)
+                }else if(frigorificos.Status_alerta == "Ideal"){
+                    bolinhas.style.backgroundColor = "#008000";
+                } else {
+                    bolinhas.style.backgroundColor = "grey"
+                    console.log(bolinhas.style.backgroundColor)
+                }
             }
             
         }
