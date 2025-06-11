@@ -80,6 +80,7 @@
         console.log(idSala)
         containerPrincipal.style.display = "none"
         containerSala.style.display = ""
+        
         fetch(`/frigorifico/dadosSala/${idSala}`,{
             method: "GET"
         }).then(res=>{

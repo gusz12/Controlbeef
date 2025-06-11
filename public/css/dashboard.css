@@ -325,16 +325,24 @@ select {
     align-self: center;
 
 }
-.card{
+.card, .cardSala{
     transition: all 0.3s;
 }
-.card:hover {
+.card:hover, .cardSala:hover {
     cursor: pointer;
     transform: scale(1.02);
     border: #5DD7ED 5px solid;
 }
 
+#containerSalasTotal a:hover {
+    transition: all 0.3s;
+}
 
+#containerSalasTotal a:hover {
+    cursor: pointer;
+    transform: scale(1.02);
+    border: #5DD7ED 5px solid;
+}
 
 .cardFrigorifico {
     border-radius: 10px;
