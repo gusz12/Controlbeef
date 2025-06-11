@@ -73,9 +73,10 @@
     var idEmpresa = sessionStorage.ID_EMPRESA;
     var idFrigo = sessionStorage.FRIGO_ATUAL;
 
+        let idSala;
 
     function sala(id) {
-        let idSala = id;
+        idSala = id
         console.log(idSala)
         containerPrincipal.style.display = "none"
         containerSala.style.display = ""
