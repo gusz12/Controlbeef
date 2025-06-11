@@ -126,7 +126,7 @@ function criarGrafico(idSala) {
     var instrucao =
         `
     select 
-        avg(d.sensor_analogico) as temperatura,
+        truncate(avg(d.sensor_analogico),2) as temperatura,
         (SELECT DATE_FORMAT(d.data_medicao, '%d/%m/%Y %H:%i:%s'))  as data_medicao
     from dados d
     inner join sensor s on d.fksensor = s.id
