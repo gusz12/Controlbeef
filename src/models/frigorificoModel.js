@@ -79,6 +79,7 @@ function listarSalas(idEmpresa,idFrigorifico){
     f.nomeFrigo,
     sf.nomeSala,
     sf.nomeSala,
+    sf.id,
     truncate(avg(d.sensor_analogico), 2) as temperatura_media_sala,
     case
 		when avg(d.sensor_analogico) > 4 then 'Crítico'
@@ -94,7 +95,7 @@ function listarSalas(idEmpresa,idFrigorifico){
     inner join sensor s on sf.id = s.fkSala
     inner join dados d on d.fksensor = s.id
     where e.id = ${idEmpresa} and f.id = ${idFrigorifico}
-    group by f.nomeFrigo, sf.nomeSala
+    group by f.nomeFrigo, sf.nomeSala, sf.id
     order by
     case 
 		when status_alerta = 'Crítico' then 1
