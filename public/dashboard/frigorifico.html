@@ -252,7 +252,9 @@
         })
             .then(res => {
                 res.json().then(json => {
-                    totalSalasNaoIdeal.innerHTML = `<h1 style="margin:0px; font-size: 60px">${json[0].salasNIdealFrigo}</h1>`
+                    salas = json[0]
+                    console.log(salas.salasNIdealFrigo)
+                    totalSalasNaoIdeal.innerHTML = `<h1 style="margin:0px; font-size: 60px">${salas.salasNIdealFrigo}</h1>`
                 })
             });
     }
@@ -274,7 +276,7 @@ let globalJson;
                     <div class="cardSala">
                         <div class="alinhar">
                             <p>Temperatura:${frigorificos.temperatura_media_sala}ºC</p>
-                            <div class="bolinha" id="bolinha"></div>
+                            <div class="bolinha" id="bolinha${c}"></div>
                         </div>
                         <p>Sala: ${frigorificos.nomeSala}</p>
                     </div>
@@ -290,19 +292,18 @@ let globalJson;
         for (c = 0; c < globalJson.length; c++) {
             let frigorificos = globalJson[c];
 
-            console.log(globalJson.length);
-
             let bolinhas = document.getElementById(`bolinha${c}`);
 
-            console.log(`Posição ${c} com o Frigorico de status ${frigorificos.Status_alerta}`)
+            console.log(`Posição ${c} com o Frigorico de status ${frigorificos.status_alerta}`)
             if(bolinhas != null){
-                if (frigorificos.Status_alerta == 'Alerta') {
+                console.log("Entrou no if")
+                if (frigorificos.status_alerta == 'Alerta') {
                 bolinhas.style.backgroundColor = "#ffff00";
                 console.log(bolinhas.style.backgroundColor)
-            } else if (frigorificos.Status_alerta == "Crítico") {
+            } else if (frigorificos.status_alerta == "Crítico") {
                 bolinhas.style.backgroundColor = "#ff0000";
                 console.log(bolinhas.style.backgroundColor)
-            }else if(frigorificos.Status_alerta == "Ideal"){
+            }else if(frigorificos.status_alerta == "Ideal"){
                 bolinhas.style.backgroundColor = "#008000";
             } else {
                 bolinhas.style.backgroundColor = "grey"

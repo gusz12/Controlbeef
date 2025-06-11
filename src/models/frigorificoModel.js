@@ -75,18 +75,32 @@ function listarSalas(idEmpresa,idFrigorifico){
 
     var instrucao = 
     `
-    select
-    f.id,
-    sf.id,
+  select
+    f.nomeFrigo,
     sf.nomeSala,
-    truncate(avg(d.sensor_analogico), 2) as temperatura_media_sala
+    sf.nomeSala,
+    truncate(avg(d.sensor_analogico), 2) as temperatura_media_sala,
+    case
+		when avg(d.sensor_analogico) > 4 then 'Crítico'
+        when avg(d.sensor_analogico) < -3 then 'Crítico'
+        when avg(d.sensor_analogico) = -3 then 'Alerta'
+        when avg(d.sensor_analogico) = 4 then 'Alerta'
+        else 'Ideal'
+	end 
+	as status_alerta 
     from empresa e
     inner join frigorifico f on e.id = f.fkempresa
     inner join salas_frias sf on sf.fkfrigo = f.id
     inner join sensor s on sf.id = s.fkSala
     inner join dados d on d.fksensor = s.id
     where e.id = ${idEmpresa} and f.id = ${idFrigorifico}
-    group by f.nomeFrigo, sf.nomeSala, sf.id; 
+    group by f.nomeFrigo, sf.nomeSala
+    order by
+    case 
+		when status_alerta = 'Crítico' then 1
+        when status_alerta = 'Alerta' then 2
+        else 3
+	end;
     `
     return database.executar(instrucao)
 }
