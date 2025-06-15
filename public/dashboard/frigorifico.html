@@ -289,20 +289,39 @@
             buscarDadosSala(idSala)
                 .then(dados => {
                     plotarGraficoSala(idSala, dados);
-                    atualizarKpiTempAtual(dados);
                 })
                 .catch(erro => console.error('Erro ao atualizar gráfico:', erro));
         }, 2000);
     }
 
-    function atualizarKpiTempAtual(dados) {
-        for (let i = 0; i < dados.length; i++) {
 
-            console.log(dados[i].temperatura);
-            tempAtual.innerHTML = `${dados[i].temperatura} °C`
+    // Função para buscar a temperatura média da sala e atualizar o KPI
+    function KpiTempAtual(idEmpresa, idFrigorifico, idSala) {
+        var idEmpresa = sessionStorage.ID_EMPRESA;
+        var idFrigo = sessionStorage.FRIGO_ATUAL;
+        idSala = idSala;
+
+        fetch(`/frigorifico/KpiTempAtual/${idEmpresa}/${idFrigorifico}/${idSala}`)
+            .then(res => res.json())
+            .then(json => {
+                console.log("Dados KPI TEMP ATUAL:", json);
+                for (let i = 0; i < json.length; i++) {
+
+                console.log(json[i].TempMedia);
+                tempAtual.innerHTML = `${json[i].TempMedia} °C`;
         }
+            })
+            .catch(err => console.error("Erro ao buscar tempo fora do ideal:", err));
     }
 
+    setInterval(() => {
+        idSala = idSala;
+        KpiTempAtual(sessionStorage.ID_EMPRESA, sessionStorage.FRIGO_ATUAL, idSala);
+    }, 2000);
+
+
+
+// Função para buscar o tempo fora do ideal e atualizar o KPI
     function tempoForaIdealSala(idEmpresa, idFrigorifico, idSala) {
         var idEmpresa = sessionStorage.ID_EMPRESA;
         var idFrigo = sessionStorage.FRIGO_ATUAL;

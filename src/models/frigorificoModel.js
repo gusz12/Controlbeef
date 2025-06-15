@@ -139,6 +139,24 @@ function criarGrafico(idSala) {
     return database.executar(instrucao);
 }
 
+function KpiTempAtual(idEmpresa, idFrigorifico, idSala) {
+    console.log("Entrei no model KpiTempAtual")
+    var instrucao =
+        `
+   select 
+	sf.nomeSala,
+    truncate(avg(d.sensor_analogico), 2) as TempMedia
+	from empresa e
+    inner join frigorifico f on e.id = f.fkempresa
+    inner join salas_frias sf on sf.fkfrigo = f.id
+    inner join sensor s on sf.id = s.fkSala
+    inner join dados d on d.fksensor = s.id
+    where e.id = ${idEmpresa} and f.id = ${idFrigorifico} and sf.id = ${idSala}
+    group by sf.nomeSala;
+    `;
+    return database.executar(instrucao)
+}
+
 
 function tempoForaIdealSala(idEmpresa, idFrigorifico, idSala) {
     console.log("Entrei no model criar gráfico")
@@ -200,6 +218,7 @@ module.exports = {
     listarSalas,
     dadosSala,
     criarGrafico,
+    KpiTempAtual,
     tempoForaIdealSala,
     avisoSalas
 };

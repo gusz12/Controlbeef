@@ -31,13 +31,10 @@ router.get("/tempoForaIdealSala/:idEmpresa/:idFrigorifico/:idSala", function (re
     frigorificoController.tempoForaIdealSala(req, res);
 });
 
-
-
-
-
-router.get("/tempoForaIdealSala/:idEmpresa/:idFrigorifico/:idSala", function (req, res) {
-    frigorificoController.tempoForaIdealSala(req, res);
+router.get("/KpiTempAtual/:idEmpresa/:idFrigorifico/:idSala", function (req, res) {
+    frigorificoController.KpiTempAtual(req, res);
 });
+
 
 router.get("/avisoSalas/:idEmpresa/:idFrigorifico", function (req, res) {
     frigorificoController.avisoSalas(req, res);

@@ -75,6 +75,18 @@ function criarGrafico(req, res) {
     });
 }
 
+function KpiTempAtual(req, res) {
+    console.log("Entrei no controller KpiTempAtual");
+    var idFrigorifico = req.params.idFrigorifico;
+    var idEmpresa = req.params.idEmpresa;
+    var idSala = req.params.idSala;
+
+    frigorificoModel.KpiTempAtual(idEmpresa, idFrigorifico, idSala).then(function (resultado) {
+        res.status(200).json(resultado);
+    }).catch(function (erro) {
+        res.status(500).json(erro.sqlMessage);
+    });
+}
 
 
 function tempoForaIdealSala(req, res) {
@@ -119,6 +131,7 @@ module.exports = {
     listarSalas,
     dadosSala,
     criarGrafico,
+    KpiTempAtual,
     tempoForaIdealSala,
     avisoSalas
 }
