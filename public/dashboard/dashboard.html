@@ -12,7 +12,7 @@
 </head>
 
 
-<body onload=" KPItotal_frigo()">
+<body onload=" KPItotal_frigo(),listarSalas()">
 
     <div class="navbar">
         <div class="logo">
@@ -106,8 +106,9 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="/js/dados.js"></script>
 <script>
-
-
+    card.style.display = "none";
+    let NaoIdeal = 0;
+    let ultimo = 0;
     var nome_user = sessionStorage.NOME_USUARIO;
     var idEmpresa = sessionStorage.ID_EMPRESA;
     nomeBemVindo.innerHTML = `Bem-vindo(a) de volta, ${nome_user}.`
@@ -116,18 +117,20 @@
     let idFrigorifico = 0;
     let globalJson;
     Container.innerHTML = ""
-    fetch(`/dashboard/listarSalasTotais/${idEmpresa}`, {
-        method: "GET"
-    })
-        .then(res => {
-            res.json().then(json => {
-                var totalSalas = 0;
-                globalJson = json;
+    function listarSalas() {
+        Container.innerHTML = ""
+        fetch(`/dashboard/listarSalasTotais/${idEmpresa}`, {
+            method: "GET"
+        })
+            .then(res => {
+                res.json().then(json => {
+                    var totalSalas = 0;
+                    globalJson = json;
 
-                for (c = 0; json.length > c; c++) {
-                    const frigorificos = json[c];
+                    for (c = 0; json.length > c; c++) {
+                        const frigorificos = json[c];
 
-                    Container.innerHTML += `
+                        Container.innerHTML += `
                     <div onclick="salvarFrigo(${frigorificos.idFrigo}, '${frigorificos.nomeFrigo}')" class="card">
                         <div class="bolaeTemperatura">
                             <p>Temperatura: ${frigorificos.temperatura_media} ºC</p>
@@ -138,27 +141,39 @@
                         <p>Sala: ${frigorificos.nomeSala}</p>
                     </div>
             `;
-                }
-                for (c = 0; json.length > c; c++) {
-                    const frigorificos = json[c];
-                    let bolinhas = document.getElementById('bolinha' + c);
-                    
-                    if (frigorificos.Status_alerta == 'Alerta') {
-                        bolinhas.style.backgroundColor = "#ffff00";
-                    } else if (frigorificos.Status_alerta == "Crítico") {
-                        totalSalas++;
-                        bolinhas.style.backgroundColor = "#ff0000";
-                        card.style.display = "block";
-                        document.getElementById("card").innerHTML = `🔔 Alerta! Você tem sala(s) fora do ideal! <br> Total salas fora do ideal: ${totalSalas}`;
-                    } else if (frigorificos.Status_alerta == "Sem Dados") {
-                        bolinhas.style.backgroundColor = "#808080"; // cinza para indicar sem dados
-                    } else {
-                        bolinhas.style.backgroundColor = "#008000";
                     }
+                    for (c = 0; json.length > c; c++) {
+                        const frigorificos = json[c];
+                        let bolinhas = document.getElementById('bolinha' + c);
 
-                }
+                        if (frigorificos.Status_alerta == 'Alerta') {
+                            bolinhas.style.backgroundColor = "#ffff00";
+                        } else if (frigorificos.Status_alerta == "Crítico") {
+                            totalSalas++;
+                            bolinhas.style.backgroundColor = "#ff0000";
+
+                        } else if (frigorificos.Status_alerta == "Sem Dados") {
+                            bolinhas.style.backgroundColor = "#808080"; // cinza para indicar sem dados
+                        } else {
+                            bolinhas.style.backgroundColor = "#008000";
+                        }
+
+                    }
+                })
             })
-        })
+    }
+
+    setInterval(() => { atualizarTudo() }, 2000);
+
+
+    function atualizarTudo() {
+        listarSalas()
+        KPIsalas_ideal()
+        KPIsalas_naoIdeal()
+        KPItotal_frigo()
+        KPItotal_salas()
+    }
+
     function funcaoBolinhas() {
         for (c = 0; c < globalJson.length; c++) {
             let frigorificos = globalJson[c];
@@ -168,20 +183,20 @@
             let bolinhas = document.getElementById(`bolinha${c}`);
 
             console.log(`Posição ${c} com o Frigorico de status ${frigorificos.Status_alerta}`)
-            if(bolinhas != null){
+            if (bolinhas != null) {
                 if (frigorificos.Status_alerta == 'Alerta') {
                     bolinhas.style.backgroundColor = "#ffff00";
                 } else if (frigorificos.Status_alerta == "Crítico") {
                     bolinhas.style.backgroundColor = "#ff0000";
                     console.log(bolinhas.style.backgroundColor)
-                }else if(frigorificos.Status_alerta == "Ideal"){
+                } else if (frigorificos.Status_alerta == "Ideal") {
                     bolinhas.style.backgroundColor = "#008000";
                 } else {
                     bolinhas.style.backgroundColor = "grey"
                     console.log(bolinhas.style.backgroundColor)
                 }
             }
-            
+
         }
     }
     function pesquisar() {
@@ -235,8 +250,6 @@
 
 
 
-
-
     function KPItotal_frigo() {
         fetch(`/dashboard/KPItotal_frigo/${idEmpresa}`, {
             method: "GET"
@@ -272,7 +285,7 @@
             })
         KPIsalas_naoIdeal();
     }
-
+    console.log(NaoIdeal)
     function KPIsalas_naoIdeal() {
         fetch(`/dashboard/KPIsalas_naoIdeal/${idEmpresa}`, {
             method: "GET"
@@ -280,7 +293,28 @@
             .then(res => {
                 res.json().then(json => {
                     salas_naoIdeal.innerHTML = `${json[0].salas_naoIdeal}`;
+                    if (json[0].salas_naoIdeal > 0) {
+
+                        if (ultimo != json[0].salas_naoIdeal) {
+                            console.log("Entrei em ultimo diferente de json")
+                            NaoIdeal = 1
+                        }
+                        ultimo = json[0].salas_naoIdeal;
+                        alertinha();
+                    }
                 })
             })
+    }
+
+
+    console.log(NaoIdeal)
+    setInterval(()=>card.style.display="none",4000)
+    function alertinha() {
+        if (NaoIdeal == 1) {
+            card.style.display = "block";
+            document.getElementById("card").innerHTML = `🔔 Alerta! Você tem sala(s) fora do ideal! <br> Total salas fora do ideal: ${ultimo}`;
+            NaoIdeal = 0;
+        }
+
     }
 </script>
