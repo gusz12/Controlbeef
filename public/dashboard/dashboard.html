@@ -146,7 +146,8 @@
             `;
                     }
                     for (c = 0; json.length > c; c++) {
-                        const frigorificos = json[c];
+                        const 
+                        frigorificos = json[c];
                         let bolinhas = document.getElementById('bolinha' + c);
 
                         if (frigorificos.Status_alerta == 'Alerta') {
@@ -174,7 +175,6 @@
                 for (let c = 0; json.length > c; c++) {
                     let frigorificos = json[c];
                     let idDatemperatura = document.getElementById("temperatura" + c);
-                    console.log(idDatemperatura.innerHTML)
                     idDatemperatura.innerHTML = `<p>Temperatura: ${frigorificos.temperatura_media} ºC</p>`
                 }
             })
@@ -235,7 +235,9 @@
                 Container.innerHTML += `
                 <div onclick="salvarFrigo(${frigorificos.idFrigo}, '${frigorificos.nomeFrigo}')" class="card">
                     <div class="bolaeTemperatura">
-                        <p>Temperatura: ${frigorificos.temperatura_media}</p>
+                         <div id="temperatura${c}">
+                            <p >Temperatura: ${frigorificos.temperatura_media} ºC</p>
+                            </div>
                         <div class="bolinha" id="bolinha${c}">
                         </div>
                     </div>
@@ -256,7 +258,9 @@
                 Container.innerHTML += `
                 <div onclick="salvarFrigo(${frigorificos.idFrigo}, '${frigorificos.nomeFrigo}')" class="card">
                     <div class="bolaeTemperatura">
-                        <p>Temperatura: ${frigorificos.temperatura_media}</p>
+                         <div id="temperatura${c}">
+                            <p>Temperatura: ${frigorificos.temperatura_media} ºC</p>
+                            </div>
                         <div class="bolinha" id="bolinha${c}">
                         </div>
                     </div>
