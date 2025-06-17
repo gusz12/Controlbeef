@@ -204,7 +204,8 @@ inner join sensor s on sf.id = s.fkSala
 inner join dados d on d.fksensor = s.id  
 where e.id = ${idEmpresa} and f.id = ${idFrigorifico}
 having temperatura not between -3 and 4  
-order by data_medicao desc;
+order by data_medicao desc
+limit 10;
     `;
     return database.executar(instrucao);
 }
