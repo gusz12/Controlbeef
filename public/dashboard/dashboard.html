@@ -116,7 +116,8 @@
 
     let idFrigorifico = 0;
     let globalJson;
-    Container.innerHTML = ""
+
+
     function listarSalas() {
         Container.innerHTML = ""
         fetch(`/dashboard/listarSalasTotais/${idEmpresa}`, {
@@ -133,7 +134,9 @@
                         Container.innerHTML += `
                     <div onclick="salvarFrigo(${frigorificos.idFrigo}, '${frigorificos.nomeFrigo}')" class="card">
                         <div class="bolaeTemperatura">
-                            <p>Temperatura: ${frigorificos.temperatura_media} ºC</p>
+                            <div id="temperatura${c}">
+                            <p >Temperatura: ${frigorificos.temperatura_media} ºC</p>
+                            </div>
                             <div class="bolinha" id="bolinha${c}">
                             </div>
                         </div>
@@ -162,12 +165,29 @@
                 })
             })
     }
+    function atualizarTemperatura() {
+        fetch(`/dashboard/listarSalasTotais/${idEmpresa}`, {
+            method: "GET"
+        }).then(res => {
+            res.json().then(json => {
+                for (let c = 0; json.length > c; c++) {
+                    let frigorificos = json[c];
+                    let idDatemperatura = document.getElementById("temperatura" + c);
+                    console.log(idDatemperatura.innerHTML)
+                    idDatemperatura.innerHTML = `<p>Temperatura: ${frigorificos.temperatura_media} ºC</p>`
+                }
+            })
+        })
+
+        funcaoBolinhas();
+
+    }
 
     setInterval(() => { atualizarTudo() }, 2000);
 
 
     function atualizarTudo() {
-        listarSalas()
+        atualizarTemperatura()
         KPIsalas_ideal()
         KPIsalas_naoIdeal()
         KPItotal_frigo()
@@ -308,7 +328,7 @@
 
 
     console.log(NaoIdeal)
-    setInterval(()=>card.style.display="none",4000)
+    setInterval(() => card.style.display = "none", 4000)
     function alertinha() {
         if (NaoIdeal == 1) {
             card.style.display = "block";
