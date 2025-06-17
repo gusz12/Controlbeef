@@ -192,15 +192,16 @@
     }
 
     let globalJson;
-
     function listarSalas() {
         var idEmpresa = sessionStorage.ID_EMPRESA;
         var idFrigo = sessionStorage.FRIGO_ATUAL;
+        containerSalasTotal.innerHTML=""
         fetch(`/frigorifico/listarSalas/${idEmpresa}/${idFrigo}`, {
             method: "GET"
         }).then(res => {
             res.json().then(json => {
                 globalJson = json;
+                
                 for (let c = 0; json.length > c; c++) {
                     frigorificos = json[c]
                     console.log(frigorificos.id)
@@ -221,6 +222,8 @@
             })
         })
     }
+setInterval(()=>{listarSalas()},2000)
+
 
     function funcaoBolinhas() {
         for (c = 0; c < globalJson.length; c++) {
@@ -344,16 +347,6 @@
         idSala = idSala;
         tempoForaIdealSala(sessionStorage.ID_EMPRESA, sessionStorage.FRIGO_ATUAL, idSala);
     }, 2000);
-
-
-
-
-
-
-
-
-
-
 
 
 
